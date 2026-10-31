@@ -47,7 +47,7 @@ The items above describe the maintainer's development history; their exact scope
 
 The latest imported copy shows W3Uzman moving toward a news and content presentation while retaining its Question2Answer foundation. Its source includes a modern editor plugin, FlatBox theme customizations, responsive styles, and a collection of W3-prefixed modules for features such as domain and WHOIS lookup, DNS records, SEO checks, SSL checks, QR codes, image/PDF utilities, and text/JSON tools.
 
-The maintainer also describes work on richer sidebars, visual content areas, content creation, and an approach intended to reduce database growth from stored content. The exact behavior, dependencies, storage design, and completeness of these features still need code review and testing. Some modules can depend on external services or data files that are not included in the filtered archive.
+The maintainer describes extensive redesign and development of the FlatBox-based theme over the life of W3Uzman; the historical FlatBox name was retained. The source retains the original FlatBox copyright and GPL notices. The maintainer also describes work on richer sidebars, visual content areas, content creation, and an approach intended to reduce database growth from stored content. The exact behavior, dependencies, storage design, and completeness of these features still need code review and testing. Some modules can depend on external services or data files that are not included in the filtered archive.
 ### Web tools and services
 
 The tools directory lists twelve services. The source for these modules is included in the latest snapshot; their runtime behavior and external dependencies still need verification.
@@ -90,7 +90,7 @@ For privacy, actual configuration files, databases, uploads, backups, and unrela
 The snapshots are intended for code review and preservation while the repository is being prepared for public use. They should not be treated as production-ready packages: deployment instructions, a sanitized example configuration, dependencies, and restoration of any missing assets still need review. If you explore the code, follow the history links above to compare the available snapshots.
 ## License and attribution
 
-W3Uzman is derived from Question2Answer, which is distributed under [GPL-2.0 or later](https://www.question2answer.org/). See the original [license notice](LICENSE.html). Bundled themes, plugins, and other third-party components retain their own notices; their licenses require individual review before public distribution.
+The Question2Answer-derived code is distributed under [GPL-2.0 or later](https://www.question2answer.org/license.php); the GPL version 2 text is included in [COPYING](COPYING) and the original [license notice](LICENSE.html) is retained. Bundled themes, plugins, and libraries retain their own copyrights and license terms. For example, FlatBox and its companion plugin include GPL version 3 notices, while Quill and CKEditor carry their own license notices. Individual third-party components and their redistribution conditions are still being reviewed before the repository is made public.
 
 ---
 
