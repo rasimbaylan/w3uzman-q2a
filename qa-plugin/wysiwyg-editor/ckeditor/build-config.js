@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/license
  */
 
 /**
@@ -10,13 +10,13 @@
  * If you would like to build CKEditor online again
  * (for example to upgrade), visit one the following links:
  *
- * (1) http://ckeditor.com/builder
+ * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) http://ckeditor.com/builder/b575a56615f1132d5a94328400e65518
+ * (2) https://ckeditor.com/cke4/builder/e32b652dfe9946048e496412b5c64fa3
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) http://ckeditor.com/builder/download/b575a56615f1132d5a94328400e65518
+ * (3) https://ckeditor.com/cke4/builder/download/e32b652dfe9946048e496412b5c64fa3
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -25,41 +25,40 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'bootstrapck',
+	skin: 'moono-lisa',
 	preset: 'basic',
 	ignore: [
-		'.bender',
-		'bender.js',
-		'bender-err.log',
-		'bender-out.log',
-		'dev',
 		'.DS_Store',
+		'.bender',
 		'.editorconfig',
 		'.gitattributes',
 		'.gitignore',
-		'gruntfile.js',
 		'.idea',
 		'.jscsrc',
 		'.jshintignore',
 		'.jshintrc',
-		'less',
 		'.mailmap',
+		'.npm',
+		'.travis.yml',
+		'bender-err.log',
+		'bender-out.log',
+		'bender.ci.js',
+		'bender.js',
+		'dev',
+		'gruntfile.js',
+		'less',
 		'node_modules',
 		'package.json',
-		'README.md',
 		'tests'
 	],
 	plugins : {
+		'about' : 1,
 		'basicstyles' : 1,
 		'clipboard' : 1,
 		'codesnippet' : 1,
 		'enterkey' : 1,
 		'entities' : 1,
 		'floatingspace' : 1,
-		'font' : 1,
-		'image' : 1,
-		'imagepaste' : 1,
-		'imageresize' : 1,
 		'indentlist' : 1,
 		'link' : 1,
 		'list' : 1,
@@ -69,7 +68,52 @@ var CKBUILDER_CONFIG = {
 		'youtube' : 1
 	},
 	languages : {
+		'ar' : 1,
+		'bn' : 1,
+		'ca' : 1,
+		'cs' : 1,
+		'cy' : 1,
+		'da' : 1,
+		'de' : 1,
+		'el' : 1,
 		'en' : 1,
-		'tr' : 1
+		'en-gb' : 1,
+		'es' : 1,
+		'et' : 1,
+		'fa' : 1,
+		'fi' : 1,
+		'fr' : 1,
+		'he' : 1,
+		'hr' : 1,
+		'hu' : 1,
+		'id' : 1,
+		'is' : 1,
+		'it' : 1,
+		'ja' : 1,
+		'ka' : 1,
+		'km' : 1,
+		'ko' : 1,
+		'ku' : 1,
+		'lt' : 1,
+		'lv' : 1,
+		'nl' : 1,
+		'no' : 1,
+		'pl' : 1,
+		'pt' : 1,
+		'pt-br' : 1,
+		'ro' : 1,
+		'ru' : 1,
+		'sk' : 1,
+		'sl' : 1,
+		'sq' : 1,
+		'sr' : 1,
+		'sr-latn' : 1,
+		'th' : 1,
+		'tr' : 1,
+		'ug' : 1,
+		'uk' : 1,
+		'vi' : 1,
+		'zh' : 1,
+		'zh-cn' : 1
 	}
 };

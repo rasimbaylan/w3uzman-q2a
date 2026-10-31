@@ -529,7 +529,7 @@ class qa_html_theme extends qa_html_theme_base
         /* Harfli Basamak Görünümü  */
         $this->output(
                 '<SPAN CLASS="qa-view-count"><span class="qa-view-count-data">',
-                $this->short_num($q_item['views_raw']),
+                array_key_exists('views_raw', $q_item) ? $this->short_num($q_item['views_raw']) : '0',
                 '</span><span class="qa-view-count-pad"> Görünüm</span></SPAN>'
             );
         /* Harfli Basamak Görünümü  */

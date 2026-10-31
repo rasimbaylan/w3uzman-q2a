@@ -33,3 +33,291 @@
         Theme License: w3 Uzman
 
 */
+
+/* Markdown editor styles */
+
+.wmd-button-bar {
+	width: 100%;
+	padding: 5px 0;
+}
+.wmd-input {
+	/* 604 */
+	width: 598px;
+	height: 250px;
+	margin: 0 0 10px;
+	padding: 2px;
+	border: 1px solid #ccc;
+}
+.wmd-preview {
+	/* 604 */
+	width: 584px;
+	margin: 10px 0;
+	padding: 8px;
+	border: 2px dashed #ccc;
+}
+
+.wmd-preview img, .entry-content img {
+	max-width: 100%
+}
+
+.qa-q-view-content pre,
+.qa-a-item-content pre,
+.wmd-preview pre {
+	overflow: auto;
+	width: 100%;
+	max-height: 400px;
+	padding: 0;
+	border-width: 1px 1px 1px 3px;
+	border-style: solid;
+	border-color: #ddd;
+	background-color: #eee;
+}
+pre code {
+	display: block;
+	padding: 8px;
+}
+
+.wmd-button-row {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	height: 20px;
+}
+
+.wmd-spacer {
+	width: 1px;
+	height: 20px;
+	margin-left: 14px;
+	position: absolute;
+	background-color: Silver;
+	display: inline-block;
+	list-style: none;
+}
+
+.wmd-button {
+	width: 20px;
+	height: 20px;
+	padding-left: 2px;
+	padding-right: 3px;
+	position: absolute;
+	display: inline-block;
+	list-style: none;
+	cursor: pointer;
+}
+
+.wmd-button > span {
+	/* note: background-image is set in plugin script */
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+}
+
+.wmd-spacer1 {
+	left: 50px;
+}
+.wmd-spacer2 {
+	left: 175px;
+}
+.wmd-spacer3 {
+	left: 300px;
+}
+
+.wmd-prompt-background {
+	background-color: #000;
+}
+.wmd-prompt-dialog {
+	border: 1px solid #999;
+	background-color: #f5f5f5;
+}
+.wmd-prompt-dialog > div {
+	font-size: 0.8em;
+}
+.wmd-prompt-dialog > form > input[type="text"] {
+	border: 1px solid #999;
+	color: black;
+}
+.wmd-prompt-dialog > form > input[type="button"] {
+	border: 1px solid #888;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+
+/* Open Login buttons */
+	.open-login-button.context-associate,
+	.open-login-button.context-login,
+	.open-login-button.context-register {
+		font-weight: bold;
+		display: inline-block;
+		margin-top: 5px;
+		width: 30%;
+	}
+	
+	.open-login-button.context-sidebar {
+		font-weight: bold;
+		margin: 0 10px 5px 10px;
+		display: block;
+		max-width: 90%;
+	}
+
+	.open-login-button.context-menu.zocial {
+		margin-top: -4px;
+		font-size: 11px;
+	}
+	
+	.open-login-profile, .open-login-accounts, .open-login-others {
+		padding-bottom: 40px;
+		border-bottom: 1px solid gray;
+	}
+	
+	.qa-nav-user { /* this should not have negative effects */
+	    /*height: 24px;*/
+		margin-top: 4px;
+	}
+	
+	.open-login-others .opacxhtml select {
+		margin: 5px 0;
+	}
+	
+	.open-login-others .opacxhtml {
+		padding-left: 35px;
+	}
+	
+	.open-login-accounts a.opacxdel:hover {
+		text-decoration: none;
+	}
+	
+	.open-login-accounts a.opacxdel{
+		display: inline-block;
+		line-height: 25px;
+		margin: 0 5px;
+	}
+	/* End of Open Login buttons */
+	
+	.open-login-button.context-menu.zocial {
+		margin-top: inherit;
+		font-size: inherit;
+		background: url(https://cdnjs.cloudflare.com/ajax/libs/webicons/2.0.0/webicons/webicon-facebook-m.png);
+		color: #00000000;
+		background-repeat: no-repeat;
+		width: 30px;
+		display: block;
+		height: 30px;
+		font-size: 0;
+		background-size: cover;
+		display:none;
+	}
+	
+	.qa-nav-user-facebook {
+	    width: 30px;
+	    padding: 0 !important;
+	    margin: 0 19px;
+	}
+	
+	.qa-nav-user-logout span {
+	    display:inline-block !important;
+	    padding: 10px 0;
+	}
+	
+    .qa-nav-user-nolink .action-logout {
+        color:inherit !important;
+        background: inherit !important;
+        height: inherit !important;
+        font-size: inherit !important;
+    }
+	
+	
+/* Eleman | http://demo.w3uzman.com/ */
+
+div.qa-widget-side-low:nth-child(1) {
+  display: none;
+}
+
+
+/* Element | https://www.w3uzman.com/ */
+
+.qa-ask-box > form:nth-child(1) {
+  width: 50%;
+  display: inline-block;
+}
+
+/* Element | https://www.w3uzman.com/ */
+
+div.qa-search:nth-child(2) {
+  width: 50%;
+  float: right;
+}
+
+/* Element | https://www.w3uzman.com/ */
+
+div.qa-search:nth-child(2) > form:nth-child(1) > input:nth-child(1) {
+  margin: 0;
+  flex: 1;
+  margin-right: 10px;
+}
+
+/* Element | https://www.w3uzman.com/ */
+
+div.qa-search:nth-child(2) > form:nth-child(1) {
+  padding: 8px;
+  display: flex;
+}
+
+/* Element | https://www.w3uzman.com/ */
+
+div.qa-search:nth-child(2) > form:nth-child(1) > input:nth-child(2) {
+  margin: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .qa-ask-box > form:nth-child(1) {
+      width: 100%;
+    }
+    
+    div.qa-search:nth-child(2) {
+      float: inherit;
+      width: 100%;
+    }
+    
+    div.qa-search:nth-child(2) > form:nth-child(1) > input:nth-child(1) {
+      flex: inherit;
+      width: 59%;
+    }
+    
+    div.qa-search:nth-child(2) > form:nth-child(1) {
+      display: inherit;
+      width: 100%;
+    }
+
+}
+
+
+
+
+/* flatbox-core.min.css | https://w3uzman.com/qa-theme/FlatBox/css/flatbox-core.min.css?flatbox-1.0.1-beta */
+
+.qa-main .qa-favoriting {
+  float: right;
+  width: 32px;
+  height: 44px;
+  z-index: 1;
+  position: relative;
+  margin-right: 10px;
+  margin-top: 3px;
+}
+
+.qa-main .qa-favoriting .qa-favorite-button {
+    background-image: url('./images/favori-eklegreen.svg');
+}
+
+
+.qa-main .qa-favoriting .qa-unfavorite-button {
+    background-image: url('./images/favori-ekle.svg');
+    border-right: 0;
+    background-color: #ecf0f1;
+    background-position: center top;
+}
+
+
