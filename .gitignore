@@ -1,0 +1,13 @@
+qa-config.php
+.env
+.env.*
+*.sql
+*.sql.gz
+*.log
+*.bak
+*.zip
+*.tar
+*.gz
+*.pem
+*.key
+.DS_Store
