@@ -220,7 +220,7 @@ class ReCaptchaSocketPostRequestMethod implements ReCaptchaRequestMethod
     const BAD_RESPONSE = '{"success": false, "error-codes": ["invalid-response"]}';
     private $socket;
 
-    public function __construct(ReCaptchaSocket $socket = null)
+    public function __construct(?ReCaptchaSocket $socket = null)
     {
         if (!is_null($socket)) {
             $this->socket = $socket;
@@ -285,7 +285,7 @@ class ReCaptcha
      *
      * @param string $secret shared secret between site and ReCAPTCHA server.
      */
-    public function __construct($secret , ReCaptchaRequestMethod $requestMethod = null)
+    public function __construct($secret , ?ReCaptchaRequestMethod $requestMethod = null)
     {
         if ($secret == null || $secret == '') {
             die('To use reCAPTCHA you must get an API key from <a href="' . self::$_signupUrl . '">' . self::$_signupUrl . '</a>');

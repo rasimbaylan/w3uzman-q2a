@@ -46,7 +46,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 			$js = file_get_contents(QA_HTML_THEME_LAYER_DIRECTORY.'pagedown/highlightjs-run.js');
 
 			$this->output_raw(
-				'<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'pagedown/highlight.min.js"></script>' .
+				'<script defer src="'.QA_HTML_THEME_LAYER_URLTOROOT.'pagedown/highlight.min.js"></script>' .
 				'<script>'.$js.'</script>'
 			);
 		}

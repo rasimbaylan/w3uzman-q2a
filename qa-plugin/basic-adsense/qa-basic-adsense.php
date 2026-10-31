@@ -22,9 +22,11 @@
 
 class qa_basic_adsense
 {
+	private static $script_loaded = false;
+
 	public function allow_template($template)
 	{
-		return $template != 'admin';
+		return $template != 'admin' && qa_google_ads_enabled();
 	}
 
 
@@ -77,6 +79,9 @@ class qa_basic_adsense
 
 	public function output_widget($region, $place, $themeobject, $template, $request, $qa_content)
 	{
+		if (!qa_google_ads_enabled())
+			return;
+
 		$format = 'auto';
 
 		switch ($region) {
@@ -91,7 +96,9 @@ class qa_basic_adsense
 		}
 
 		?>
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<?php if (!self::$script_loaded) { self::$script_loaded = true; ?>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<?php } ?>
 		<ins class="adsbygoogle <?php echo qa_html($region) ?>"
 			style="display:block; margin:.5em auto"
 			data-ad-client="<?php echo qa_html(qa_opt('adsense_publisher_id')) ?>"

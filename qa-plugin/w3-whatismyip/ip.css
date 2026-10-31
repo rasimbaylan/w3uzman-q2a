@@ -1,0 +1,107 @@
+body.w3-tools-page { color: #192637; background: #f7f9fc; font-family: Arial, sans-serif; }
+body.w3-tools-page .qa-body-wrapper { width: calc(100% - 40px); max-width: 1120px; margin: 0 auto; }
+body.w3-tools-page .qa-main-wrapper { display: block; width: 100%; }
+body.w3-tools-page .qa-main { float: none; width: 100% !important; margin: 0; padding: 0; }
+body.w3-tools-page .qa-main > .qa-part-custom { margin: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+.w3-ip, .w3-ip * { box-sizing: border-box; }
+.w3-ip { padding: 12px 0 34px; font: 400 14px/1.65 Arial, sans-serif; }
+.w3-ip [hidden] { display: none !important; }
+.w3-ip a { color: #344a68; text-decoration: none; }
+.w3-ip a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.w3-ip-breadcrumb { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 30px; color: #68788d; font-size: 12px; }
+.w3-ip-breadcrumb > span[aria-hidden] { color: #b5bec9; }
+.w3-ip-heading { margin-bottom: 16px; }
+.w3-ip-eyebrow { display: block; margin-bottom: 11px; color: #826700; font-size: 10px; font-weight: 700; letter-spacing: 1.6px; }
+body.w3-tools-page .w3-ip-heading h1 { margin: 0 0 6px; padding: 0; border: 0; color: #192637; background: transparent; font: 700 27px/1.2 Arial, sans-serif; letter-spacing: -.6px; }
+.w3-ip-heading p { margin: 0; color: #65758b; font-size: 14px; }
+.w3-ip-card { position: relative; padding: 30px 36px 22px; border: 1px solid #e3e9f0; border-radius: 12px; background: #fff; }
+.w3-ip-card::before { content: ""; position: absolute; top: 30px; left: 0; width: 4px; height: 30px; border-radius: 0 3px 3px 0; background: #ffc400; }
+.w3-ip-card-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.w3-ip-card-top h2 { margin: 0; color: #63748a; font: 400 13px/1.5 Arial, sans-serif; }
+.w3-ip-version { padding: 4px 10px; border: 1px solid #f2e6b1; border-radius: 5px; color: #806400; background: #fffbed; font-size: 12px; font-weight: 700; }
+.w3-ip-address { display: block; width: 100%; margin: 12px 0 4px; color: #192637; font: 600 clamp(27px,3.5vw,39px)/1.35 Consolas, "Courier New", monospace; overflow-wrap: anywhere; word-break: break-word; user-select: all; }
+.w3-ip-card-description { margin: 0; color: #68788d; font-size: 13px; }
+.w3-ip-actions { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; margin-top: 14px; }
+.w3-ip-actions button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 9px; margin: 0; padding: 0 17px; border: 1px solid #ffc400; border-radius: 7px; background: #ffc400; color: #192637; font: 700 13px/1.4 Arial, sans-serif; cursor: pointer; }
+.w3-ip-actions button:hover { background: #f2ba00; border-color: #f2ba00; }
+.w3-ip-actions button[hidden] { display: none; }
+.w3-ip-actions button svg { flex-shrink: 0; }
+.w3-ip-refresh { display: inline-flex; min-height: 44px; align-items: center; gap: 9px; font-size: 13px; }
+.w3-ip-refresh span { font-size: 20px; }
+.w3-ip-status { min-height: 18px; margin: 3px 0 0; color: #42634b; font-size: 12px; }
+.w3-ip-local-note { margin: 5px 0 0; padding-top: 14px; border-top: 1px solid #edf0f4; color: #6b778a; font-size: 12px; }
+.w3-ip-error { margin: 22px 0 10px; color: #8b382f; }
+.w3-ip-noscript { color: #65758b; font-size: 12px; }
+.w3-ip-info { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; margin-top: 24px; }
+.w3-ip-info h2 { margin: 0 0 13px; color: #192637; font: 700 21px/1.35 Arial, sans-serif; letter-spacing: -.3px; }
+.w3-ip-info p { margin: 0 0 13px; color: #63748a; font-size: 13px; line-height: 1.8; }
+.w3-ip-related { display: inline-block; margin-top: 6px; font-size: 12px; font-weight: 700; }
+.w3-ip-faq details { border-bottom: 1px solid #e3e9f0; }
+.w3-ip-faq summary { position: relative; padding: 14px 24px 14px 0; color: #34445d; font-size: 13px; font-weight: 600; list-style: none; cursor: pointer; }
+.w3-ip-faq summary::-webkit-details-marker { display: none; }
+.w3-ip-faq summary::after { content: "+"; position: absolute; right: 4px; top: 10px; font-size: 20px; font-weight: 400; color: #8c98a8; }
+.w3-ip-faq details[open] summary::after { content: "−"; }
+.w3-ip-faq details p { padding: 0 12px 3px 0; }
+.w3-ip :focus-visible { outline: 2px solid #9f7b00; outline-offset: 4px; }
+.w3-ip-dashboard { display: grid; grid-template-columns: 1.2fr 1fr; border: 1px solid #e1e7ef; border-radius: 10px; background: #fff; overflow: hidden; }
+.w3-ip-result { min-width: 0; padding: 22px 26px 16px; border-top: 3px solid #ffc400; }
+.w3-ip-address-caption { margin: 0; color: #6c7b8f; font-size: 12px; }
+.w3-ip-connection { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 12px; color: #607087; font-size: 12px; }
+.w3-ip-connection strong { color: #34445d; font: 600 12px Consolas, monospace; }
+.w3-ip-connection > a { margin-left: auto; font-weight: 600; }
+.w3-ip-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 20px; margin: 8px 0 0; }
+.w3-ip-field { min-width: 0; padding: 10px 0; border-top: 1px solid #edf0f4; }
+.w3-ip-field-wide { grid-column: 1 / -1; }
+.w3-ip-field dt { margin: 0 0 3px; color: #79869a; font-size: 11px; }
+.w3-ip-field dd { margin: 0; color: #26374e; font-size: 13px; overflow-wrap: anywhere; }
+.w3-ip-mono { font-family: Consolas, "Courier New", monospace; }
+.w3-ip-unavailable { color: #8b96a5; }
+.w3-ip-notice { margin-top: 10px; padding: 12px 14px; border-radius: 6px; background: #fffbeb; color: #806600; font-size: 12px; }
+.w3-ip-notice strong { display: block; margin-bottom: 4px; }
+.w3-ip-notice p, .w3-ip-data-note { margin: 0; font-size: 12px; }
+.w3-ip-data-note { color: #748197; padding-top: 10px; }
+.w3-ip-map-panel { min-width: 0; padding: 20px; border-left: 1px solid #e9edf3; background: #fcfdff; }
+.w3-ip-map-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+.w3-ip-map-heading h2 { margin: 0; font: 600 14px/1.5 Arial, sans-serif; color: #34445b; }
+.w3-ip-map-heading > span { font-size: 11px; color: #8090a3; }
+.w3-ip-map-heading > a { display: inline-flex; align-items: center; min-height: 44px; font-size: 11px; }
+.w3-ip-map { height: 320px; overflow: hidden; border: 1px solid #e5eaf1; border-radius: 7px; background: #f1f5f8; }
+.w3-ip-map iframe { display: block; width: 100%; height: 100%; border: 0; }
+.w3-ip-map-placeholder { display: flex; height: 100%; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; }
+.w3-ip-map-symbol { display: grid; place-items: center; width: 55px; height: 55px; border-radius: 50%; color: #a27e00; background: #fff5cc; }
+.w3-ip-map-placeholder h3 { margin: 0; color: #3c4f67; font: 600 16px/1.4 Arial, sans-serif; }
+.w3-ip-map-placeholder p { margin: 0; max-width: 280px; color: #7a899c; font-size: 12px; }
+.w3-ip-map-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; margin: 0; padding: 0 16px; border: 1px solid #ffc400; border-radius: 6px; background: #ffc400; color: #192637; font: 600 12px Arial,sans-serif; cursor: pointer; }
+.w3-ip-map-coordinate { color: #7d8da1; font: 11px Consolas,monospace; }
+.w3-ip-map-note { margin: 10px 0 0; color: #7b889b; font-size: 11px; line-height: 1.6; }
+.w3-ip-lookup { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; align-items: center; margin-top: 16px; padding: 16px 20px; border: 1px solid #e2e8ef; border-radius: 8px; background: #fff; }
+.w3-ip-lookup h2 { margin: 0 0 3px; font: 600 15px/1.4 Arial,sans-serif; color: #31445d; }
+.w3-ip-lookup p { margin: 0; color: #7b889b; font-size: 12px; }
+.w3-ip-form { min-width: 0; margin: 0; }
+.w3-ip-form-row { display: flex; gap: 8px; }
+.w3-ip .w3-ip-form-row input { flex: 1 1 auto; min-width: 0; width: 100%; height: 44px; margin: 0; padding: 0 12px; border: 1px solid #d5dde8; border-radius: 6px; color: #24364d; background: #fff; font: 14px Consolas,monospace; box-shadow: none; }
+.w3-ip .w3-ip-form-row button { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: 7px; min-height: 44px; height: 44px; margin: 0; padding: 0 14px; border: 1px solid #ffc400; border-radius: 6px; color: #192637; background: #ffc400; font: 600 12px Arial,sans-serif; cursor: pointer; }
+.w3-ip-form-hint { padding-top: 5px; font-size: 11px !important; }
+.w3-ip .w3-ip-form-error { margin-top: 6px; color: #a23930; font-size: 12px; }
+.w3-ip-source { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 20px; margin-top: 12px; color: #8b96a5; font-size: 11px; }
+.w3-ip-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip: rect(0,0,0,0); overflow: hidden; white-space: nowrap; }
+@media (max-width: 700px) {
+    body.w3-tools-page .qa-body-wrapper { width: calc(100% - 24px); }
+    .w3-ip { padding: 8px 0 28px; }
+    .w3-ip-breadcrumb { margin-bottom: 22px; }
+    body.w3-tools-page .w3-ip-heading h1 { font-size: 25px; }
+    .w3-ip-heading p { max-width: 320px; font-size: 13px; }
+    .w3-ip-card { padding: 24px 22px 18px; }
+    .w3-ip-card::before { top: 24px; }
+    .w3-ip-address { margin-top: 21px; font-size: 29px; }
+    .w3-ip-info { grid-template-columns: 1fr; gap: 25px; margin-top: 30px; }
+    .w3-ip-actions { gap: 9px 17px; }
+    .w3-ip-actions button { font-size: 12px; padding: 0 13px; }
+    .w3-ip-refresh { font-size: 12px; }
+    .w3-ip-dashboard, .w3-ip-lookup { grid-template-columns: 1fr; }
+    .w3-ip-result { padding: 18px; }
+    .w3-ip-map-panel { padding: 16px; border-left: 0; border-top: 1px solid #e9edf3; }
+    .w3-ip-map { height: 270px; }
+    .w3-ip-lookup { padding: 16px; gap: 10px; }
+    .w3-ip .w3-ip-form-row input { font-size: 16px; }
+}

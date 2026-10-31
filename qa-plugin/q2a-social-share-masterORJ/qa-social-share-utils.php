@@ -2,27 +2,36 @@
 
 function ami_generate_social_buttons($data , $template = null )
 {
-	$share_text = '' ;
-	if (is_null($template) || $template == 'question') {
-		$share_text = qa_opt(qa_sss_opt::SHARE_TEXT) ;
-	}elseif (!is_null($template) && $template == 'qa') {
-		$share_text = qa_opt(qa_sss_opt::SHARE_TEXT_HOME) ;
-	}
+    $url = urldecode(isset($data['{{page_url}}']) ? $data['{{page_url}}'] : '');
+    $title = urldecode(isset($data['{{page_title}}']) ? $data['{{page_title}}'] : '');
+    if (!filter_var($url, FILTER_VALIDATE_URL) || !in_array(strtolower((string) parse_url($url, PHP_URL_SCHEME)), array('http', 'https'), true)) { return ''; }
+    $u = rawurlencode($url); $t = rawurlencode($title);
+    $items = array(
+        array('whatsapp', 'WhatsApp', 'https://wa.me/?text=' . rawurlencode($title . ' ' . $url), true),
+        array('x', 'X', 'https://x.com/intent/tweet?url=' . $u . '&text=' . $t, qa_opt(qa_sss_opt::TW_BUTTON)),
+        array('facebook', 'Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' . $u, qa_opt(qa_sss_opt::FB_BUTTON)),
+        array('linkedin', 'LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url=' . $u, qa_opt(qa_sss_opt::LI_BUTTON)),
+        array('telegram', 'Telegram', 'https://t.me/share/url?url=' . $u . '&text=' . $t, true),
+    );
+    $html = '<section class="w3-share" aria-label="İçeriği paylaş"><span class="w3-share-label">Paylaş</span><div class="w3-share-actions">';
+    foreach ($items as $item) {
+        if (!$item[3]) { continue; }
+        $html .= '<a class="w3-share-button w3-share--' . $item[0] . '" href="' . qa_html($item[2]) . '" target="_blank" rel="noopener noreferrer nofollow" aria-label="' . $item[1] . ' üzerinde paylaş" title="' . $item[1] . ' üzerinde paylaş">' . w3_share_icon($item[0]) . '<span>' . $item[1] . '</span></a>';
+    }
+    return $html . '<button class="w3-share-button w3-share-copy" type="button" data-share-url="' . qa_html($url) . '" aria-label="Bağlantıyı kopyala">' . w3_share_icon('copy') . '<span>Bağlantıyı kopyala</span></button></div><span class="w3-share-status" role="status" aria-live="polite"></span></section>';
+}
 
-	$buttons  = '<div class="qa-sss-buttons">' ;
-	$buttons .=		'<div class="qa-sss-text">'.$share_text.' </div>';
-	$buttons .=		'<div class="qa-sss-final">';
-	$buttons .=			qa_opt(qa_sss_opt::GP_BUTTON)? get_social_button( 'gp',$data ):'';
-	$buttons .=			qa_opt(qa_sss_opt::FB_BUTTON)? get_social_button( 'fb',$data ):'';
-	$buttons .=			qa_opt(qa_sss_opt::TW_BUTTON)? get_social_button( 'tw',$data ):'';
-	$buttons .=			qa_opt(qa_sss_opt::LI_BUTTON)? get_social_button( 'li',$data ):'';
-	$buttons .=			qa_opt(qa_sss_opt::RE_BUTTON)? get_social_button( 're',$data ):'';
-	$buttons .=			qa_opt(qa_sss_opt::VK_BUTTON)? get_social_button( 'vk',$data , $template):'';
-	$buttons .=			qa_opt(qa_sss_opt::EM_BUTTON)? get_social_button( 'em',$data ):'';
-	$buttons .=		'</div>'; 
-	$buttons .=		'<div class="qa-sss-clear"></div>'; 
-	$buttons .=	'</div>' ;
-	return $buttons;
+function w3_share_icon($name)
+{
+    $icons = array(
+        'whatsapp' => '<path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.5L3 20.8l1.5-4.7a8.5 8.5 0 1 1 16-4.3Z"></path><path d="M8.5 7.5c-.5.2-1 1-.8 2 .5 2.5 3.3 5.3 5.8 5.8 1 .2 1.8-.3 2-.8l.5-1-2.4-1.1-.8.8c-1.3-.6-2.3-1.6-2.9-2.9l.8-.8-1.1-2.4-.9.4Z"></path>',
+        'x' => '<path d="m5 4 14 16M19 4 5 20M3 4h4l14 16h-4L3 4Z"></path>',
+        'facebook' => '<path d="M14.5 21v-8h2.8l.4-3h-3.2V8.2c0-.9.3-1.5 1.6-1.5H18V4.1c-.4-.1-1.6-.1-2.7-.1-2.7 0-4.3 1.6-4.3 4.4V10H8v3h3v8"></path>',
+        'linkedin' => '<rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M7 10v7m0-10v.1M11 17v-7m0 3c0-4 6-4 6 0v4"></path>',
+        'telegram' => '<path d="m3 11 18-7-4 17-6-6-4 3 1-6 13-8-10 11M3 11l5 1"></path>',
+        'copy' => '<rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"></path>',
+    );
+    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $icons[$name] . '</svg>';
 }
 
 function get_social_button($type , $data , $template = null )

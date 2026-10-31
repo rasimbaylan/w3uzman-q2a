@@ -1,0 +1,62 @@
+<div class="w3-responsive" id="w3-responsive" data-tool-url="{{TOOL_URL}}">
+    <header class="w3-responsive-heading">
+        <h1>Responsive Kontrol</h1>
+        <p>Sitenizi mobil, tablet ve masaüstü ölçülerinde inceleyin.</p>
+    </header>
+
+    <section class="w3-responsive-address" aria-label="Site seçimi">
+        <form id="w3-responsive-url-form" novalidate>
+            <label for="w3-responsive-url">Site adresi</label>
+            <div class="w3-responsive-url-row">
+                <input id="w3-responsive-url" name="url" type="text" inputmode="url" placeholder="https://ornek.com" maxlength="4096" autocomplete="url" autocapitalize="none" spellcheck="false" required aria-describedby="w3-responsive-url-help w3-responsive-url-error">
+                <button type="submit" class="w3-responsive-primary" aria-label="Önizlemeyi aç">Önizle <span aria-hidden="true">→</span></button>
+            </div>
+            <p id="w3-responsive-url-help" class="w3-responsive-help">HTTP veya HTTPS adresi girin. Protokol yazılmazsa HTTPS kullanılır.</p>
+            <p id="w3-responsive-url-error" class="w3-responsive-error" role="alert" hidden></p>
+        </form>
+        <noscript><p class="w3-responsive-error">Önizleme aracını kullanmak için tarayıcınızda JavaScript'i etkinleştirin.</p></noscript>
+    </section>
+
+    <section class="w3-responsive-workspace" aria-label="Responsive önizleme">
+        <div class="w3-responsive-controls">
+            <div class="w3-responsive-presets" role="group" aria-label="Hazır görüntü alanları">
+                <button type="button" data-preset="mobile" data-width="375" data-height="812" aria-pressed="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M10 18h4"></path></svg><span>Mobil<small>375 × 812</small></span></button>
+                <button type="button" data-preset="tablet" data-width="768" data-height="1024" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="2" width="18" height="20" rx="2"></rect><path d="M10 18h4"></path></svg><span>Tablet<small>768 × 1024</small></span></button>
+                <button type="button" data-preset="desktop" data-width="1440" data-height="900" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="1.5"></rect><path d="M12 17v4M7 21h10"></path></svg><span>Masaüstü<small>1440 × 900</small></span></button>
+            </div>
+
+            <form id="w3-responsive-size-form" class="w3-responsive-size-form" novalidate>
+                <div><label for="w3-responsive-width">Genişlik</label><input id="w3-responsive-width" name="width" type="number" inputmode="numeric" min="240" max="3840" step="1" value="375" required aria-describedby="w3-responsive-size-help w3-responsive-size-error"></div>
+                <span class="w3-responsive-times" aria-hidden="true">×</span>
+                <div><label for="w3-responsive-height">Yükseklik</label><input id="w3-responsive-height" name="height" type="number" inputmode="numeric" min="240" max="3840" step="1" value="812" required aria-describedby="w3-responsive-size-help w3-responsive-size-error"></div>
+                <button type="submit" class="w3-responsive-secondary">Uygula</button>
+            </form>
+        </div>
+        <p id="w3-responsive-size-help" class="w3-responsive-size-help">Özel ölçüler: her kenar 240–3840 px.</p>
+        <p id="w3-responsive-size-error" class="w3-responsive-error" role="alert" hidden></p>
+
+        <div class="w3-responsive-preview-toolbar">
+            <p class="w3-responsive-measurement"><strong id="w3-responsive-dimensions">375 × 812 px</strong><span id="w3-responsive-scale">Ekrana sığdırma: %100</span></p>
+            <div class="w3-responsive-preview-actions">
+                <button type="button" id="w3-responsive-rotate" class="w3-responsive-action" aria-label="Yönü değiştir"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 9a8 8 0 0 1 13-5l3 3M20 15a8 8 0 0 1-13 5l-3-3M20 2v5h-5M4 22v-5h5"></path></svg>Döndür</button>
+                <button type="button" id="w3-responsive-refresh" class="w3-responsive-action" disabled>Yenile</button>
+                <a id="w3-responsive-open" class="w3-responsive-action" aria-label="Yeni sekmede aç" target="_blank" rel="noopener noreferrer" hidden>Yeni sekme <span aria-hidden="true">↗</span></a>
+            </div>
+        </div>
+
+        <div class="w3-responsive-stage" id="w3-responsive-stage">
+            <div class="w3-responsive-empty" id="w3-responsive-empty">
+                <svg width="54" height="44" viewBox="0 0 54 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="40" height="28" rx="3"></rect><path d="M17 31v7M9 38h17"></path><rect x="33" y="17" width="18" height="25" rx="2.5" fill="currentColor" fill-opacity=".06"></rect><path d="M40 37h4"></path></svg>
+                <h3>Önizlemeniz burada görünecek</h3>
+                <p>Bir site adresi girerek başlayın. Ardından farklı ölçüler arasında geçiş yapabilirsiniz.</p>
+            </div>
+            <div class="w3-responsive-viewport" id="w3-responsive-viewport" hidden></div>
+        </div>
+        <p id="w3-responsive-status" class="w3-responsive-status" role="status" aria-live="polite" aria-atomic="true">Henüz bir site seçilmedi.</p>
+    </section>
+
+    <aside class="w3-responsive-note" aria-labelledby="w3-responsive-note-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v7M12 6.5v1"></path></svg>
+        <div><h2 id="w3-responsive-note-title">Önizleme hakkında</h2><p>Bu araç sayfanın görüntü alanını değiştirir; gerçek cihaz, dokunmatik ekran veya mobil tarayıcı emülasyonu yapmaz. Büyük görünümler alana sığacak şekilde küçültülür, sitenin kullandığı piksel ölçüleri değişmez.</p><p>Bazı siteler güvenlik politikaları nedeniyle çerçevede gösterilemez. İçerik görünmüyorsa <strong>Yeni sekmede aç</strong> bağlantısını kullanın.</p></div>
+    </aside>
+</div>

@@ -1,0 +1,66 @@
+/* Readable public contact records; isolated from other tools and shared layouts. */
+body.w3-whois-page .w3-whois-contacts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 14px;
+    margin-top: 18px;
+}
+body.w3-whois-page .w3-whois-contact-card {
+    min-width: 0;
+    padding: 0;
+    border: 1px solid #dde5ef;
+    border-radius: 9px;
+    background: #fff;
+    overflow: hidden;
+}
+/* An odd final card fills its row instead of leaving an empty half-column. */
+body.w3-whois-page .w3-whois-contact-card:last-of-type:nth-of-type(odd) { grid-column: 1 / -1; }
+body.w3-whois-page .w3-whois-contact-card > h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 47px;
+    margin: 0;
+    padding: 11px 15px;
+    border: 0;
+    border-bottom: 1px solid #e0e7ef;
+    color: #172c48;
+    background: #f4f7fb;
+    font: 700 14px/1.45 Arial, sans-serif;
+}
+body.w3-whois-page .w3-whois-contact-icon { display: inline-flex; flex: 0 0 21px; align-items: center; color: #906900; }
+body.w3-whois-page .w3-whois-contact-icon svg { display: block; width: 21px; height: 21px; }
+body.w3-whois-page .w3-whois-contact-card > dl { margin: 0; padding: 2px 15px; }
+body.w3-whois-page .w3-whois-contact-card dl > div {
+    display: grid;
+    grid-template-columns: 124px minmax(0, 1fr);
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e8edf3;
+}
+body.w3-whois-page .w3-whois-contact-card dl > div:last-child { border-bottom: 0; }
+body.w3-whois-page .w3-whois-contact-card dt { margin: 0; padding: 0; color: #435b76; font: 400 13px/1.55 Arial, sans-serif; overflow-wrap: anywhere; }
+body.w3-whois-page .w3-whois-contact-card dd { min-width: 0; margin: 0; color: #152c46; font: 400 14px/1.5 Arial, sans-serif; overflow-wrap: anywhere; }
+body.w3-whois-page .w3-whois-contact-card dd > span { display: block; white-space: pre-line; }
+body.w3-whois-page .w3-whois-contact-card dd a { color: #155985; text-decoration: none; }
+body.w3-whois-page .w3-whois-contact-card dd a:hover { text-decoration: underline; }
+body.w3-whois-page .w3-whois-contact-note { padding: 13px 15px; color: #465d77; background: #fafbfd; font: 400 13px/1.65 Arial, sans-serif; }
+body.w3-whois-page .w3-whois-contact-source { grid-column: 1 / -1; margin: -2px 0 0; color: #50667e; font: 400 12px/1.6 Arial, sans-serif; }
+body.w3-whois-page .w3-whois-contact-source a { color: #155985; }
+@media (min-width: 1100px) {
+    body.w3-whois-page .w3-whois-contacts[data-card-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    body.w3-whois-page .w3-whois-contacts[data-card-count="3"] > .w3-whois-contact-card { grid-column: auto; }
+    body.w3-whois-page .w3-whois-contacts[data-card-count="3"] .w3-whois-contact-card dl > div { grid-template-columns: 105px minmax(0, 1fr); gap: 10px; }
+}
+@media (max-width: 760px) {
+    body.w3-whois-page .w3-whois-contacts { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 16px; }
+}
+@media (max-width: 400px) {
+    body.w3-whois-page .w3-whois-contact-card > h3 { padding: 11px 12px; font-size: 13px; }
+    body.w3-whois-page .w3-whois-contact-card > dl { padding: 2px 12px; }
+    body.w3-whois-page .w3-whois-contact-card dl > div { grid-template-columns: minmax(72px, .7fr) minmax(0, 1.3fr); gap: 9px; }
+    body.w3-whois-page .w3-whois-contact-card dt { font-size: 12px; }
+    body.w3-whois-page .w3-whois-contact-card dd { font-size: 13px; }
+}

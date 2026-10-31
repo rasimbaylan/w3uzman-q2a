@@ -48,80 +48,20 @@ class qa_ask_box
 		<table class="qa-form-tall-table" style="width:100%">
 			<tr style="vertical-align:middle;">
 				<td class="qa-form-tall-label" style="width: 1px; padding:8px; white-space:nowrap; <?php echo ($region=='side') ? 'padding-bottom:0;' : 'text-align:right;'?>">
-					<?php echo strtr(qa_lang_html('question/ask_title'), array(' ' => '&nbsp;'))?>:
+					<label for="qa-ask-box-title"><?php echo strtr(qa_lang_html('question/ask_title'), array(' ' => '&nbsp;'))?>:</label>
 				</td>
 		<?php if ($region=='side') : ?>
 			</tr>
 			<tr>
 		<?php endif; ?>
 				<td class="qa-form-tall-data" style="padding:8px;">
-					<input name="title" type="text" aria-label="Bir Soru Sor" class="qa-form-tall-text" style="width:95%;">
+					<input name="title" id="qa-ask-box-title" type="text" class="qa-form-tall-text" style="width:95%;">
 				</td>
 			</tr>
 		</table>
 		<input type="hidden" name="doask1" value="1">
 	</form>
-	<div class="qa-search">
-        <form method="GET" action="../search">
-        <input type="text" name="q" aria-label="Sitede Ara" value="" class="qa-search-field">
-        <input type="submit" value="Sitede Ara" class="qa-search-button">
-        </form>
-        <div id="searchresults" style="display:none"></div>
-    </div>
 </div>
-<script>
-$('.qa-search-field').keyup(function() {
-    var user_search = $(this).val();
-    
-    //var msg = $.ajax({type: "GET", url: "/search?q=" + user_search, async: false}).responseText;
-    //$('#searchresults').append($(msg));
-});
-
-
-/*
-function loadData() {
-
-    $('.insertliste').load('pdf-takip .autoliste');
-        
-}
-
-    var result = null;
-
-    if($('.insertliste').length > 0) {
-        function checkdata() {
-            var scriptUrl = "pdf-takip .autoliste";
-            $.ajax({
-                url: scriptUrl,
-                type: 'get',
-                dataType: 'html',
-                async: true,
-                cache: false,
-                success: function(data) {
-                    if (result != data) {
-                        result = data;
-                        loadData();
-                    }
-                }
-            });
-        }
-    
-        var auto_refresh = setInterval(function() {
-            
-            var msg = $.ajax({type: "GET", url: "/qq-yonet/qq_yenile.php", async: false}).responseText;
-            var yenile = parseInt(msg);
-    
-            
-            if(yenile > 0) {
-                if($('.insertliste').length > 0){
-                    checkdata();
-                }
-            }
-        }, 5000);
-        
-    }
-    */
-
-</script>
 		<?php
 	}
 }

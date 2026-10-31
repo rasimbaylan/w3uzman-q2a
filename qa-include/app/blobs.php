@@ -24,6 +24,44 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 	exit;
 }
 
+// Uploaded media belongs on disk. Existing SQL-backed blobs remain readable.
+if (!defined('QA_BLOBS_DIRECTORY'))
+	define('QA_BLOBS_DIRECTORY', QA_BASE_DIR . 'images/');
+
+function qa_get_blob_storage_directory()
+{
+	$directory = str_replace('\\', '/', QA_BLOBS_DIRECTORY);
+	if (!preg_match('~^(?:/|[A-Za-z]:/)~', $directory))
+		$directory = str_replace('\\', '/', QA_BASE_DIR) . $directory;
+
+	return rtrim($directory, '/');
+}
+
+function qa_blob_storage_stats()
+{
+	$stats = array('total' => 0, 'database_files' => 0, 'database_bytes' => 0,
+		'disk_files' => 0, 'disk_bytes' => 0, 'missing_files' => 0);
+	$rows = qa_db_read_all_assoc(qa_db_query_sub(
+		'SELECT blobid, format, content IS NOT NULL AS in_database, OCTET_LENGTH(content) AS bytes FROM ^blobs'
+	));
+	foreach ($rows as $blob) {
+		$stats['total']++;
+		if ($blob['in_database']) {
+			$stats['database_files']++;
+			$stats['database_bytes'] += (int)$blob['bytes'];
+		} else {
+			$filename = qa_get_blob_filename($blob['blobid'], $blob['format']);
+			if (is_file($filename)) {
+				$stats['disk_files']++;
+				$stats['disk_bytes'] += (int)filesize($filename);
+			} else {
+				$stats['missing_files']++;
+			}
+		}
+	}
+	return $stats;
+}
+
 
 /**
  * Return the URL which will output $blobid from the database when requested, $absolute or relative
@@ -48,7 +86,7 @@ function qa_get_blob_directory($blobid)
 {
 	if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
-	return rtrim(QA_BLOBS_DIRECTORY, '/') . '/' . substr(str_pad($blobid, 20, '0', STR_PAD_LEFT), 0, 3);
+	return qa_get_blob_storage_directory() . '/' . substr(str_pad($blobid, 20, '0', STR_PAD_LEFT), 0, 3);
 }
 
 
@@ -67,7 +105,7 @@ function qa_get_blob_filename($blobid, $format)
 
 
 /**
- * Create a new blob (storing the content in the database or on disk as appropriate) with $content and $format, returning its blobid.
+ * Create a new file-backed blob with metadata only in SQL, returning its blobid.
  * Pass the original name of the file uploaded in $sourcefilename and the $userid, $cookieid and $ip of the user creating it
  * @param $content
  * @param $format
@@ -83,12 +121,12 @@ function qa_create_blob($content, $format, $sourcefilename = null, $userid = nul
 
 	require_once QA_INCLUDE_DIR . 'db/blobs.php';
 
-	$blobid = qa_db_blob_create(defined('QA_BLOBS_DIRECTORY') ? null : $content, $format, $sourcefilename, $userid, $cookieid, $ip);
+	$blobid = qa_db_blob_create(null, $format, $sourcefilename, $userid, $cookieid, $ip);
 
-	if (isset($blobid) && defined('QA_BLOBS_DIRECTORY')) {
-		// still write content to the database if writing to disk failed
-		if (!qa_write_blob_file($blobid, $content, $format))
-			qa_db_blob_set_content($blobid, $content);
+	if (isset($blobid) && !qa_write_blob_file($blobid, $content, $format)) {
+		// Never silently grow SQL storage when the filesystem is unavailable.
+		qa_db_blob_delete($blobid);
+		return null;
 	}
 
 	return $blobid;
@@ -106,23 +144,28 @@ function qa_write_blob_file($blobid, $content, $format)
 {
 	if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
-	$written = false;
-
+	$root = qa_get_blob_storage_directory();
+	if (!@is_dir($root) && !@mkdir($root, 0755, true) && !@is_dir($root))
+		return false;
 	$directory = qa_get_blob_directory($blobid);
-	if (is_dir($directory) || mkdir($directory, fileperms(rtrim(QA_BLOBS_DIRECTORY, '/')) & 0777)) {
-		$filename = qa_get_blob_filename($blobid, $format);
+	if (!@is_dir($directory) && !@mkdir($directory, 0755) && !@is_dir($directory))
+		return false;
 
-		$file = fopen($filename, 'xb');
-		if (is_resource($file)) {
-			if (fwrite($file, $content) >= strlen($content))
-				$written = true;
-
-			fclose($file);
-
-			if (!$written)
-				unlink($filename);
-		}
+	$filename = qa_get_blob_filename($blobid, $format);
+	$content = (string)$content;
+	if (is_file($filename)) {
+		// A retried migration may encounter a file already written successfully.
+		$existing = @file_get_contents($filename);
+		return is_string($existing) && hash_equals(hash('sha256', $content), hash('sha256', $existing));
 	}
+
+	$file = @fopen($filename, 'xb');
+	if (!is_resource($file))
+		return false;
+	$written = @fwrite($file, $content) === strlen($content) && @fflush($file);
+	fclose($file);
+	if (!$written)
+		@unlink($filename);
 
 	return $written;
 }

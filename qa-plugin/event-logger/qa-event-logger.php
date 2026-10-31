@@ -61,34 +61,33 @@ class qa_event_logger
 
 	public function admin_form(&$qa_content)
 	{
-		// Process form input
-
 		$saved = false;
-
-		if (qa_clicked('event_logger_save_button')) {
-			qa_opt('event_logger_to_database', (int)qa_post_text('event_logger_to_database_field'));
-			qa_opt('event_logger_to_files', qa_post_text('event_logger_to_files_field'));
-			qa_opt('event_logger_directory', qa_post_text('event_logger_directory_field'));
-			qa_opt('event_logger_hide_header', !qa_post_text('event_logger_hide_header_field'));
-
-			$saved = true;
-		}
-
-		// Check the validity of the currently entered directory (if any)
-
-		$directory = qa_opt('event_logger_directory');
-
-		$note = null;
+		$directory = (string)qa_opt('event_logger_directory');
+		$tofiles = (bool)qa_opt('event_logger_to_files');
+		$todatabase = (bool)qa_opt('event_logger_to_database');
+		$includeheader = !qa_opt('event_logger_hide_header');
 		$error = null;
 
-		if (!strlen($directory))
-			$note = 'Please specify a directory that is writable by the web server.';
-		elseif (!file_exists($directory))
-			$error = 'This directory cannot be found. Please enter the full path.';
-		elseif (!is_dir($directory))
-			$error = 'This is a file. Please enter the full path of a directory.';
-		elseif (!is_writable($directory))
-			$error = 'This directory is not writable by the web server. Please choose a different directory, use chown/chmod to change permissions, or contact your web hosting company for assistance.';
+		if (qa_clicked('event_logger_save_button')) {
+			$directory = trim((string)qa_post_text('event_logger_directory_field'));
+			$tofiles = (bool)qa_post_text('event_logger_to_files_field');
+			$todatabase = (bool)qa_post_text('event_logger_to_database_field');
+			$includeheader = (bool)qa_post_text('event_logger_hide_header_field');
+			$error = $tofiles ? $this->directory_error($directory) : null;
+
+			// Validate the complete form before persisting any of its options.
+			if ($error === null) {
+				qa_opt('event_logger_to_database', (int)$todatabase);
+				qa_opt('event_logger_to_files', (int)$tofiles);
+				qa_opt('event_logger_directory', $directory);
+				qa_opt('event_logger_hide_header', !$includeheader);
+				$saved = true;
+			}
+		}
+
+		if ($tofiles && $error === null)
+			$error = $this->directory_error($directory);
+		$note = 'Web sunucusunun yazabildiği, herkese açık web dizininin dışında bir klasör kullanın. Günlükler IP adresi ve kullanıcı bilgisi içerebilir.';
 
 		// Create the form for display
 
@@ -98,50 +97,67 @@ class qa_event_logger
 		));
 
 		return array(
-			'ok' => ($saved && !isset($error)) ? 'Event log settings saved' : null,
+			'ok' => $saved ? 'Olay günlüğü ayarları kaydedildi.' : null,
 
 			'fields' => array(
 				array(
-					'label' => 'Log events to <code>' . QA_MYSQL_TABLE_PREFIX . 'eventlog</code> database table',
+					'label' => 'Olayları <code>' . qa_html(QA_MYSQL_TABLE_PREFIX) . 'eventlog</code> veritabanı tablosuna kaydet',
 					'tags' => 'name="event_logger_to_database_field"',
-					'value' => qa_opt('event_logger_to_database'),
+					'value' => $todatabase,
 					'type' => 'checkbox',
 				),
 
 				array(
-					'label' => 'Log events to daily log files',
+					'label' => 'Olayları günlük dosyalarına kaydet',
 					'tags' => 'name="event_logger_to_files_field" id="event_logger_to_files_field"',
-					'value' => qa_opt('event_logger_to_files'),
+					'value' => $tofiles,
 					'type' => 'checkbox',
 				),
 
 				array(
 					'id' => 'event_logger_directory_display',
-					'label' => 'Directory for log files - enter full path:',
+					'label' => 'Günlük klasörünün tam yolu:',
 					'value' => qa_html($directory),
 					'tags' => 'name="event_logger_directory_field"',
 					'note' => $note,
-					'error' => qa_html($error),
+					'error' => $error === null ? null : qa_html($error),
 				),
 
 				array(
 					'id' => 'event_logger_hide_header_display',
-					'label' => 'Include header lines at top of each log file',
+					'label' => 'Her günlük dosyasının başına sütun başlıklarını ekle',
 					'type' => 'checkbox',
 					'tags' => 'name="event_logger_hide_header_field"',
-					'value' => !qa_opt('event_logger_hide_header'),
+					'value' => $includeheader,
 				),
 			),
 
 			'buttons' => array(
 				array(
-					'label' => 'Save Changes',
+					'label' => 'Değişiklikleri kaydet',
 					'tags' => 'name="event_logger_save_button"',
 				),
 			),
 		);
 	}
 
+	private function directory_error($directory)
+	{
+		if ($directory === '' || strpos($directory, "\0") !== false)
+			return 'Dosyaya kayıt için geçerli bir günlük klasörünün tam yolunu girin.';
+		if (!file_exists($directory))
+			return 'Bu klasör bulunamadı. Var olan bir klasörün tam yolunu girin.';
+		if (!is_dir($directory))
+			return 'Bu yol bir dosyaya ait. Bir klasörün tam yolunu girin.';
+		if (!is_writable($directory))
+			return 'Web sunucusu bu klasöre yazamıyor. Yazılabilir bir klasör seçin veya sunucu yöneticinizle görüşün.';
+		return null;
+	}
+
+	private function line_value($value)
+	{
+		return strtr((string)$value, "\t\n\r", '   ');
+	}
 
 	public function value_to_text($value)
 	{
@@ -149,12 +165,14 @@ class qa_event_logger
 
 		if (is_array($value))
 			$text = 'array(' . count($value) . ')';
-		elseif (qa_strlen($value) > 40)
-			$text = qa_substr($value, 0, 38) . '...';
+		elseif (is_object($value))
+			$text = 'object(' . get_class($value) . ')';
 		else
-			$text = $value;
+			$text = (string)$value;
 
-		return strtr($text, "\t\n\r", '   ');
+		if (qa_strlen($text) > 40)
+			$text = qa_substr($text, 0, 38) . '...';
+		return $this->line_value($text);
 	}
 
 
@@ -164,7 +182,7 @@ class qa_event_logger
 			$paramstring = '';
 
 			foreach ($params as $key => $value) {
-				$paramstring .= (strlen($paramstring) ? "\t" : '') . $key . '=' . $this->value_to_text($value);
+				$paramstring .= (strlen($paramstring) ? "\t" : '') . $this->line_value($key) . '=' . $this->value_to_text($value);
 			}
 
 			qa_db_query_sub(
@@ -176,17 +194,17 @@ class qa_event_logger
 
 		if (qa_opt('event_logger_to_files')) {
 			// Substitute some placeholders if certain information is missing
-			if (!strlen($userid))
+			if ((string)$userid === '')
 				$userid = 'no_userid';
 
-			if (!strlen($handle))
+			if ((string)$handle === '')
 				$handle = 'no_handle';
 
-			if (!strlen($cookieid))
+			if ((string)$cookieid === '')
 				$cookieid = 'no_cookieid';
 
 			$ip = qa_remote_ip_address();
-			if (!strlen($ip))
+			if ((string)$ip === '')
 				$ip = 'no_ipaddress';
 
 			// Build the log file line to be written
@@ -201,32 +219,33 @@ class qa_event_logger
 				'Event' => $event,
 			);
 
-			$fields = $fixedfields;
+			$fields = array_map(array($this, 'line_value'), $fixedfields);
 
 			foreach ($params as $key => $value) {
-				$fields['param_' . $key] = $key . '=' . $this->value_to_text($value);
+				$fields['param_' . $key] = $this->line_value($key) . '=' . $this->value_to_text($value);
 			}
 
 			$string = implode("\t", $fields);
 
 			// Build the full path and file name
 
-			$directory = qa_opt('event_logger_directory');
-
-			if (substr($directory, -1) != '/')
-				$directory .= '/';
+			$directory = trim((string)qa_opt('event_logger_directory'));
+			// Never fall back to the filesystem root when the directory is unset.
+			if ($this->directory_error($directory) !== null)
+				return;
+			$directory = rtrim($directory, '/\\') . '/';
 
 			$filename = $directory . 'q2a-log-' . date('Y\-m\-d') . '.txt';
 
 			// Open, lock, write, unlock, close (to prevent interference between multiple writes)
 
-			$exists = file_exists($filename);
-
-			$file = @fopen($filename, 'a');
+			$file = @fopen($filename, 'ab');
 
 			if (is_resource($file)) {
 				if (flock($file, LOCK_EX)) {
-					if (!$exists && filesize($filename) === 0 && !qa_opt('event_logger_hide_header')) {
+					// Inspect size while holding the lock, not before another writer finishes.
+					$stat = fstat($file);
+					if ($stat !== false && $stat['size'] === 0 && !qa_opt('event_logger_hide_header')) {
 						$string = "Question2Answer " . QA_VERSION . " log file generated by Event Logger plugin.\n" .
 							"This file is formatted as tab-delimited text with UTF-8 encoding.\n\n" .
 							implode("\t", array_keys($fixedfields)) . "\textras...\n\n" . $string;

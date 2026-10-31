@@ -1,0 +1,129 @@
+body.qa-template-qa.w3-whois-page { color: #111d36; font-family: Arial, sans-serif; background: #f5f7fa; }
+body.w3-whois-page .qa-body-wrapper { max-width: 1120px; }
+body.w3-whois-page .qa-main-wrapper { display: block; }
+body.qa-template-qa.w3-whois-page .qa-main { float: none; width: 100% !important; padding: 20px 0 0; }
+body.qa-template-qa.w3-whois-page .qa-main-heading { display: block; margin: 0; padding: 0; border: 0; background: none; }
+body.qa-template-qa.w3-whois-page .qa-main-heading h1 { margin: 0; padding: 0; border: 0; background: transparent; font: 700 32px/1.2 Arial, sans-serif; letter-spacing: -.8px; }
+body.w3-whois-page .qa-main-heading::before, body.w3-whois-page .qa-main-heading::after { display: none !important; }
+.w3-whois-page-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+.w3-whois-page-heading .w3-whois-intro { max-width: 370px; margin: 0; color: #69778c; font: 400 13px/1.55 Arial, sans-serif; text-align: right; }
+.w3-whois { font-size: 14px; line-height: 1.55; }
+.w3-whois *, .w3-whois *::before, .w3-whois *::after { box-sizing: border-box; }
+.w3-whois p { margin: 0; }
+.w3-whois a { color: #344a68; text-decoration: underline; text-underline-offset: 3px; }
+.w3-whois-query { padding: 18px; border: 1px solid #e3e5e2; border-radius: 12px; background: #fff; box-shadow: 0 3px 12px #17233b04; }
+.w3-whois-eyebrow { display: block; margin-bottom: 12px; color: #738095; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; }
+.w3-whois-query label { display: block; margin-bottom: 7px; color: #344a68; font-size: 13px; font-weight: 500; }
+.w3-whois-field { position: relative; display: flex; align-items: center; gap: 10px; }
+.w3-whois-globe { position: absolute; top: 11px; left: 14px; width: 24px; height: 24px; margin: 0; font-size: 24px; line-height: 1; color: #8592a4; pointer-events: none; }
+.w3-whois-input-wrap { display: flex; align-items: center; flex: 1 1 auto; min-width: 0; height: 42px; border: 1px solid #dce2db; border-radius: 7px; background: #fff; }
+.w3-whois-input-wrap:focus-within { border-color: #d4a700; box-shadow: 0 0 0 3px #ffc60018; }
+.w3-whois-field input { flex: 1 1 auto; width: 100%; min-width: 0; height: 40px; margin: 0; padding: 0 12px; border: 0; border-radius: 7px; background: transparent; color: #17233b; font: 400 14px/normal Arial, sans-serif; box-shadow: none; }
+.w3-whois-field input:focus { outline: none; background: transparent; box-shadow: none; }
+.w3-whois-suffix { flex-shrink: 0; display: flex; align-items: center; height: 24px; padding: 0 12px; border-left: 1px solid #e4e7e2; color: #7b8799; font-size: 12px; }
+#w3-whois-clear { flex: 0 0 28px; width: 28px; height: 28px; padding: 0; margin: 0 4px 0 0; border: 0; border-radius: 4px; background: transparent; color: #8090a2; font-size: 20px; line-height: 1; }
+#w3-whois-clear:hover { background: #f5f6f3; }
+#w3-whois-clear[hidden] { display: none; }
+.w3-whois button { cursor: pointer; font-family: inherit; }
+.w3-whois-field > button[type="submit"] { display: inline-flex; align-items: center; justify-content: center; gap: 7px; flex: 0 0 auto; height: 42px; margin: 0; padding: 0 18px; border: 1px solid #ffc600; border-radius: 7px; background: #ffc600; color: #111d36; font-size: 13px; font-weight: 700; }
+.w3-whois-field > button[type="submit"]:hover { background: #f2ba00; }
+.w3-whois-field > button[type="submit"]:disabled { opacity: .7; cursor: wait; }
+.w3-whois :focus-visible { outline: 3px solid #d39c00; outline-offset: 3px; }
+.w3-whois-examples { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; color: #7a8799; font-size: 11px; }
+.w3-whois-examples a { padding: 3px 8px; border-radius: 4px; color: #697c94; background: #f4f5f2; text-decoration: none; }
+.w3-whois-examples a:hover { color: #17233b; background: #fff4c4; }
+.w3-whois-query #w3-whois-help { margin: 0 0 0 auto; color: #8993a3; font-size: 11px; }
+.w3-whois-result, .w3-whois-notice { margin-top: 16px; padding: 20px; border: 1px solid #e3e5e2; border-radius: 12px; background: #fff; }
+.w3-whois-result header { display: block; padding-bottom: 16px; border-bottom: 1px solid #e5e7e2; }
+.w3-whois-result h2 { margin: 6px 0 2px; font-size: 26px; line-height: 1.25; letter-spacing: -.4px; overflow-wrap: anywhere; }
+.w3-whois-result-header > p { color: #7a8799; font-size: 12px; }
+.w3-whois-result-header > .w3-whois-status { display: inline-flex; padding: 3px 10px; border: 1px solid currentColor; border-radius: 5px; font-size: 11px; line-height: 1.4; }
+.w3-whois-result .w3-whois-eyebrow { margin-bottom: 5px; }
+.w3-whois-status { flex-shrink: 0; padding: 5px 12px; border-radius: 30px; background: #eaf7f1; color: #247451; font-size: 12px; }
+.w3-whois-status--registered { background: #fff0f0; color: #ba3636; }
+.w3-whois-status--unknown, .w3-whois-status--checking { background: #f0f3f7; color: #69778c; }
+.w3-whois-result--available { border-color: #cce8d9; }
+.w3-whois-result .w3-whois-availability-note { margin: 0 0 14px; color: #627189; font-size: 13px; }
+.w3-whois-alternatives { margin-top: 8px; padding: 0; border: 0; }
+.w3-whois-alternatives ul { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; list-style: none; padding: 0; margin: 0; }
+.w3-whois-alternative { min-width: 0; max-width: 100%; margin: 0; padding: 0; }
+.w3-whois-alternative a { display: flex; align-items: center; gap: 6px; max-width: 100%; color: #344a68; text-decoration: none; font-size: 12px; line-height: 1.5; font-weight: 500; }
+.w3-whois-alternative-domain { min-width: 0; overflow-wrap: anywhere; }
+.w3-whois-alternative a:hover { text-decoration: underline; }
+.w3-whois-alternative .w3-whois-status { display: inline-flex; flex: 0 0 8px; align-items: center; justify-content: center; width: 8px; height: 8px; padding: 0; border-radius: 0; background: transparent; font-size: 8px; line-height: 1; }
+.w3-whois-alternative .w3-whois-status > span[aria-hidden] { display: block; width: 6px; height: 6px; margin: 0; border-radius: 50%; background: currentColor; font-size: 0; }
+.w3-whois-alternative .qa-reader-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.w3-whois-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; padding: 16px 0; border-bottom: 1px solid #e5e7e2; background: transparent; }
+.w3-whois-metrics > div { padding: 0 16px; border-right: 1px solid #e5e7e2; min-width: 0; }
+.w3-whois-metrics > div:first-child { padding-left: 0; }
+.w3-whois-metrics > div:last-child { border: 0; }
+.w3-whois-metrics dt { margin-bottom: 5px; color: #697c94; font-size: 11px; }
+.w3-whois-metrics dd { margin: 0; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.w3-whois-metrics small { display: block; margin-top: 3px; color: #8090a2; font-size: 11px; }
+.w3-whois-metrics .w3-whois-days { color: #248075; }
+.w3-whois-technical { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 0 0; }
+.w3-whois-tech-card { min-width: 0; min-height: 98px; padding: 14px; border: 1px solid #e7e9e3; border-radius: 9px; background: #fafbf8; }
+.w3-whois-tech-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.w3-whois-tech-heading > span { flex-shrink: 0; padding: 2px 8px; color: #697c94; background: #f0f2ed; border-radius: 4px; font-size: 11px; }
+.w3-whois-tech-card h3 { color: #526783; font-size: 12px; font-weight: 500; }
+.w3-whois-tech-card #w3-whois-related-message { margin-top: 5px; color: #8090a2; font-size: 12px; font-style: italic; }
+.w3-whois-domain-status { padding-top: 10px; color: #8090a2; font-size: 11px; overflow-wrap: anywhere; }
+.w3-whois-domain-status > span { color: #526783; }
+.w3-whois h3 { margin: 0 0 8px; font-size: 14px; }
+.w3-whois-technical ul { padding: 0; margin: 0; list-style: none; color: #526783; font: 12px/1.9 Arial, sans-serif; overflow-wrap: anywhere; }
+.w3-whois-technical li::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; background: #d8b12a; vertical-align: 1px; }
+.w3-whois-technical a { text-decoration: none; }
+.w3-whois-source { padding-top: 10px; color: #8993a3; font-size: 10px; }
+.w3-whois-raw { margin-top: 14px; border: 1px solid #e1e5dc; border-radius: 9px; overflow: hidden; }
+.w3-whois summary { cursor: pointer; font-weight: 600; }
+.w3-whois-raw summary { position: relative; padding: 12px 14px; list-style: none; color: #344a68; background: #f4f6f1; font-size: 13px; font-weight: 500; }
+.w3-whois-raw summary::-webkit-details-marker { display: none; }
+.w3-whois-raw summary::after { content: "+"; position: absolute; right: 16px; color: #7a8799; }
+.w3-whois-raw[open] summary::after { content: "−"; }
+.w3-whois-raw-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 14px; border-top: 1px solid #e5e8e0; border-bottom: 1px solid #e5e8e0; color: #8090a2; font-size: 11px; }
+.w3-whois-raw pre { width: 100%; max-height: 300px; overflow: auto; margin: 0; padding: 10px 0; border: 0; border-radius: 0; background: #f9fbf7; color: #254464; font: 11px/22px Consolas, monospace; white-space: pre; counter-reset: code-line; }
+.w3-whois-code-line { display: block; min-height: 22px; padding-right: 16px; counter-increment: code-line; }
+.w3-whois-code-line::before { content: counter(code-line); display: inline-block; width: 42px; margin-right: 16px; padding-right: 12px; border-right: 1px solid #e2e7dc; color: #8993a3; text-align: right; user-select: none; }
+#w3-whois-copy { margin: 0; padding: 5px 10px; border: 1px solid #dce2d7; border-radius: 5px; background: #fff; color: #526783; font-size: 11px; }
+#w3-whois-copy-status { display: block; padding: 0 14px; font-size: 11px; color: #627189; }
+#w3-whois-copy-status:empty { display: none; }
+.w3-whois-notice h2 { margin: 0 0 8px; font-size: 20px; }
+.w3-whois-notice--error { border-color: #f1d5ba; background: #fffbf5; }
+.w3-whois-info { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; margin-top: 24px; }
+.w3-whois-info h2 { margin: 0 0 10px; font-size: 20px; line-height: 1.35; }
+.w3-whois-info p { color: #69778c; font-size: 13px; }
+.w3-whois-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 16px; }
+.w3-whois-features b { display: block; margin-bottom: 6px; font-size: 13px; }
+.w3-whois-info aside { padding: 18px; border: 1px solid #e4e8ef; border-radius: 10px; background: #fff; }
+.w3-whois-info aside h2 { font-size: 16px; }
+.w3-whois-info details { padding: 10px 0; border-top: 1px solid #edf0f5; font-size: 12px; }
+.w3-whois-info details p { margin-top: 9px; }
+.w3-whois .w3-whois-footnote { margin: 18px 0 16px; color: #8993a3; font-size: 11px; }
+@media(max-width:800px) {
+    body.qa-template-qa.w3-whois-page .qa-main { padding-top: 16px; }
+    body.qa-template-qa.w3-whois-page .qa-main-heading h1 { font-size: 28px; }
+    .w3-whois-page-heading { align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .w3-whois-page-heading .w3-whois-intro { max-width: none; text-align: left; }
+    .w3-whois-query, .w3-whois-result, .w3-whois-notice { padding: 18px; }
+    .w3-whois-info { grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
+    .w3-whois-metrics { grid-template-columns: 1fr 1fr; }
+    .w3-whois-metrics { gap: 14px 0; }
+    .w3-whois-metrics > div { border: 0; padding: 0 10px; }
+    .w3-whois-metrics > div:nth-child(odd) { padding-left: 0; }
+    body.qa-template-qa.w3-whois-page .w3-home-nav { display: flex; gap: 14px; margin-left: auto; }
+    body.qa-template-qa.w3-whois-page .w3-home-nav a { display: none; }
+    body.qa-template-qa.w3-whois-page .w3-home-nav a.is-current { display: flex; }
+    body.qa-template-qa.w3-whois-page .w3-home-login { margin-left: 14px; }
+}
+@media(max-width:500px) {
+    .w3-whois-field { flex-wrap: wrap; }
+    .w3-whois-input-wrap { flex-basis: 100%; }
+    .w3-whois-field > button[type="submit"] { width: 100%; }
+    .w3-whois-suffix { display: none; }
+    .w3-whois-query #w3-whois-help { flex-basis: 100%; margin: 2px 0 0; }
+    .w3-whois-result header { align-items: flex-start; flex-direction: column; }
+    .w3-whois-metrics > div:first-child { grid-column: 1 / -1; }
+    .w3-whois-technical { grid-template-columns: 1fr; gap: 16px; }
+    .w3-whois-features { grid-template-columns: 1fr; gap: 15px; }
+    .w3-whois-alternatives ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; }
+}

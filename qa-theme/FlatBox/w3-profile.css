@@ -1,0 +1,195 @@
+/* Native community profiles. Do not change permissions or hide editable controls. */
+body.w3-profile-page { color: #17243b; background: #f5f8fb; font-family: Arial, sans-serif; }
+body.w3-profile-page #qam-topbar { margin-bottom: 0; }
+body.w3-profile-page .qa-main-wrapper { padding: 16px 0 20px; }
+body.w3-profile-detail .qa-main { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: stretch; gap: 16px; }
+body.w3-profile-page .qa-main svg { display: inline-block; flex-shrink: 0; width: 20px; height: 20px; vertical-align: middle; }
+body.w3-profile-page .w3-profile-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 112px minmax(0,1fr) minmax(360px,.95fr);
+    align-items: center;
+    gap: 26px;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 154px;
+    padding: 20px 24px;
+    border: 1px solid #e1e8f1;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at 0 65%,#fff8e6 0,transparent 39%),radial-gradient(ellipse at 92% 5%,#eaf2ff 0,transparent 55%),#fff;
+    box-shadow: 0 4px 16px #1c304608,inset 0 0 0 2px #fff;
+}
+body.w3-profile-page .w3-profile-hero-avatar { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 112px; height: 112px; padding: 4px; border: 1px solid #e4e8ed; border-radius: 16px; background: #fff; box-shadow: 0 3px 9px #1c30461a; overflow: hidden; }
+body.w3-profile-page .w3-profile-hero-avatar .qa-avatar-link { display: block; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; }
+body.w3-profile-page .w3-profile-hero-avatar .qa-avatar-image { display: block; width: 100%; height: 100%; max-width: none; max-height: none; border-radius: 11px; object-fit: cover; }
+body.w3-profile-page .w3-profile-initial { color: #415b7d; font: 700 48px/1 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-hero-identity { min-width: 0; }
+body.w3-profile-page .w3-profile-name { display: flex; align-items: center; gap: 10px; }
+body.w3-profile-page .w3-profile-hero h1 { margin: 0; padding: 0 !important; border: 0; color: #142238; background: transparent; font: 700 27px/1.25 Arial,sans-serif; letter-spacing: -.5px; overflow-wrap: anywhere; }
+body.w3-profile-page .w3-profile-hero-identity > p { margin: 4px 0 9px; color: #52657f; font: 400 14px/1.4 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-role { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; padding: 4px 11px; box-sizing: border-box; border: 1px solid #f2d67c; border-radius: 18px; color: #745310; background: #fff6d4; font: 400 11px/1.4 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-role svg { width: 14px; height: 14px; color: #b88800; }
+body.w3-profile-page .w3-profile-hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 17px; margin-top: 10px; color: #455b78; font: 400 11px/1.4 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-hero-meta > span { display: inline-flex; align-items: center; gap: 7px; }
+body.w3-profile-page .w3-profile-hero-meta svg { width: 15px; height: 15px; color: #3e5b85; }
+body.w3-profile-page .w3-profile-favorite { flex: 0 0 auto; display: flex; align-items: center; margin: 0; }
+body.w3-profile-page .w3-profile-favorite .qa-favoriting { position: static; display: inline-flex; margin: 0; padding: 0; }
+body.w3-profile-page .w3-profile-favorite input { margin: 0; }
+body.w3-profile-page .w3-profile-metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); align-items: center; min-width: 0; }
+body.w3-profile-page .w3-profile-metric { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; padding: 0 10px; border-left: 1px solid #e6edf5; text-align: center; }
+body.w3-profile-page .w3-profile-metric:first-child { border-left: 0; }
+body.w3-profile-page .w3-profile-metric > svg { margin-bottom: 7px; color: #007dd8; }
+body.w3-profile-page .w3-profile-metric-points > svg { color: #d89a00; }
+body.w3-profile-page .w3-profile-metric-questions > svg { color: #6454d9; }
+body.w3-profile-page .w3-profile-metric-comments > svg { color: #405a7a; }
+body.w3-profile-page .w3-profile-metric strong { color: #152238; font: 700 20px/1.2 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-metric > span { display: flex; align-items: center; gap: 6px; color: #52657f; font: 400 11px/1.4 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-metric small { padding: 1px 5px; border-radius: 5px; color: #4c3800; background: #ffdb46; font: 700 10px/1.2 Arial,sans-serif; }
+
+body.w3-profile-page .w3-profile-main-tabs { max-width: none; min-width: 0; width: 100%; }
+body.w3-profile-page .w3-profile-tabs .qa-nav-sub { width: 100%; margin: 0; padding: 0; }
+body.w3-profile-page .w3-profile-main-tabs .qa-nav-sub-list { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 0; width: 100%; box-sizing: border-box; margin: 0; padding: 0; border: 1px solid #e3eaf2; border-radius: 10px; background: #fff; overflow: hidden; }
+body.w3-profile-page .w3-profile-main-tabs .qa-nav-sub-item { display: flex; }
+body.w3-profile-page .w3-profile-tabs .qa-nav-sub .qa-nav-sub-list .qa-nav-sub-item .qa-nav-sub-link { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 28px !important; border: 0; border-radius: 0; color: #405675; background: transparent; font: 400 12px/1.5 Arial,sans-serif; text-decoration: none; }
+body.w3-profile-page .w3-profile-tabs .qa-nav-sub .qa-nav-sub-list .qa-nav-sub-item .qa-nav-sub-selected { color: #26344b; background: #fff6db; box-shadow: inset 0 -3px #ffc600; font-weight: 700; }
+body.w3-profile-page .w3-profile-tabs .qa-nav-sub-link svg { width: 17px; height: 17px; color: #47628a; }
+body.w3-profile-page .w3-profile-tabs .qa-nav-sub-selected svg { color: #c08a00; }
+body.w3-profile-page .w3-profile-main-tabs .qa-nav-sub-clear { display: none; }
+body.w3-profile-page .w3-profile-tabs .qa-nav-sub-link:not(.qa-nav-sub-selected):hover { color: #142238; background: #f3f6fa; }
+
+body.w3-profile-detail .qa-main > .qa-part-form-profile,
+body.w3-profile-detail .qa-main > .qa-part-form-activity,
+body.w3-profile-page .qa-part-message-list { box-sizing: border-box; padding: 20px; border: 1px solid #e2e9f2; border-radius: 11px; color: #344b68; background: #fff; box-shadow: 0 3px 12px #1c304604; }
+body.w3-profile-detail .qa-main > .qa-part-form-profile { grid-column: 1; height: 100%; margin: 0; }
+body.w3-profile-detail .qa-main > .qa-part-form-activity { grid-column: 2; height: 100%; margin: 0; }
+body.w3-profile-detail .qa-main > .qa-part-message-list { grid-column: 1 / -1; margin: 0; }
+body.w3-profile-page .w3-profile-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+body.w3-profile-page .qa-part-form-profile .w3-profile-card-title,
+body.w3-profile-page .qa-part-form-activity > h2,
+body.w3-profile-page .qa-part-message-list > h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; padding: 0; border: 0; color: #172943; background: transparent; font: 700 16px/1.5 Arial,sans-serif; }
+body.w3-profile-page .qa-part-form-profile .w3-profile-card-title { margin: 0; }
+body.w3-profile-page .qa-part-form-activity > h2 > span { display: flex; align-items: center; gap: 12px; }
+body.w3-profile-page .w3-profile-card-title > svg,
+body.w3-profile-page .qa-part-form-activity > h2 svg,
+body.w3-profile-page .qa-part-message-list > h2 > svg { width: 19px; height: 19px; color: #008bdb; }
+body.w3-profile-page .qa-form-wide-table { table-layout: fixed; }
+body.w3-profile-page .qa-form-wide-table td { padding: 11px 0; border-color: #e9eef5; vertical-align: middle; }
+body.w3-profile-page .qa-form-wide-table tr:last-child > td { border-bottom: 0; }
+body.w3-profile-page .qa-form-wide-table .qa-form-wide-label { width: 30%; padding-right: 14px !important; color: #435a79; font: 400 12px/1.5 Arial,sans-serif; }
+body.w3-profile-page .qa-form-wide-static { color: #2e4462; font: 400 12px/1.6 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-field-label { display: flex; align-items: center; gap: 12px; }
+body.w3-profile-page .w3-profile-field-icon { display: flex; align-items: center; justify-content: center; flex: 0 0 32px; width: 32px; height: 32px; border-radius: 50%; color: #3d5b84; background: #f0f5fb; }
+body.w3-profile-page .w3-profile-field-icon svg { width: 17px; height: 17px; }
+body.w3-profile-page .qa-part-form-activity .qa-form-wide-label { width: 37%; }
+body.w3-profile-page .qa-part-form-activity .w3-profile-field-icon { flex-basis: 19px; width: 19px; height: 20px; border-radius: 0; color: #007fd1; background: transparent; }
+body.w3-profile-page .qa-part-form-activity .qa-form-wide-table td { padding: 8px 0; }
+body.w3-profile-page .qa-part-form-activity [class^="qa-uf-user-"] { color: #0073bd; font: 700 16px/1.4 Arial,sans-serif; }
+body.w3-profile-page .qa-part-form-activity .qa-uf-user-points { color: #9b6b00; }
+body.w3-profile-page .qa-part-form-activity .qa-uf-user-rank { color: #435a79; font: inherit; }
+body.w3-profile-page .qa-part-form-activity .qa-uf-user-upvotes,
+body.w3-profile-page .qa-part-form-activity .qa-uf-user-upvoteds { color: #128043; }
+body.w3-profile-page .qa-part-form-activity .qa-uf-user-downvotes,
+body.w3-profile-page .qa-part-form-activity .qa-uf-user-downvoteds { color: #c12a35; }
+body.w3-profile-page .qa-form-wide-note,
+body.w3-profile-page .qa-form-tall-note { color: #52657d; font: 400 11px/1.5 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-permits { color: #435a79; font: 400 12px/1.65 Arial,sans-serif; }
+body.w3-profile-page .w3-profile-permits summary { color: #385575; }
+body.w3-profile-page .qa-part-form-profile #level .qa-form-wide-static a { display: inline-flex; align-items: center; margin: 0 0 0 8px; padding: 5px 9px; border-color: #e0e8f2; color: #385575; background: #f4f7fb; font: 600 11px/1.4 Arial,sans-serif; text-decoration: none; }
+body.w3-profile-page .w3-profile-card-heading .qa-form-wide-button-edit { flex: 0 0 auto; min-height: 30px; margin: 0; padding: 7px 11px; border: 1px solid #e0e8f2; border-radius: 7px; color: #385575; background: #f4f7fb; font: 600 11px/1.4 Arial,sans-serif; cursor: pointer; }
+
+body.w3-profile-page .qa-part-message-list .qa-error { margin: 0 0 12px; padding: 10px 13px; border: 1px solid #e1eaf5; border-radius: 8px; color: #435a79; background: #f3f7fc; font: 400 12px/1.6 Arial,sans-serif; }
+body.w3-profile-page .qa-part-message-list .qa-error a { border-bottom-color: #a9bbcf; color: #1767a5; }
+body.w3-profile-page .qa-message-list { display: grid; gap: 7px; }
+body.w3-profile-page .qa-part-message-list .qa-message-item { position: relative; display: grid; grid-template-columns: 40px minmax(0,1fr) auto; column-gap: 12px; row-gap: 2px; min-width: 0; margin: 0; padding: 10px 12px !important; border: 1px solid #e2e9f2; border-radius: 9px; background: #fff; }
+body.w3-profile-page .qa-part-message-list .qa-message-item::before,
+body.w3-profile-page .qa-part-message-list .qa-message-item::after { display: none; content: none; }
+body.w3-profile-page .qa-part-message-list .qa-message-content { grid-column: 2; grid-row: 1; margin: 0; padding: 0; border: 0; color: #2e4462; font: 400 12px/1.6 Arial,sans-serif; overflow-wrap: anywhere; }
+body.w3-profile-page .qa-message-avatar-meta { display: contents; }
+body.w3-profile-page .qa-part-message-list .qa-message-avatar { display: flex; grid-column: 1; grid-row: 1 / span 2; align-self: center; margin: 0; }
+body.w3-profile-page .qa-message-avatar .qa-avatar-link { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; margin: 0; padding: 0; border: 0; border-radius: 9px; background: #f4f7fb; overflow: hidden; }
+body.w3-profile-page .qa-message-avatar img { display: block; max-width: 40px; max-height: 40px; border-radius: 7px; object-fit: contain; }
+body.w3-profile-page .qa-part-message-list .qa-message-meta { display: flex; grid-column: 2; grid-row: 2; flex-wrap: wrap; gap: 3px; margin: 0; padding: 0; border: 0; color: #52657f; font: 400 11px/1.45 Arial,sans-serif; }
+body.w3-profile-page .qa-message-meta .qa-user-link { color: #1767a5; font: 400 11px/1.45 Arial,sans-serif; }
+body.w3-profile-page .qa-part-message-list .qa-message-buttons { margin: 0; }
+body.w3-profile-page .qa-message-buttons .qa-form-tall-button,
+body.w3-profile-page .qa-part-message-list .qa-message-buttons .qa-form-light-button { width: auto; height: auto; min-height: 30px; margin: 0; padding: 5px 8px; border: 1px solid #efd5d9; border-radius: 5px; color: #b32934; background: #fff4f5; font: 600 11px/1.4 Arial,sans-serif; cursor: pointer; }
+body.w3-profile-page .w3-profile-message-actions { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+body.w3-profile-page .w3-profile-message-actions summary { display: flex; align-items: center; justify-content: center; width: 28px; height: 30px; border-radius: 5px; color: #47607e; list-style: none; font: 700 20px/1 Arial,sans-serif; cursor: pointer; }
+body.w3-profile-page .w3-profile-message-actions summary::-webkit-details-marker { display: none; }
+body.w3-profile-page .w3-profile-message-actions[open] .qa-message-buttons { position: absolute; z-index: 2; right: 10px; top: calc(100% - 7px); padding: 6px; border: 1px solid #e1e8f2; border-radius: 7px; background: #fff; box-shadow: 0 4px 12px #24364e13; }
+body.w3-profile-page .w3-profile-compose { display: grid; grid-template-columns: 40px minmax(0,1fr); gap: 14px; margin-bottom: 12px; }
+body.w3-profile-page .w3-profile-compose-avatar { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #526b8a; background: #f0f5fb; overflow: hidden; }
+body.w3-profile-page .w3-profile-compose-avatar .qa-avatar-link { display: block; width: 40px; height: 40px; margin: 0; padding: 0; border: 0; }
+body.w3-profile-page .w3-profile-compose-avatar img { display: block; width: 40px; height: 40px; object-fit: cover; }
+body.w3-profile-page .qa-message-list-form { min-width: 0; margin: 0; padding: 0; }
+body.w3-profile-page .qa-message-list-form .qa-form-tall-table { width: 100%; }
+body.w3-profile-page .qa-message-list-form td { padding: 0; }
+body.w3-profile-page .qa-message-list-form textarea { display: block; width: 100%; box-sizing: border-box; min-height: 54px; margin: 0; padding: 11px 13px; border: 1px solid #d6e1ef; border-radius: 7px; color: #263e5c; background: #fafbfd; font: 400 13px/1.5 Arial,sans-serif; resize: vertical; }
+body.w3-profile-page .qa-message-list-form textarea::placeholder { color: #52657f; opacity: 1; }
+body.w3-profile-page .qa-message-list-form .qa-form-tall-buttons { padding-top: 7px !important; }
+body.w3-profile-page .qa-message-list-form .qa-form-tall-button-post { min-height: 33px; margin: 0; padding: 8px 16px; border: 1px solid #edbc00; border-radius: 7px; color: #322a0d; background: #ffc600; font: 700 12px/1.4 Arial,sans-serif; cursor: pointer; }
+body.w3-profile-page .w3-profile-tabs a:focus-visible,
+body.w3-profile-page .w3-profile-message-actions summary:focus-visible,
+body.w3-profile-page .w3-profile-card-heading input:focus-visible { outline: 2px solid #967000; outline-offset: 3px; }
+
+@media(max-width:1100px) {
+    body.w3-profile-page .w3-profile-hero { grid-template-columns: 100px minmax(0,1fr) 340px; gap: 20px; padding: 20px; }
+    body.w3-profile-page .w3-profile-hero-avatar { width: 100px; height: 100px; }
+    body.w3-profile-page .w3-profile-tabs .qa-nav-sub .qa-nav-sub-list .qa-nav-sub-item .qa-nav-sub-link { padding: 12px 22px !important; }
+}
+@media(max-width:900px) {
+    body.w3-profile-page .w3-profile-hero { grid-template-columns: 94px minmax(0,1fr); gap: 16px 22px; }
+    body.w3-profile-page .w3-profile-hero-avatar { width: 94px; height: 94px; }
+    body.w3-profile-page .w3-profile-metrics { grid-column: 1 / -1; padding-top: 16px; border-top: 1px solid #e4ecf5; }
+    body.w3-profile-page .w3-profile-metric { gap: 4px; }
+    body.w3-profile-page .w3-profile-metric > svg { margin-bottom: 3px; }
+    body.w3-profile-page .qa-form-wide-table .qa-form-wide-label { width: 36%; }
+    body.w3-profile-page .w3-profile-field-label { gap: 8px; }
+}
+@media(max-width:800px) {
+    body.w3-profile-detail .qa-main { grid-template-columns: minmax(0,1fr); gap: 14px; }
+    body.w3-profile-detail .qa-main > .qa-part-form-profile,
+    body.w3-profile-detail .qa-main > .qa-part-form-activity { grid-column: 1; height: auto; }
+    body.w3-profile-page .qa-form-wide-table .qa-form-wide-label { width: 31%; }
+    body.w3-profile-page .w3-profile-tabs .qa-nav-sub .qa-nav-sub-list .qa-nav-sub-item .qa-nav-sub-link { padding: 12px 20px !important; }
+}
+@media(max-width:600px) {
+    body.w3-profile-page .qa-main-wrapper { padding-top: 10px; }
+    body.w3-profile-page .w3-profile-hero { grid-template-columns: 76px minmax(0,1fr); gap: 15px; padding: 16px; }
+    body.w3-profile-page .w3-profile-hero-avatar { width: 76px; height: 76px; padding: 3px; border-radius: 13px; }
+    body.w3-profile-page .w3-profile-hero h1 { font-size: 23px; }
+    body.w3-profile-page .w3-profile-hero-identity > p { font-size: 12px; }
+    body.w3-profile-page .w3-profile-hero-meta { gap: 7px; font-size: 11px; }
+    body.w3-profile-page .w3-profile-metric { padding: 0 5px; }
+    body.w3-profile-page .w3-profile-metric strong { font-size: 18px; }
+    body.w3-profile-page .w3-profile-metric > span { gap: 4px; }
+    body.w3-profile-page .w3-profile-tabs .qa-nav-sub .qa-nav-sub-list .qa-nav-sub-item .qa-nav-sub-link { gap: 7px; padding: 12px 14px !important; font-size: 11px; }
+    body.w3-profile-page .w3-profile-main-tabs .qa-nav-sub-list { justify-content: flex-start; }
+    body.w3-profile-detail .qa-main > .qa-part-form-profile,
+    body.w3-profile-detail .qa-main > .qa-part-form-activity,
+    body.w3-profile-page .qa-part-message-list { padding: 16px; }
+    body.w3-profile-page .w3-profile-card-heading { flex-wrap: wrap; }
+    body.w3-profile-page .qa-form-wide-table .qa-form-wide-label { width: 34%; }
+    body.w3-profile-page .w3-profile-field-icon { flex-basis: 26px; width: 26px; height: 26px; }
+    body.w3-profile-page .w3-profile-field-label { gap: 7px; }
+    body.w3-profile-page .qa-form-wide-table .qa-form-wide-label { padding-right: 10px !important; font-size: 11px; }
+    body.w3-profile-page .qa-part-form-activity .qa-form-wide-label { width: 36%; }
+    body.w3-profile-page .qa-part-message-list .qa-message-item { grid-template-columns: 32px minmax(0,1fr) auto; gap: 3px 9px; padding: 10px !important; }
+    body.w3-profile-page .qa-message-avatar .qa-avatar-link { width: 32px; height: 36px; }
+    body.w3-profile-page .qa-message-avatar img { max-width: 32px; max-height: 36px; }
+    body.w3-profile-page .w3-profile-compose { grid-template-columns: 32px minmax(0,1fr); gap: 9px; }
+    body.w3-profile-page .w3-profile-compose-avatar,
+    body.w3-profile-page .w3-profile-compose-avatar .qa-avatar-link,
+    body.w3-profile-page .w3-profile-compose-avatar img { width: 32px; height: 36px; }
+}
+@media(max-width:360px) {
+    body.w3-profile-page .w3-profile-hero { grid-template-columns: 62px minmax(0,1fr); gap: 12px; padding: 14px; }
+    body.w3-profile-page .w3-profile-hero-avatar { width: 62px; height: 62px; }
+    body.w3-profile-page .w3-profile-hero h1 { font-size: 21px; }
+    body.w3-profile-page .w3-profile-hero-meta > span { align-items: flex-start; }
+    body.w3-profile-page .w3-profile-metric small { padding: 1px 3px; }
+    body.w3-profile-page .qa-form-wide-table .qa-form-wide-label { width: 37%; }
+    body.w3-profile-page .qa-part-form-activity .qa-form-wide-label { width: 39%; }
+    body.w3-profile-page .w3-profile-field-icon { flex-basis: 21px; width: 21px; height: 23px; }
+    body.w3-profile-page .w3-profile-field-label { gap: 5px; }
+}

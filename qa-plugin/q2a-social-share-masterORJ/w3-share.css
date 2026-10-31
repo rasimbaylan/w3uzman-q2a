@@ -1,0 +1,20 @@
+.w3-share, .w3-share * { box-sizing: border-box; }
+.w3-share { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; clear: both; width: 100%; margin: 20px 0 14px; padding: 14px 0; border-top: 1px solid #edf0f4; color: #64748b; font: 400 12px/1.4 Arial,sans-serif; }
+.w3-share-label { flex-shrink: 0; color: #66758a; font-weight: 600; }
+.w3-share-actions { display: flex; flex: 1 1 auto; align-items: center; flex-wrap: wrap; gap: 6px; }
+.w3-share .w3-share-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 36px; min-height: 36px; margin: 0; padding: 7px 9px; border: 1px solid #e4e9f0; border-radius: 8px; color: #526176; background: #fff; font: 500 11px/1.4 Arial,sans-serif; white-space: nowrap; text-decoration: none; cursor: pointer; transition: background-color .15s,border-color .15s; }
+.w3-share .w3-share-button svg { display: block; flex-shrink: 0; width: 17px; height: 17px; }
+.w3-share .w3-share--whatsapp { color: #168347; }
+.w3-share .w3-share--x { color: #17233b; }
+.w3-share .w3-share--facebook { color: #1765cb; }
+.w3-share .w3-share--linkedin { color: #0a66a2; }
+.w3-share .w3-share--telegram { color: #1886b2; }
+.w3-share .w3-share-button:hover { border-color: #cbd5e1; background: #f5f8fc; text-decoration: none; }
+.w3-share .w3-share-copy:hover { border-color: #dfc35b; color: #7e6400; background: #fffbed; }
+.w3-share .w3-share-button:focus-visible { outline: 2px solid #b68e00; outline-offset: 3px; }
+.w3-share .w3-share-copy:disabled { opacity: .7; cursor: wait; }
+.w3-share-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.w3-share .w3-share-manual { display: block; flex-basis: 100%; width: 100%; margin: 0; padding: 8px; border: 1px solid #e0c34f; border-radius: 6px; color: #344158; background: #fffdf4; font: 12px/1.5 Arial,sans-serif; }
+@media(max-width:600px) { .w3-share { gap: 8px; padding: 12px 0; } .w3-share-label { flex-basis: 100%; } .w3-share .w3-share-button { min-height: 38px; } }
+@media(max-width:440px) { .w3-share .w3-share-button:not(.w3-share-copy) { width: 38px; padding: 8px; } .w3-share .w3-share-button:not(.w3-share-copy) > span { display: none; } }
+@media(prefers-reduced-motion:reduce) { .w3-share .w3-share-button { transition: none; } }

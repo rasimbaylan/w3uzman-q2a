@@ -84,11 +84,11 @@ class qa_most_active_users {
 			$ts = strtotime( date('Y-m-d') );
 			$start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
 			$weekstart = date('Y-m-d', $start);
-			$weekend = date('Y-m-d', strtotime('next saturday', $start));
+			$weekend = date('Y-m-d', strtotime('+7 days', $start));
 
 			$events = qa_db_query_sub("SELECT handle,event from `^eventlog`
 										WHERE `datetime`
-										BETWEEN $ AND $
+										>= $ AND `datetime` < $
 										AND `handle`!='NULL'", $weekstart, $weekend);
 		}
 		else {
@@ -113,19 +113,25 @@ class qa_most_active_users {
 
 		// sort users, highest points first
 		arsort($users);
+		// Only fetch accounts that can actually be displayed. Old log entries may
+		// refer to removed or renamed accounts, so skip missing accounts safely.
+		$visibleUsers = array();
 
 		// get avatar images
 		foreach ($users as $username => $val) {
 			$user = qa_db_select_with_pending( qa_db_user_account_selectspec($username, false) );
+			if (!is_array($user)) { continue; }
+			$visibleUsers[$username] = $val;
 			$avatarImages[$username] = qa_get_user_avatar_html($user['flags'], $user['email'], $user['handle'], $user['avatarblobid'], $user['avatarwidth'], $user['avatarheight'], $avatarSize, true);
-			$totalPoints[$username] = $user['points'];
+			$totalPoints[$username] = isset($user['points']) ? (int)$user['points'] : 0;
+			if (count($visibleUsers) >= $maxusers) { break; }
         }
 
 		// initiate output string
 		$topusers = "<ul>";
 		// display maximum of maxusers
 		$nrUsers = 0;
-		foreach ($users as $key => $val) {
+		foreach ($visibleUsers as $key => $val) {
 			$nrUsers++;
 			$pointString = $showActivityPoints ? '<span class="mau_points"> - '.$val.($showTotalPoints ? '/'.$totalPoints[$key] : '').' '.$langPoints.'</span>': '';
 			$topusers .= '<li>'.$avatarImages[$key].' '.qa_get_one_user_html($key, false) . $pointString . '</li>';
@@ -151,7 +157,8 @@ class qa_most_active_users {
 		/* 	Tip: you can style the most active user box by css selector: #mostactiveusers
 			Example below:
 		*/
-		$themeobject->output('<style type="text/css">
+		/* Styling moved to the active theme stylesheet to keep style elements in head metadata. */
+		/*
 .qa-sidepanel .qa-widget-side-top{padding:0!important; margin-bottom:0!important}
 #mostactiveusers { padding:0 0 20px 0; border:1px solid #DDD; border-radius:0; background: #f9f9f9; }
 #mostactiveusers img { border:1px solid #CCC; vertical-align:middle; margin:0 5px 5px 7px; }
@@ -160,7 +167,7 @@ class qa_most_active_users {
 #mostactiveusers ul li .mau_points{font-size:14px;}
 #mostactiveusers .qa-nav-cat-list { margin:0 0 10px 0; padding:8px; overflow:auto; background: #f3f3f3; color:#565656; border-bottom: 1px solid #FF9800;}
 
-		</style>');
+		*/
 
 	}
 

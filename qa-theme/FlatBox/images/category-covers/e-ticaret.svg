@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title">
+<title id="title">E-TİCARET — W3Uzman kategori kapağı</title>
+<defs>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101a2c"/><stop offset="1" stop-color="#4a291f"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#ffb17d" stop-opacity=".21"/><stop offset="1" stop-color="#ffb17d" stop-opacity="0"/></radialGradient>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0v40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
+</defs>
+<path fill="url(#bg)" d="M0 0h640v360H0z"/><path fill="url(#grid)" d="M0 0h640v360H0z"/>
+<ellipse cx="405" cy="155" rx="275" ry="230" fill="url(#glow)"/>
+<circle cx="585" cy="10" r="170" fill="none" stroke="#ffb17d" stroke-opacity=".09" stroke-width="35"/>
+<circle cx="45" cy="350" r="110" fill="none" stroke="#ffb17d" stroke-opacity=".08" stroke-width="2"/>
+<path d="M34 42h24" stroke="#ffb17d" stroke-width="5" stroke-linecap="round"/>
+<text x="70" y="48" fill="#e5edf5" fill-opacity=".67" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="3">W3UZMAN</text>
+<g transform="translate(238 60) scale(2.55)" fill="none" color="#ffb17d" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10h8l8 33h29l8-25H16M23 27h27m-25 8h22"/><circle cx="25" cy="53" r="4"/><circle cx="47" cy="53" r="4"/></g>
+<text x="320" y="304" fill="#f3f7fc" font-family="Arial,sans-serif" font-size="39" font-weight="700" text-anchor="middle" letter-spacing="1.4">E-TİCARET</text>
+<path d="M291 329h58" stroke="#ffb17d" stroke-width="3" stroke-linecap="round"/>
+</svg>

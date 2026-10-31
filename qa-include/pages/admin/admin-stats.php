@@ -28,6 +28,7 @@ require_once QA_INCLUDE_DIR . 'db/recalc.php';
 require_once QA_INCLUDE_DIR . 'app/admin.php';
 require_once QA_INCLUDE_DIR . 'db/admin.php';
 require_once QA_INCLUDE_DIR . 'app/format.php';
+require_once QA_INCLUDE_DIR . 'app/blobs.php';
 
 
 // Check admin privileges (do late to allow one DB query)
@@ -203,6 +204,38 @@ foreach ($qa_content['form']['fields'] as $index => $field) {
 		$qa_content['form']['fields'][$index]['type'] = 'static';
 }
 
+$media = qa_blob_storage_stats();
+$mediaWritable = is_dir(qa_get_blob_storage_directory()) && is_writable(qa_get_blob_storage_directory());
+$qa_content['form_media'] = array(
+	'title' => 'Görsel ve dosya depolama',
+	'style' => 'wide',
+	'tags' => 'method="post" action="' . qa_path_html('admin/recalc') . '"',
+	'fields' => array(
+		'policy' => array('type' => 'static', 'label' => 'Yeni yüklemeler',
+			'value' => 'Otomatik olarak dosyaya kaydedilir; SQL içine görsel içeriği yazılmaz.'),
+		'directory' => array('type' => 'static', 'label' => 'Kayıt klasörü',
+			'value' => qa_html(QA_BLOBS_DIRECTORY)),
+		'writable' => array('type' => 'static', 'label' => 'Klasör durumu',
+			'value' => $mediaWritable ? 'Yazılabilir' : 'Yazılamıyor. Yüklemeler SQL içine alınmaz; klasör izinlerini kontrol edin.'),
+		'disk' => array('type' => 'static', 'label' => 'Dosyalarda saklanan',
+			'value' => qa_html(qa_format_number($media['disk_files']) . ' dosya · ' . qa_format_number($media['disk_bytes'] / 1000000, 2) . ' MB')),
+		'database' => array('type' => 'static', 'label' => 'SQL içinde kalan',
+			'value' => qa_html(qa_format_number($media['database_files']) . ' dosya · ' . qa_format_number($media['database_bytes'] / 1000000, 2) . ' MB')),
+		'missing' => array('type' => 'static', 'label' => 'Bulunamayan dosyalar',
+			'value' => qa_html(qa_format_number($media['missing_files']))),
+		'backup' => array('type' => 'static', 'label' => 'Yedekleme',
+			'value' => 'SQL yedeğiyle birlikte görsellerin bulunduğu klasörü de yedekleyin. SQL içindeki kimlik ve dosya kayıtları korunmalıdır.'),
+	),
+	'hidden' => array('code' => qa_get_form_security_code('admin/recalc')),
+);
+if ($media['database_files'] > 0 && $mediaWritable) {
+	$qa_content['form_media']['buttons']['blobs_to_disk'] = array(
+		'label' => 'Eski yüklemeleri dosyalara taşı',
+		'tags' => 'name="doblobstodisk" onclick="return qa_recalc_click(this.name, this, ' . qa_js(qa_lang_html('admin/blobs_stop')) . ', \'blobs_to_disk_note\');"',
+		'note' => '<span id="blobs_to_disk_note">SQL içindeki eski dosyaları taşır; mevcut görsel bağlantıları değişmez. İşlemden sonra sayfayı yenileyin.</span>',
+	);
+}
+
 $qa_content['form_2'] = array(
 	'tags' => 'method="post" action="' . qa_path_html('admin/recalc') . '"',
 
@@ -255,25 +288,6 @@ $qa_content['form_2'] = array(
 
 if (!qa_using_categories())
 	unset($qa_content['form_2']['buttons']['recalc_categories']);
-
-if (defined('QA_BLOBS_DIRECTORY')) {
-	if (qa_db_has_blobs_in_db()) {
-		$qa_content['form_2']['buttons']['blobs_to_disk'] = array(
-			'label' => qa_lang_html('admin/blobs_to_disk'),
-			'tags' => 'name="doblobstodisk" onclick="return qa_recalc_click(this.name, this, ' . qa_js(qa_lang_html('admin/blobs_stop')) . ', \'blobs_to_disk_note\');"',
-			'note' => '<span id="blobs_to_disk_note">' . qa_lang_html('admin/blobs_to_disk_note') . '</span>',
-		);
-	}
-
-	if (qa_db_has_blobs_on_disk()) {
-		$qa_content['form_2']['buttons']['blobs_to_db'] = array(
-			'label' => qa_lang_html('admin/blobs_to_db'),
-			'tags' => 'name="doblobstodb" onclick="return qa_recalc_click(this.name, this, ' . qa_js(qa_lang_html('admin/blobs_stop')) . ', \'blobs_to_db_note\');"',
-			'note' => '<span id="blobs_to_db_note">' . qa_lang_html('admin/blobs_to_db_note') . '</span>',
-		);
-	}
-}
-
 
 $qa_content['script_rel'][] = 'qa-content/qa-admin.js?' . QA_VERSION;
 $qa_content['script_var']['qa_warning_recalc'] = qa_lang('admin/stop_recalc_warning');

@@ -62,6 +62,8 @@ class qa_wysiwyg_editor
 			'function wysiwyg_editor_ajax(totalEdited) {',
 			'	$.ajax({',
 			'		url: ' . qa_js(qa_path('wysiwyg-editor-ajax')) . ',',
+			'		type: "POST",',
+			'		data: {code: ' . qa_js(qa_get_form_security_code('wysiwyg-smiley-repair')) . '},',
 			'		success: function(response) {',
 			'			var postsEdited = parseInt(response, 10);',
 			'			var $btn = $("#wysiwyg_editor_ajax");',
@@ -159,8 +161,9 @@ class qa_wysiwyg_editor
 		if (!$alreadyadded) {
 			$uploadimages = qa_opt('wysiwyg_editor_upload_images');
 			$uploadall = $uploadimages && qa_opt('wysiwyg_editor_upload_all');
-			$imageUploadUrl = qa_js( qa_path('wysiwyg-editor-upload', array('qa_only_image' => true)) );
-			$fileUploadUrl = qa_js( qa_path('wysiwyg-editor-upload') );
+			$uploadCode = qa_get_form_security_code('wysiwyg-editor-upload');
+			$imageUploadUrl = qa_js( qa_path('wysiwyg-editor-upload', array('qa_only_image' => true, 'code' => $uploadCode)) );
+			$fileUploadUrl = qa_js( qa_path('wysiwyg-editor-upload', array('code' => $uploadCode)) );
 
 			$qa_content['script_src'][] = $scriptsrc;
 			$qa_content['script_lines'][] = array(

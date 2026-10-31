@@ -1,0 +1,188 @@
+/* Shared text contrast. Loaded after page styles; status colors stay semantic. */
+:root { --w3-copy:#465a72; --w3-muted:#52677f; --w3-hint:#5d7086; }
+
+/* Text and JSON tools */
+body .w3-local .local-heading p { color:var(--w3-copy); font-size:14px; }
+body .w3-local .local-crumb, body .w3-local .local-sibling { color:var(--w3-muted); font-size:12px; }
+body .w3-local .local-stats span { color:var(--w3-muted); font-size:12px; }
+body .w3-local button, body .w3-local .local-file-button { font-size:12px; }
+body .w3-local .local-editor-head > label { color:#2c4159; font-size:13px; }
+body .w3-local .local-editor-head button, body .w3-local .local-editor-head .local-file-button { color:#405975; font-size:12px; }
+body .w3-local .local-editor-head > span, body .w3-local .local-editor-bottom > span,
+body .w3-local .local-private, body .w3-local .text-cleaning > span { color:var(--w3-muted); font-size:12px; line-height:1.6; }
+body .w3-local .local-area { color:#21364e; font-size:15px; }
+body .w3-local .json-area { font-size:14px; }
+body .w3-local .local-area::placeholder { color:var(--w3-hint); opacity:1; }
+body .w3-local .local-guide h2 { color:#293f58; font-size:15px; }
+body .w3-local .local-guide p, body .w3-local .local-faq p { color:var(--w3-copy); font-size:13px; }
+body .w3-local .local-faq summary { color:#344d68; font-size:13px; }
+body .w3-local .local-status-row p { font-size:12px; }
+body .w3-local .json-toolbar-end > label:not(.local-file-button) { color:var(--w3-muted); font-size:12px; }
+body .w3-local .json-toolbar-end select { color:#344e6c; font-size:12px; }
+body .w3-local .json-status { font-size:13px; }
+body .w3-local .json-status:not(.is-valid):not(.is-error) { color:var(--w3-copy); }
+body .w3-local .json-status button { font-size:12px; }
+body .w3-local .json-warnings { font-size:12px; }
+body .w3-local button:disabled { opacity:1; color:#5d6e82; border-color:#d8e0e9; background:#f0f3f7; cursor:default; }
+body .w3-local .local-primary:disabled { color:#6d5a26; border-color:#ead286; background:#f7e5a5; }
+
+/* QR: labels and guides, never the generated QR modules. */
+body .w3-qr .w3-qr-heading p { color:var(--w3-copy); font-size:14px; }
+body .w3-qr .w3-qr-breadcrumb, body .w3-qr .w3-qr-local { color:var(--w3-muted); font-size:12px; }
+body .w3-qr .w3-qr-fields h2 + p, body .w3-qr .w3-qr-guide p,
+body .w3-qr .w3-qr-faq p { color:var(--w3-copy); font-size:13px; }
+body .w3-qr label { color:#344c66; font-size:13px; }
+body .w3-qr label span, body .w3-qr small { color:var(--w3-muted); font-size:12px; }
+body .w3-qr input::placeholder, body .w3-qr textarea::placeholder { color:var(--w3-hint); opacity:1; }
+body .w3-qr .w3-qr-privacy, body .w3-qr .w3-qr-summary, body .w3-qr .w3-qr-download-hint { color:var(--w3-muted); font-size:12px; }
+body .w3-qr .w3-qr-privacy strong { color:#374f69; }
+body .w3-qr .w3-qr-options label, body .w3-qr .w3-qr-options select { font-size:12px; }
+body .w3-qr #qr-ready { font-size:12px; }
+body .w3-qr #qr-ready:not(.is-ready) { color:var(--w3-muted); }
+body .w3-qr .w3-qr-code p { color:var(--w3-muted); font-size:13px; }
+body .w3-qr .w3-qr-feedback p, body .w3-qr .w3-qr-feedback button { font-size:12px; }
+body .w3-qr .w3-qr-feedback button { color:var(--w3-muted); }
+body .w3-qr .w3-qr-downloads a[aria-disabled="true"] { opacity:1; color:#5d6e82; border-color:#d8e0e9; background:#f0f3f7; }
+body .w3-qr .w3-qr-downloads a.w3-qr-primary[aria-disabled="true"] { color:#6d5a26; border-color:#ead286; background:#f7e5a5; }
+
+/* Network tools: supporting copy and record labels. */
+body .w3-dns .w3-dns-heading p, body .w3-dns .w3-dns-guide p,
+body .w3-dns .w3-dns-empty p, body .w3-ssl .w3-ssl-heading p,
+body .w3-ssl .w3-ssl-guide p, body .w3-ssl .w3-ssl-empty p,
+body .w3-domain .w3-domain-heading p, body .w3-domain .w3-domain-empty p,
+body .w3-domain .w3-domain-info p { color:var(--w3-copy); font-size:13px; }
+body .w3-dns #w3-dns-help, body .w3-dns .w3-dns-group-description,
+body .w3-dns .w3-dns-record-name, body .w3-dns .w3-dns-record-name small,
+body .w3-dns .w3-dns-record-ttl, body .w3-dns .w3-dns-record-ttl small,
+body .w3-dns .w3-dns-group-meta, body .w3-dns .w3-dns-source,
+body .w3-dns .w3-dns-privacy, body .w3-dns .w3-dns-filters button span,
+body .w3-dns th { color:var(--w3-muted); font-size:12px; }
+body .w3-dns .w3-dns-group-count { font-size:12px; }
+body .w3-dns .w3-dns-group:not([data-state="ready"]):not([data-state="error"]) .w3-dns-group-count { color:var(--w3-muted); }
+body .w3-dns .w3-dns-type-tags span, body .w3-dns .w3-dns-filters button { font-size:12px; }
+body .w3-dns code { font-size:13px; }
+body .w3-ssl #w3-ssl-help, body .w3-ssl dt, body .w3-ssl .w3-ssl-metrics span,
+body .w3-ssl .w3-ssl-source, body .w3-ssl .w3-ssl-card > p,
+body .w3-ssl .w3-ssl-domains h3 span { color:var(--w3-muted); font-size:12px; }
+body .w3-ssl dd, body .w3-ssl code { color:#344d68; font-size:12px; }
+body .w3-ssl .w3-ssl-status p { color:#79444d; font-size:12px; }
+body .w3-ssl .w3-ssl-status--valid p { color:#38624b; }
+body .w3-ssl .w3-ssl-status--expiring p { color:#705b2e; }
+body .w3-domain #w3-domain-help, body .w3-domain .w3-domain-note,
+body .w3-domain .w3-domain-legend, body .w3-domain .w3-domain-row small,
+body .w3-domain .w3-domain-info p.w3-domain-sources { color:var(--w3-muted); font-size:12px; }
+body .w3-domain .w3-domain-status { font-size:12px; }
+body .w3-domain .w3-domain-row[data-state="unknown"] .w3-domain-status { color:var(--w3-muted); }
+
+/* IP, Whois, responsive preview */
+body .w3-ip .w3-ip-heading p, body .w3-ip .w3-ip-info p { color:var(--w3-copy); font-size:14px; }
+body .w3-ip .w3-ip-card-description, body .w3-ip .w3-ip-address-caption,
+body .w3-ip .w3-ip-local-note, body .w3-ip .w3-ip-data-note,
+body .w3-ip .w3-ip-field dt, body .w3-ip .w3-ip-map-heading > span,
+body .w3-ip .w3-ip-map-placeholder p, body .w3-ip .w3-ip-map-note,
+body .w3-ip .w3-ip-map-coordinate, body .w3-ip .w3-ip-lookup p,
+body .w3-ip .w3-ip-unavailable { color:var(--w3-muted); font-size:12px; }
+body .w3-whois-page-heading .w3-whois-intro { color:var(--w3-copy); font-size:14px; }
+body .w3-whois .w3-whois-query-help, body .w3-whois .w3-whois-source,
+body .w3-whois .w3-whois-metrics dt, body .w3-whois .w3-whois-metrics small,
+body .w3-whois .w3-whois-result-header > p, body .w3-whois .w3-whois-eyebrow,
+body .w3-whois .w3-whois-tech-card #w3-whois-related-message { color:var(--w3-muted); font-size:12px; }
+body .w3-responsive .w3-responsive-heading > p { color:var(--w3-copy); font-size:14px; }
+body .w3-responsive .w3-responsive-note p, body .w3-responsive .w3-responsive-empty p { color:var(--w3-copy); font-size:13px; }
+body .w3-responsive .w3-responsive-size-help, body .w3-responsive .w3-responsive-pixel-unit,
+body .w3-responsive .w3-responsive-presets button small { color:var(--w3-muted); font-size:12px; }
+body .w3-responsive .w3-responsive-action { font-size:12px; }
+
+/* Category, news and editorial pages: no overlays or slide text. */
+body .w3-cat-page-heading .w3-cat-intro, body .w3-cat-card .w3-cat-description { color:var(--w3-copy); }
+body .w3-cat-card .w3-cat-description { font-size:13px; line-height:1.6; }
+body .w3-cat-news-count, body .w3-cat-topics a, body .w3-cat-more summary,
+body .w3-cat-breadcrumb a { color:var(--w3-muted); }
+body .w3-cat-filter input::placeholder { color:var(--w3-hint); }
+body.w3-news-page .w3-news-hero > p, body.w3-news-page .w3-news-excerpt { color:var(--w3-copy); font-size:13px; }
+body.w3-news-page .qa-news-item-meta, body.w3-news-page .qa-q-item-stats,
+body.w3-news-page .qa-q-list-item .qa-voting, body.w3-news-page .qa-q-list-item .qa-a-count,
+body.w3-news-page .qa-q-list-item .qa-view-count, body.w3-news-page .w3-news-empty { color:var(--w3-muted); }
+body.w3-news-page .qa-news-item-meta { font-size:12px; }
+body.w3-news-page .w3-news-tabs .qa-nav-sub .qa-nav-sub-list .qa-nav-sub-item .qa-nav-sub-link:not(.qa-nav-sub-selected) { color:#465c77; font-size:12px; }
+body.w3-news-page .w3-news-tabs .qa-nav-sub .qa-nav-sub-list .qa-nav-sub-item .qa-nav-sub-selected { color:#72550a; font-size:12px; }
+body.qa-template-qa.w3-home-page .w3-news-excerpt { color:var(--w3-copy); font-size:13px; }
+body .w3-home-shortcuts small, body section.w3-home-popular-categories .w3-home-category-count { color:var(--w3-muted); }
+body .w3-about .w3-about-principles p { color:var(--w3-copy); font-size:13px; }
+body .w3-about .w3-about-lead, body .w3-about .w3-about-story-copy > p:not(.w3-about-eyebrow) { color:#45566a; }
+body .w3-policy-heading p, body .w3-policy-section p, body .w3-policy-section li { color:var(--w3-copy); font-size:14px; }
+body .w3-policy-date, body .w3-policy-tabs a:not([aria-current]),
+body .w3-policy-breadcrumb a, body .w3-policy-section .w3-policy-source { color:var(--w3-muted); }
+body .w3-policy-section .w3-policy-source { font-size:12px; }
+body .w3-policy-section a { color:#365b89; }
+
+/* Audit: shared contrast is intentionally loaded after every page stylesheet. */
+body.w3-modern-header a.w3-home-login,
+body.w3-modern-header a.w3-home-login:hover { color:#172238; }
+body .w3-home-all-news, body .w3-home-all-news span,
+body section.w3-home-popular-categories li > a.is-current .w3-home-category-name { color:#765700; }
+body.w3-home-page .w3-home-shortcuts small,
+body.w3-home-page .w3-home-newsletter p, body.w3-home-page .w3-home-newsletter small,
+body .qa-suggest-next { color:#465a72; }
+body.qa-template-qa .w3-news-save, body.qa-template-qa .w3-news-save span { color:#465a72; }
+body .qa-q-list-item .qa-a-count-data, body .qa-q-list-item .qa-view-count-data,
+body .qa-q-list-item .qa-a-count-pad, body .qa-q-list-item .qa-view-count-pad { color:#52677f; }
+body .qa-form-tall-label, body .qa-form-wide-label,
+body.w3-profile-page .qa-form-wide-static { color:#465a72; }
+body.w3-profile-page .qa-main .qa-form-wide-static a,
+body.w3-profile-page .qa-main .qa-message-content a,
+body.w3-article-page .qa-a-item a { color:#0757a6; }
+body .qa-a-selected-text { color:#176b38; }
+body .qa-a-item .qa-netvote-count-data, body .qa-a-item .qa-netvote-count-pad { color:#1e334c; }
+body .qa-activity-count .qa-activity-count-item:nth-child(1) { color:#fff; background:#245a9a; }
+body .qa-activity-count .qa-activity-count-item:nth-child(2) { color:#fff; background:#176b3a; }
+body .qa-activity-count .qa-activity-count-item:nth-child(3) { color:#172238; background:#ffd23f; }
+body .qa-activity-count .qa-activity-count-item:nth-child(4) { color:#fff; background:#b92e2e; }
+body .qa-activity-count .qa-activity-count-item span { color:inherit; }
+body .qa-sidepanel section.w3-home-popular-categories header a { color:#765700; }
+body .w3-directory .directory-crumb, body .w3-directory .directory-total span,
+body .w3-directory .directory-results, body .w3-directory .directory-footer,
+body .w3-directory .directory-footer a { color:#465a72; }
+body.qa-template-question #a_list_title, body.qa-template-question #a_list_title span { color:#172238; }
+body.qa-template-question .qa-main .qa-a-item a,
+body.qa-template-question .qa-main .qa-a-item .qa-user-link,
+body.qa-template-question .qa-main .qa-a-item .qa-user-link span { color:#0757a6; }
+body.qa-template-question .qa-main .qa-a-selected-text { color:#176b38; }
+
+/* Explicit legacy overrides: these elements otherwise inherit low-contrast
+   theme-option colors or selectors more specific than their page stylesheet. */
+body .qa-main .w3-home-all-news { color:#765700!important; }
+body .qa-q-list-item .qa-category-link { color:#23684f!important; }
+body .qa-q-list-item .qa-netvote-count-pad { color:#52677f!important; }
+body .qa-page-links :is(.qa-page-link,.qa-page-next,.qa-page-prev,.qa-page-ellipsis,.qa-page-links-label) { color:#465a72!important; }
+body .qa-page-links .qa-page-selected { color:#172238!important; background:#ffd23f!important; }
+body .qa-form-tall-note a, body .qa-feed-link { color:#0757a6!important; }
+body.w3-profile-page .qa-form-wide-static { color:#465a72!important; }
+body .w3-profile-identity p, body .w3-profile-back { color:#465a72!important; }
+body .qa-error { color:#fff!important; background:#b52b36!important; }
+body .qa-error a { color:#fff!important; text-decoration:underline; }
+body .qa-activity-count .qa-activity-count-item:nth-child(4) { color:#fff!important; background:#b92e2e!important; }
+body .w3-news-latest time, body .w3-news-side-card header a,
+body .w3-news-empty a, body .w3-news-stat dt { color:#465a72!important; }
+body .w3-news-stat-green dd { color:#176b3a!important; }
+body .w3-news-stat-amber dd { color:#765700!important; }
+body .w3-news-stat-pink dd { color:#9b243c!important; }
+body .w3-tags-heading p, body .w3-tags-total, body .w3-tags-panel-heading span,
+body .w3-tag-count, body .w3-cat-breadcrumb { color:#465a72!important; }
+body .w3-policy-kicker, body .w3-policy-breadcrumb, body .w3-policy-summary,
+body .w3-policy-date, body .w3-policy-help, body .w3-policy-help a,
+body .w3-policy-article table th, body .w3-policy-article table td,
+body .w3-policy-section h2 span { color:#465a72!important; }
+body .w3-responsive-measurement, body .w3-qr-guide article > span { color:#765700!important; }
+body .w3-ip-source { color:#465a72!important; }
+body .w3-whois p:not([role="alert"]):not(.w3-whois-error), body .w3-whois-examples,
+body .w3-whois-examples a, body .w3-whois-examples span { color:#465a72!important; }
+body .w3-ssl-empty p { color:#465a72!important; }
+body .w3-pdf p:not([role="alert"]):not(.pdf-error), body .w3-pdf .pdf-crumb { color:#465a72!important; }
+body .w3-pdf .pdf-eyebrow, body .w3-pdf .pdf-step { color:#765700!important; }
+body .qa-activity-count .qa-activity-count-item:nth-child(1) { background:#245a9a!important; }
+body .qa-activity-count .qa-activity-count-item:nth-child(2) { background:#176b3a!important; }
+body .w3-news-site-stats dt span, body .w3-ssl-empty b,
+body .w3-responsive-measurement span, body .w3-policy-date *,
+body .w3-policy-help * { color:#465a72!important; }
+body .w3-policy-sidebar nav a { color:#465a72!important; }

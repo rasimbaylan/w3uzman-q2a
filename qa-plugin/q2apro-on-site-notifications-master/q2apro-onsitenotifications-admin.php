@@ -54,7 +54,7 @@
 
 					return 'CREATE TABLE IF NOT EXISTS ^eventlog ('.
 						'datetime DATETIME NOT NULL,'.
-						'ipaddress VARCHAR (15) CHARACTER SET ascii,'.
+						'ipaddress VARCHAR (45) CHARACTER SET ascii,'.
 						'userid '.qa_get_mysql_user_column_type().','.
 						'handle VARCHAR('.QA_DB_MAX_HANDLE_LENGTH.'),'.
 						'cookieid BIGINT UNSIGNED,'.
@@ -118,7 +118,7 @@
 			if (qa_clicked('q2apro_onsitenotifications_save')) {
 				qa_opt('q2apro_onsitenotifications_enabled', (bool)qa_post_text('q2apro_onsitenotifications_enabled')); // empty or 1
 				qa_opt('q2apro_onsitenotifications_nill', qa_post_text('q2apro_onsitenotifications_nill')); // string
-				qa_opt('q2apro_onsitenotifications_maxevshow', (int)qa_post_text('q2apro_onsitenotifications_maxevshow')); // int
+				qa_opt('q2apro_onsitenotifications_maxevshow', max(1, min(100, (int)qa_post_text('q2apro_onsitenotifications_maxevshow'))));
 				qa_opt('q2apro_onsitenotifications_newwindow', (bool)qa_post_text('q2apro_onsitenotifications_newwindow')); // int
 				qa_opt('q2apro_onsitenotifications_rtl', (bool)qa_post_text('q2apro_onsitenotifications_rtl')); // int
 				$ok = qa_lang('admin/options_saved');

@@ -34,14 +34,18 @@ $loginuserid = qa_get_logged_in_userid();
 $fromhandle = qa_get_logged_in_handle();
 
 $qa_content = qa_content_prepare();
+$qa_content['title'] = qa_lang_html('misc/private_message_title');
 
 
 // Check we have a handle, we're not using Q2A's single-sign on integration and that we're logged in
 
-if (QA_FINAL_EXTERNAL_USERS)
-	qa_fatal_error('User accounts are handled by external code');
+if (QA_FINAL_EXTERNAL_USERS) {
+	header('HTTP/1.1 404 Not Found');
+	echo qa_lang_html('main/page_not_found');
+	qa_exit();
+}
 
-if (!strlen($handle))
+if (!strlen((string)$handle))
 	qa_redirect('users');
 
 if (!isset($loginuserid)) {
@@ -101,6 +105,8 @@ switch (qa_user_permit_error(null, QA_LIMIT_MESSAGES)) {
 // check for messages or errors
 $state = qa_get_state();
 $messagesent = $state == 'message-sent';
+$errors = array();
+
 if ($state == 'email-error')
 	$pageerror = qa_lang_html('main/email_error');
 
@@ -186,7 +192,7 @@ $qa_content['form_message'] = array(
 			'value' => qa_html(@$inmessage, $messagesent),
 			'rows' => 8,
 			'note' => qa_lang_html_sub('misc/message_explanation', qa_html(qa_opt('site_title'))),
-			'error' => qa_html(@$errors['message']),
+			'error' => qa_html(isset($errors['message']) ? $errors['message'] : null),
 		),
 	),
 

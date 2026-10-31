@@ -44,7 +44,6 @@ $allowstates = array(
 	'dorecalccategories',
 	'dodeletehidden',
 	'doblobstodisk',
-	'doblobstodb',
 );
 
 $recalcnow = false;

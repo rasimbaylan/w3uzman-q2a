@@ -36,6 +36,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 			if (!empty($postids)) {
 				// Retrieve the content for these questions from the database
 				$maxlength = qa_opt('mouseover_content_max_len');
+				$maxlength = is_numeric($maxlength) ? max(40, min(2000, (int)$maxlength)) : 480;
 				$result = qa_db_query_sub('SELECT postid, content, format FROM ^posts WHERE postid IN (#)', $postids);
 				$postinfo = qa_db_read_all_assoc($result, 'postid');
 
@@ -46,7 +47,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 				// Now add the popup to the title for each question
 
 				foreach ($q_list['qs'] as $index => $question) {
-					if (isset($postinfo[$question['raw']['postid']])) {
+					if (isset($question['raw']['postid'], $postinfo[$question['raw']['postid']])) {
 						$thispost = $postinfo[$question['raw']['postid']];
 						$text = qa_viewer_text($thispost['content'], $thispost['format'], array('blockwordspreg' => $blockwordspreg));
 						$text = preg_replace('/\s+/', ' ', $text);  // Remove duplicated blanks, new line characters, tabs, etc

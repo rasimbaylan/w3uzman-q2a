@@ -40,7 +40,7 @@
 			if(!empty($emailbans))
 			{
 				// array from string
-				$notAllowed = explode(',', $emailbans); 
+				$notAllowed = array_filter(explode(',', $emailbans), 'strlen'); 
 				// check if email contains one of the spam strings
 				foreach($notAllowed as $string)
 				{
@@ -64,7 +64,7 @@
 			// check if question title already exists, prevent duplicate
 			$quTitleExists = qa_db_read_one_value( qa_db_query_sub('SELECT title
 										FROM `^posts` 
-										WHERE title = #
+										WHERE title = $
 										AND type = "Q"
 										LIMIT 1', $question['title']), true
 							);
@@ -176,7 +176,7 @@
 			if(!empty($spamwords)) 
 			{
 				// array from string
-				$notAllowedTerms = explode(',', $spamwords); 
+				$notAllowedTerms = array_filter(explode(',', $spamwords), 'strlen'); 
 				// check if checktext contains one of the spam strings
 				foreach($notAllowedTerms as $string) 
 				{
@@ -303,7 +303,7 @@
 		if(count($links)>0) 
 		{
 			// remove duplicate links
-			$links = array_unique($links);
+			$links = array_values(array_unique($links));
 			
 			// ignore internal links
 			$ignorelinks = array(qa_opt('site_url'));
@@ -315,7 +315,9 @@
 				{
 					if(isset($links[$i]))
 					{
-						if(strpos($links[$i],$ignorelink) !== false) 
+						$linkHost = parse_url(html_entity_decode($links[$i], ENT_QUOTES, 'UTF-8'), PHP_URL_HOST);
+						$siteHost = parse_url($ignorelink, PHP_URL_HOST);
+						if($linkHost && $siteHost && strcasecmp($linkHost, $siteHost) === 0)
 						{
 						}
 						else 

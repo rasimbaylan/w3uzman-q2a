@@ -66,7 +66,7 @@ function qa_db_user_create($email, $password, $handle, $level, $ip)
 		qa_db_query_sub(
 			'INSERT INTO ^users (created, createip, email, passsalt, passcheck, level, handle, loggedin, loginip) ' .
 			'VALUES (NOW(), UNHEX($), $, $, UNHEX($), #, $, NOW(), UNHEX($))',
-			$ipHex, $email, $salt, isset($password) ? qa_db_calc_passcheck($password, $salt) : null, (int)$level, $handle, $ipHex
+			$ipHex, $email, $salt, isset($password, $salt) ? qa_db_calc_passcheck($password, $salt) : null, (int)$level, $handle, $ipHex
 		);
 	}
 
@@ -92,7 +92,7 @@ function qa_db_user_delete($userid)
 	qa_db_query_sub('UPDATE ^posts SET userid=NULL WHERE userid=$', $userid);
 	qa_db_query_sub('DELETE FROM ^userlogins WHERE userid=$', $userid);
 	qa_db_query_sub('DELETE FROM ^userprofile WHERE userid=$', $userid);
-	qa_db_query_sub('DELETE FROM ^userfavorites WHERE userid=$', $userid);
+	qa_db_query_sub('DELETE FROM ^userfavorites WHERE userid=$ OR entitytype=$ AND entityid=$', $userid, QA_ENTITY_USER, $userid);
 	qa_db_query_sub('DELETE FROM ^userevents WHERE userid=$', $userid);
 	qa_db_query_sub('DELETE FROM ^uservotes WHERE userid=$', $userid);
 	qa_db_query_sub('DELETE FROM ^userlimits WHERE userid=$', $userid);
@@ -394,19 +394,23 @@ function qa_db_users_get_mailing_next($lastuserid, $count)
 	));
 }
 
-
 /**
  * Update the cached count of the number of users who are awaiting approval after registration
+ * @param int|null $increment
  */
-function qa_db_uapprovecount_update()
+function qa_db_uapprovecount_update($increment = null)
 {
-	if (qa_should_update_counts() && !QA_FINAL_EXTERNAL_USERS) {
-		qa_db_query_sub(
-			"INSERT INTO ^options (title, content) " .
-			"SELECT 'cache_uapprovecount', COUNT(*) FROM ^users " .
-			"WHERE level < # AND NOT (flags & #) " .
-			"ON DUPLICATE KEY UPDATE content = VALUES(content)",
-			QA_USER_LEVEL_APPROVED, QA_USER_FLAGS_USER_BLOCKED
-		);
+	if (QA_FINAL_EXTERNAL_USERS) {
+		return;
 	}
+
+	qa_db_generic_cache_update(
+		'cache_uapprovecount',
+		qa_db_apply_sub(
+			'SELECT COUNT(*) FROM ^users ' .
+			'WHERE level < # AND NOT (flags & #)',
+			array(QA_USER_LEVEL_APPROVED, QA_USER_FLAGS_USER_BLOCKED)
+		),
+		$increment
+	);
 }

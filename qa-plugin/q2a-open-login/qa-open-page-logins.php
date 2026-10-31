@@ -29,6 +29,14 @@
 class qa_open_logins_page {
 	var $directory;
 	var $urltoroot;
+	private $formError;
+
+	public function valid_account_post() {
+		$valid = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST'
+			&& qa_check_form_security_code('open-login-accounts', qa_post_text('account_code'));
+		if (!$valid) { http_response_code(403); }
+		return $valid;
+	}
 
 	function load_module($directory, $urltoroot) {
 		$this->directory=$directory;
@@ -90,6 +98,12 @@ class qa_open_logins_page {
 		if (!isset($userid)) {
 			qa_redirect('login');
 		}
+		if ((qa_clicked('dosplit') || qa_clicked('domerge') || qa_clicked('dosaveprofile')) && !$this->valid_account_post()) {
+			$qa_content = qa_content_prepare();
+			$qa_content['title'] = qa_lang_html('plugin_open/my_logins_title');
+			$qa_content['error'] = qa_lang_html('misc/form_security_again');
+			return $qa_content;
+		}
 
 		//	Get current information on user
 		$useraccount = qa_db_user_find_by_id__open($userid);
@@ -109,6 +123,7 @@ class qa_open_logins_page {
 		//	Prepare content for theme
 		$disp_conf = qa_get('confirm') || !empty($tolink);
 		$qa_content = qa_content_prepare();
+		if ($this->formError) { $qa_content['error'] = $this->formError; }
 
 		//  Build page
 		if(!$disp_conf) {
@@ -163,7 +178,8 @@ class qa_open_logins_page {
 		$userid = $findid = $useraccount['userid'];
 		$findemail = $useraccount['oemail']; // considering this is an openid user, so use the openid email
 		if(empty($findemail)) {
-			$findemail = $useraccount['email']; // fallback
+			$findemail = !empty($useraccount['flags']) && ($useraccount['flags'] & QA_USER_FLAGS_EMAIL_CONFIRMED)
+				? $useraccount['email'] : null; // Only a verified address can prove account ownership.
 		}
 
 		if($tolink) {
@@ -175,13 +191,15 @@ class qa_open_logins_page {
 			// bogus confirm page, stop right here
 			qa_redirect('logins');
 		}
+		if (!$tolink && empty($findemail)) { return array(); }
 
 		// find other un-linked accounts with the same email
 		$otherlogins = qa_db_user_login_find_other__open($findid, $findemail, $userid);
 
 		if (qa_clicked('domerge') && !empty($otherlogins)) {
+			if (!$this->valid_account_post()) { return $otherlogins; }
 			// if cancel was requested, just redirect
-			if($_POST['domerge'] == 0) {
+			if(qa_post_text('domerge') === '0') {
 				$tourl = qa_post_text('to');
 				if(!empty($tourl)) {
 					qa_redirect($tourl);
@@ -194,7 +212,16 @@ class qa_open_logins_page {
 			require_once QA_INCLUDE_DIR.'qa-app-users-edit.php';
 			$recompute = false;
 			$email = null;
-			$baseid = $_POST["base{$_POST['domerge']}"]; // POST[base1] or POST[base2]
+			$mode = qa_post_text('domerge');
+			$baseid = in_array($mode, array('1', '2'), true) ? qa_post_text('base' . $mode) : null;
+			// Never accept an arbitrary target account supplied by the browser.
+			$allowedBase = is_string($baseid) && ctype_digit($baseid)
+				&& ((string)$baseid === (string)$userid || (isset($otherlogins[$baseid]) && qa_post_text('user_' . $baseid) !== null));
+			if (!$allowedBase) {
+				http_response_code(400);
+				$this->formError = 'Birleştirme için listede gösterilen bir hesabı seçin.';
+				return $otherlogins;
+			}
 
 			// see which account was selected, if any
 			if($baseid != 0) // just in case
@@ -231,8 +258,8 @@ class qa_open_logins_page {
 				// check if the current account has been deleted
 				if($userid != $baseid) {
 					$oldsrc = $useraccount['sessionsource'];
-					qa_set_logged_in_user($baseid, $useraccount['handle'], false, $oldsrc);
 					$useraccount = qa_db_user_find_by_id__open($baseid);
+					qa_set_logged_in_user($baseid, $useraccount['handle'], false, $oldsrc);
 					$userid = $baseid;
 
 					// clear some cached data
@@ -281,6 +308,7 @@ class qa_open_logins_page {
 		$mylogins = qa_db_user_login_find_mine__open($userid);
 
 		if (qa_clicked('dosplit') && !empty($mylogins)) {
+			if (!$this->valid_account_post()) { return $mylogins; }
 			// a request to split (un-link) some accounts was made
 			$unlink = $_POST['dosplit'];
 			foreach($mylogins as $login) {
@@ -310,18 +338,18 @@ class qa_open_logins_page {
 		$key = null;
 
 		if (isset($_REQUEST['provider'])) {
-			$key = trim(strip_tags($_REQUEST['provider']));
+			$key = is_string($_REQUEST['provider']) ? trim(strip_tags($_REQUEST['provider'])) : '';
 			$action = 'process';
 		} else if( !empty($_REQUEST['hauth_start']) ) {
-			$key = trim(strip_tags($_REQUEST['hauth_start']));
+			$key = is_string($_REQUEST['hauth_start']) ? trim(strip_tags($_REQUEST['hauth_start'])) : '';
 			$action = 'process';
 
 		} else if( !empty($_REQUEST['hauth_done']) ) {
-			$key = trim(strip_tags($_REQUEST['hauth_done']));
+			$key = is_string($_REQUEST['hauth_done']) ? trim(strip_tags($_REQUEST['hauth_done'])) : '';
 			$action = 'process';
 
 		} else if( !empty($_GET['link']) ) {
-			$key = trim(strip_tags($_GET['link']));
+			$key = is_string($_GET['link']) ? trim(strip_tags($_GET['link'])) : '';
 			$action = 'login';
 		}
 
@@ -330,13 +358,14 @@ class qa_open_logins_page {
 		}
 
 		$provider = $this->get_ha_provider($key);
+		if (!$provider) { return false; }
 		$source = strtolower($provider);
 
 //		if($action == 'login') {
 			// handle the login
 
 			// after login come back to the same page
-			$loginCallback = qa_path('', array(), qa_opt('site_url'));
+			$loginCallback = qa_path('logins', array('link' => $key, 'confirm' => qa_get('confirm')), qa_opt('site_url'));
 
 			require_once( $this->directory . 'HybridAuth/autoload.php' );
 //						require_once( $this->directory . 'Hybrid/Auth.php' );
@@ -347,7 +376,7 @@ class qa_open_logins_page {
 
 			try {
 				// try to login
-				$hybridauth = new Hybrid_Auth( $config );
+				$hybridauth = new Hybridauth\Hybridauth( $config );
 				$adapter = $hybridauth->authenticate( $provider );
 
 				// if ok, create/refresh the user account
@@ -378,7 +407,7 @@ class qa_open_logins_page {
 						qa_db_user_login_sync(false);
 
 						// now that everything was added, log out to allow for multiple accounts
-						$adapter->logout();
+						$adapter->disconnect();
 
 						// redirect to get rid of parameters
 						qa_redirect('logins');
@@ -391,7 +420,7 @@ class qa_open_logins_page {
 						qa_db_user_login_sync(false);
 
 						// log out to allow for multiple accounts
-						$adapter->logout();
+						$adapter->disconnect();
 
 						// redirect to get rid of parameters
 						qa_redirect('logins');
@@ -441,7 +470,8 @@ class qa_open_logins_page {
 			),
 
 			'hidden' => array(
-				'dosaveprofile' => '0'
+				'dosaveprofile' => '0',
+				'account_code' => qa_get_form_security_code('open-login-accounts'),
 			),
 
 		);
@@ -462,6 +492,7 @@ class qa_open_logins_page {
 				'style' => 'wide',
 				'hidden' => array(
 					'dosplit' => '1',
+					'account_code' => qa_get_form_security_code('open-login-accounts'),
 				),
 			);
 
@@ -481,7 +512,7 @@ class qa_open_logins_page {
 				);
 			}
 			$qa_content['form_mylogins']['fields'] = $data;
-			$qa_content['customscriptu'] = '<script type="text/javascript">
+			$qa_content['customscriptu'] = '<script>
 				function OP_unlink(id) {
 					$(".qa-main form.open-login-accounts>input[name=dosplit]").attr("value", id);
 					$(".qa-main form.open-login-accounts").submit();
@@ -498,7 +529,7 @@ class qa_open_logins_page {
 			// display other logins which could be linked to this user account
 			if($disp_conf) {
 				$title = '';
-				$p = '<br />' . ($disp_conf == 1 ? qa_lang_html('plugin_open/other_logins_conf_text') : qa_lang_html_sub('plugin_open/link_exists', '<strong>' . ucfirst(qa_get('link')) . '</strong>') );
+				$p = '<br />' . ($disp_conf == 1 ? qa_lang_html('plugin_open/other_logins_conf_text') : qa_lang_html_sub('plugin_open/link_exists', '<strong>' . qa_html(ucfirst((string)qa_get('link'))) . '</strong>') );
 			} else {
 				$title = '<h2>' . qa_lang_html('plugin_open/other_logins') . '</h2>';
 				$p = qa_lang_html('plugin_open/other_logins_conf_text');
@@ -517,6 +548,7 @@ class qa_open_logins_page {
 				),
 				'hidden' => array(
 					'domerge' => '1',
+					'account_code' => qa_get_form_security_code('open-login-accounts'),
 					'confirm' => $disp_conf,
 					'to' => qa_get('to'),
 				),
@@ -589,7 +621,7 @@ class qa_open_logins_page {
 				);
 			}
 			$qa_content['form_merge']['fields'] = $data;
-			$qa_content['customscript'] = '<script type="text/javascript">
+			$qa_content['customscript'] = '<script>
 				function OP_actionSelected(i, divid) {
 					$(".opacxhtml").slideUp();
 					if(i != 2 || op_last_action == 2) {

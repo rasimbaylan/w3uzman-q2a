@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 80" fill="none">
+ <circle cx="39" cy="37" r="31" stroke="#f5f8ff" stroke-width="6"/>
+ <path d="m49 49 25 27" stroke="#f5f8ff" stroke-width="7"/>
+ <text x="77" y="68" fill="#f5f8ff" font-family="Arial,sans-serif" font-size="10">®</text>
+ <path d="M105 17v41" stroke="#7690ad" stroke-opacity=".85"/>
+ <g fill="#edf3ff" font-family="Arial,sans-serif" font-size="15" letter-spacing="2.1"><text x="130" y="33">SOFTWARE</text><text x="130" y="54">SOLUTIONS</text></g>
+</svg>

@@ -26,16 +26,15 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 
 
 /**
- * Increment the views counter for the post (if different IP from last view).
+ * Increment the views counter for the post on every page visit.
  * @param  int $postid The ID of the post
  * @return bool Whether views were actually incremented.
  */
 function qa_db_increment_views($postid)
 {
-	$query = 'UPDATE ^posts SET views=views+1, lastviewip=UNHEX($) WHERE postid=# AND (lastviewip IS NULL OR lastviewip!=UNHEX($))';
-	$ipHex = bin2hex(@inet_pton(qa_remote_ip_address()));
+	$query = 'UPDATE ^posts SET views=views+1 WHERE postid=#';
 
-	qa_db_query_sub($query, $ipHex, $postid, $ipHex);
+	qa_db_query_sub($query, $postid);
 
 	return qa_db_affected_rows() > 0;
 }

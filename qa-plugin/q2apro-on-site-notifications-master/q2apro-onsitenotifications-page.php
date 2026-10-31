@@ -41,7 +41,7 @@
 				array(
 					'title' => 'On-Site-Notifications Page', // title of page
 					'request' => 'eventnotify', // request name
-					'nav' => 'M', // 'M'=main, 'F'=footer, 'B'=before main, 'O'=opposite main, null=none
+					'nav' => null, // Private AJAX endpoint, not a public navigation page.
 				),
 			);
 		}
@@ -65,9 +65,16 @@
 				// prevent empty userid
 				$userid = qa_get_logged_in_userid();
 				if(empty($userid)) {
-					echo 'Userid is empty!';
+					http_response_code(401);
+					echo 'Bildirimler için giriş yapmalısınız.';
 					return;
 				}
+				if (!qa_is_http_post() || !qa_check_form_security_code('eventnotify', qa_post_text('code'))) {
+					http_response_code(403);
+					echo qa_lang('misc/form_security_reload');
+					return null;
+				}
+				header('Cache-Control: no-store');
 
 				// this is echoed via ajax success data
 				$notifyBoxEvents = '';
@@ -81,7 +88,7 @@
 						), true
 					);
 
-					$maxEvents = qa_opt('q2apro_onsitenotifications_maxevshow'); // maximal events to show
+					$maxEvents = max(1, min(100, (int)qa_opt('q2apro_onsitenotifications_maxevshow')));
 
 					// query all new events of user
 					$event_query = qa_db_query_sub(
@@ -93,13 +100,13 @@
 						FROM
 							^eventlog AS e
 						WHERE
-							FROM_UNIXTIME(#) <= datetime
+							DATE_SUB(CURDATE(), INTERVAL # DAY) <= datetime
 							AND
-							(e.userid=# AND e.event LIKE "in_%")
-							OR ((e.event LIKE "u_message" OR e.event LIKE "u_wall_post") AND e.params LIKE "userid=#\t%")
+							((e.userid=# AND e.event LIKE "in_%")
+							OR ((e.event LIKE "u_message" OR e.event LIKE "u_wall_post") AND e.params LIKE "userid=#\t%"))
 						ORDER BY datetime DESC
 						LIMIT #', // Limit
-						qa_opt('q2apro_onsitenotifications_maxage'), // events of last x days
+						max(1, min(3650, (int)qa_opt('q2apro_onsitenotifications_maxage'))),
 						$userid,
 						$userid,
 						$maxEvents
@@ -162,7 +169,7 @@
 						$post_query = qa_db_read_all_assoc(
 							qa_db_query_sub(
 								'SELECT postid, type, parentid, BINARY title as title FROM ^posts
-									WHERE postid IN ('.implode(',',$postids).')'
+									WHERE type IN ("Q", "A", "C") AND postid IN ('.implode(',',$postids).')'
 							)
 						);
 						foreach($post_query as $post) {
@@ -173,7 +180,7 @@
 
 					// List all events
 					$notifyBoxEvents = '<div id="nfyWrap" class="nfyWrap">
-						<div class="nfyTop">'.qa_lang('q2apro_onsitenotifications_lang/my_notifications').' <a id="nfyReadClose">'.qa_lang('q2apro_onsitenotifications_lang/close').' | × |</a> </div>
+						<div class="nfyTop">'.qa_lang_html('q2apro_onsitenotifications_lang/my_notifications').' <button type="button" id="nfyReadClose" style="float:right;border:0;background:transparent;color:inherit;cursor:pointer" aria-label="'.qa_lang_html('q2apro_onsitenotifications_lang/close').'">×</button> </div>
 						<div class="nfyContainer">
 							<div id="nfyContainerInbox">
 						';
@@ -187,7 +194,7 @@
 						if($type=='u_message') {
 							$eventName = qa_lang('q2apro_onsitenotifications_lang/you_received').' ';
 							$itemIcon = '<div class="nicon nmessage"></div>';
-							$activity_url = qa_path_absolute('message').'/'.$event['handle'];
+							$activity_url = qa_path_absolute('message/'.$event['handle']);
 							$linkTitle = qa_lang('q2apro_onsitenotifications_lang/message_from').' '.$event['handle'];
 						}
 						else if($type=='u_wall_post') {
@@ -197,7 +204,7 @@
 							require_once QA_INCLUDE_DIR.'qa-app-posts.php';
 							$userhandle = qa_post_userid_to_handle($userid);
 							// from v1.7 require_once QA_INCLUDE_DIR.'qa-app-users.php'; and qa_userid_to_handle($userid);
-							$activity_url = qa_path_absolute('user').'/'.$userhandle.'/wall';
+							$activity_url = qa_path_absolute('user/'.$userhandle.'/wall');
 							$linkTitle = qa_lang('q2apro_onsitenotifications_lang/wallpost_from').' '.$event['handle'];
 						}
 						else {
@@ -211,7 +218,7 @@
 							// explode string to array with values (memo: leave "\t", '\t' will cause errors)
 							$paramsa = explode("\t", $event['params']);
 							foreach($paramsa as $param) {
-								$parama = explode('=',$param);
+								$parama = explode('=',$param,2);
 								if(isset($parama[1])) {
 									$params[$parama[0]] = $parama[1];
 								}
@@ -236,6 +243,7 @@
 										$params['parentid']
 									)
 								);
+								if(!$parent) { continue; }
 								if($parent['type'] == 'A') {
 									$parent = qa_db_select_with_pending(
 										qa_db_full_post_selectspec(
@@ -245,7 +253,8 @@
 									);
 								}
 
-								$anchor = qa_anchor((strpos($event['event'],'a_') === 0 || strpos($event['event'],'in_a_') === 0?'A':'C'), $params['postid']);
+								if (!$parent || $parent['type'] !== 'Q') { continue; }
+								$anchor = qa_anchor((strpos($event['event'],'a_') === 0 || strpos($event['event'],'in_a_') === 0?'A':'C'), (int)$params['postid']);
 								$activity_url = qa_path_absolute(qa_q_request($parent['postid'], $parent['title']), null, $anchor);
 								$linkTitle = $parent['title'];
 								$link = '<a target="_blank" href="'.$activity_url.'">'.$parent['title'].'</a>';
@@ -255,7 +264,7 @@
 									$params['title'] = $posts[$params['postid']]['title'];
 								}
 								if($params['title'] !== null) {
-									$qTitle = qa_db_read_one_value( qa_db_query_sub("SELECT title FROM `^posts` WHERE `postid` = ".$params['postid']." LIMIT 1"), true );
+									$qTitle = qa_db_read_one_value(qa_db_query_sub('SELECT title FROM ^posts WHERE postid=# AND type=$ LIMIT 1', (int)$params['postid'], 'Q'), true);
 									if(!isset($qTitle)) $qTitle = '';
 									$activity_url = qa_path_absolute(qa_q_request($params['postid'], $qTitle), null, null);
 									$linkTitle = $qTitle;
@@ -313,7 +322,7 @@
 								'.$itemIcon.'
 								<div class="nfyItemLine">
 									<p class="nfyWhat">'.$eventName.'
-										<a '.($type=='u_message' || $type=='u_wall_post'?'title="'.$event['message'].'" ':'').'href="'.$activity_url.'"'.(qa_opt('q2apro_onsitenotifications_newwindow')?' target="_blank"':'').'>'.$linkTitle.'</a>
+										<a '.($type=='u_message' || $type=='u_wall_post'?'title="'.qa_html($event['message']).'" ':'').'href="'.qa_html($activity_url).'"'.(qa_opt('q2apro_onsitenotifications_newwindow')?' target="_blank" rel="noopener noreferrer"':'').'>'.qa_html($linkTitle).'</a>
 									</p>
 									<p class="nfyTime">'.$when.'</p>
 								</div>
@@ -324,12 +333,11 @@
 					$notifyBoxEvents .= '</div>
 						</div>
 						<div class="nfyFooter">
-							<a href="http://w3uzman.com/">w3uzman.com</a>
+							<a href="'.qa_path_html('').'">W3Uzman</a>
 						</div>
 					</div>
 					';
 
-					header('Access-Control-Allow-Origin: '.qa_path(null));
 					header("Content-type: text/html; charset=utf-8");
 					echo $notifyBoxEvents;
 
@@ -339,11 +347,12 @@
 						$userid, 'visited_profile'
 					);
 
-					exit();
+					return null;
 				} // END AJAX RETURN
 				else {
-					echo 'Unexpected problem detected! No userid, no transfer string.';
-					exit();
+					http_response_code(400);
+					echo 'Geçersiz bildirim isteği.';
+					return null;
 				}
 			}
 

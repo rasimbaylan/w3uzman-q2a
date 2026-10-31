@@ -16,9 +16,9 @@
 		{	
 			return array(
 				array(
-					'title' => 'List all posted links', // title of page
+					'title' => 'Paylaşılan bağlantılar', // title of page
 					'request' => 'listlinks', // request name
-					'nav' => 'M', // 'M'=main, 'F'=footer, 'B'=before main, 'O'=opposite main, null=none
+					'nav' => null, // Administrative report, not a public navigation item.
 				),
 			);
 		}
@@ -38,15 +38,16 @@
 		
 			/* start */
 			$qa_content=qa_content_prepare();
+			$qa_content['title'] = 'Paylaşılan bağlantılar';
+			$qa_content['head_lines'][] = '<meta name="robots" content="noindex, nofollow">';
 
 			// return if not admin!
 			if(qa_get_logged_in_level() < QA_USER_LEVEL_ADMIN) {
-				$qa_content['error'] = '<p>Access forbidden</p>';
+				http_response_code(403);
+				$qa_content['error'] = 'Bu raporu görüntüleme yetkiniz bulunmuyor.';
 				return $qa_content;
 			}
 			
-			$qa_content['title'] = 'List all posted links';
-
 			// query 
 			$queryAllPosts = qa_db_query_sub('SELECT postid,type,parentid,created,userid,content
 											FROM `^posts`
@@ -55,10 +56,10 @@
 			// initiate output string
 			$postlisting = '<table class="linklisting"> 
 								<thead><tr>
-									<th style="width:10%;">Date</th> 
-									<th style="width:10%;">Post Type / Postid</th> 
-									<th style="width:15%;">Posted by</th> 
-									<th style="width:65%;">Links</th> 
+									<th style="width:10%;">Tarih</th> 
+									<th style="width:10%;">İçerik / Kimlik</th> 
+									<th style="width:15%;">Paylaşan</th> 
+									<th style="width:65%;">Bağlantılar</th> 
 								</tr></thead>';
 
 			// for function qa_post_userid_to_handle
@@ -74,7 +75,7 @@
 				$links = q2apro_list_all_getUrls($post['content']);
 				if(count($links)>0) {
 					// remove duplicate links
-					$links = array_unique($links);
+						$links = array_values(array_unique($links));
 					$linkstring = '';
 					for($i=0;$i<count($links);$i++) {
 						if(isset($links[$i])) {
@@ -89,16 +90,16 @@
 							if(!$ignore) {
 								// sometimes the string contains still html tags
 								$url = strip_tags($links[$i]);
-								$linkstring .= '<a class="q2apro_link" target="_blank" href="'.$url.'">'.$url.'</a>';
+								$linkstring .= '<a class="q2apro_link" target="_blank" rel="noopener noreferrer" href="'.qa_html($url).'">'.qa_html($url).'</a>';
 							}
 						}
 					}
 					// display if links
 					if(!empty($linkstring)) {
 						$postlisting .= '<tr>
-							<td>'.substr($post['created'],0,10).'</td> 
-							<td>'.$post['type'].': '.$post['postid'].'</td> 
-							<td>'.(isset($post['userid']) ? qa_post_userid_to_handle($post['userid']) : 'Anonym	').'</td> 
+							<td>'.qa_html(substr($post['created'],0,10)).'</td> 
+							<td>'.qa_html($post['type']).': '.(int)$post['postid'].'</td> 
+							<td>'.(isset($post['userid']) ? qa_html(qa_post_userid_to_handle($post['userid'])) : 'Misafir').'</td> 
 							<td>'.$linkstring.'</td> 
 							</tr>';
 					}
@@ -120,23 +121,23 @@
 				text-align:left;
 				border-collapse:collapse; 
 				table-layout: fixed;
-				width:900px; 
+				width:100%; 
 			} 
-			table thead tr th {
+			table.linklisting thead tr th {
 				background-color:#cfc;
 				border:1px solid #CCC;
 				padding:4px;
 			} 
-			td {
+			table.linklisting td {
 				border:1px solid #CCC;padding:1px 10px;line-height:25px;
 				word-wrap:break-word;
 			}
-			tr:hover{background:#ffc} 
-			th {text-align:center; } 
-			td img { 
+			table.linklisting tr:hover{background:#ffc} 
+			table.linklisting th {text-align:center; } 
+			table.linklisting td img { 
 				border:1px solid #DDD !important; margin-right:5px;
 			} 
-			td a.q2apro_link {
+			table.linklisting td a.q2apro_link {
 				display:block;
 			}
 			</style>';

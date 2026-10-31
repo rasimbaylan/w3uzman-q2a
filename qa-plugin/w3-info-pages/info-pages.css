@@ -1,0 +1,51 @@
+body.w3-info-page { color: #22344e; background: #f5f8fb; font-family: Arial,sans-serif; }
+body.w3-info-page .qa-body-wrapper { box-sizing: border-box; width: min(1190px,calc(100% - 40px)); max-width: none; margin: 0 auto; padding: 0; }
+body.w3-info-page .qa-main-wrapper { display: block; padding: 26px 0 36px; }
+body.w3-info-page .qa-main { float: none; width: 100% !important; margin: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+body.w3-info-page .qa-part-custom { margin: 0; padding: 0; }
+.w3-policy-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; color: #8494aa; font: 400 12px/1.5 Arial,sans-serif; }
+.w3-policy-breadcrumb a { color: #7a8da8; text-decoration: none; }
+.w3-policy-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.w3-policy-kicker { color: #aa8b37; font: 600 10px/1.4 Arial,sans-serif; letter-spacing: 1.5px; }
+body.w3-info-page .w3-policy-heading h1 { float: none; width: auto; margin: 9px 0 10px; padding: 0 !important; border: 0 !important; color: #152740; background: transparent !important; font: 700 35px/1.2 Arial,sans-serif; letter-spacing: -.7px; }
+.w3-policy-heading p { max-width: 740px; margin: 0; color: #8191a7; font: 400 13px/1.7 Arial,sans-serif; }
+.w3-policy-date { flex-shrink: 0; padding: 12px 16px; border: 1px solid #e3e9f2; border-radius: 9px; color: #99a5b6; background: #fff; font: 400 10px/1.5 Arial,sans-serif; }
+.w3-policy-date time { display: block; margin-top: 3px; color: #657992; font-size: 12px; }
+.w3-policy-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+.w3-policy-tabs a { padding: 10px 15px; border: 1px solid #e2e9f2; border-radius: 8px; color: #8192aa; background: #fff; font: 400 12px/1.4 Arial,sans-serif; text-decoration: none; }
+.w3-policy-tabs a[aria-current] { border-color: #ebd580; color: #8c6f18; background: #fff9df; }
+.w3-policy-layout { display: grid; grid-template-columns: minmax(0,1fr) 270px; align-items: start; gap: 24px; }
+.w3-policy-article { min-width: 0; padding: 28px 32px; border: 1px solid #e4ebf3; border-radius: 12px; background: #fff; }
+.w3-policy-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; padding: 14px 17px; border: 1px solid #eee4bb; border-radius: 8px; color: #927d3f; background: #fffcf0; font: 400 13px/1.5 Arial,sans-serif; }
+.w3-policy-summary > span { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; color: #b28a08; background: #fff0ac; }
+.w3-policy-section { scroll-margin-top: 24px; padding-bottom: 23px; margin-bottom: 24px; border-bottom: 1px solid #edf1f6; }
+.w3-policy-section:last-child { margin-bottom: 0; padding-bottom: 0; border: 0; }
+.w3-policy-section h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 13px; padding: 0; color: #2c405e; background: transparent; font: 600 18px/1.5 Arial,sans-serif; }
+.w3-policy-section h2 > span { color: #c4ab61; font: 400 12px/1 Arial,sans-serif; }
+.w3-policy-section p, .w3-policy-section li { color: #7a8a9f; font: 400 13px/1.85 Arial,sans-serif; }
+.w3-policy-section p { margin: 0 0 12px; }
+.w3-policy-section p:last-child { margin-bottom: 0; }
+.w3-policy-section ul { padding-left: 20px; margin: 0 0 14px; }
+.w3-policy-section li { margin-bottom: 8px; }
+.w3-policy-section strong { color: #526983; font-weight: 600; }
+.w3-policy-section a { color: #6884aa; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.w3-policy-section .w3-policy-source { margin-top: 14px; font-size: 11px; color: #97a4b6; }
+.w3-policy-sidebar { position: sticky; top: 24px; display: grid; gap: 14px; }
+.w3-policy-sidebar > nav, .w3-policy-help { padding: 22px; border: 1px solid #e4ebf3; border-radius: 11px; background: #fff; }
+.w3-policy-sidebar h2 { margin: 0 0 16px; color: #40556f; font: 600 14px/1.4 Arial,sans-serif; }
+.w3-policy-sidebar ol { margin: 0; padding-left: 18px; color: #b3bece; }
+.w3-policy-sidebar li { margin-bottom: 13px; padding-left: 4px; font: 400 12px/1.5 Arial,sans-serif; }
+.w3-policy-sidebar li:last-child { margin-bottom: 0; }
+.w3-policy-sidebar a { color: #8295ae; text-decoration: none; }
+.w3-policy-sidebar a:hover { color: #a38731; }
+.w3-policy-help { background: #fffcf2; border-color: #eee5c7; }
+.w3-policy-help > span { display: inline-block; margin-bottom: 12px; color: #c29e29; font-size: 24px; }
+.w3-policy-help p { margin: 0 0 15px; color: #8b9ab0; font: 400 12px/1.7 Arial,sans-serif; }
+.w3-policy-help a { display: block; margin-top: 9px; color: #a48a3e; font: 400 12px/1.5 Arial,sans-serif; }
+.w3-policy-table-wrap { max-width: 100%; overflow: auto; margin: 18px 0; border: 1px solid #e7edf4; border-radius: 8px; }
+.w3-policy-table-wrap table { width: 100%; margin: 0; border-collapse: collapse; }
+.w3-policy-table-wrap th, .w3-policy-table-wrap td { padding: 12px; border: 0; border-bottom: 1px solid #edf1f6; color: #8192a9; background: #fff; font: 400 12px/1.7 Arial,sans-serif; text-align: left; vertical-align: top; }
+.w3-policy-table-wrap th { color: #607793; background: #f7f9fc; font-weight: 600; }
+.w3-policy :focus-visible { outline: 2px solid #d9ba5a; outline-offset: 3px; }
+@media(max-width:900px) { .w3-policy-layout { grid-template-columns: minmax(0,1fr); } .w3-policy-sidebar { position: static; grid-template-columns: minmax(0,1fr) minmax(0,1fr); } }
+@media(max-width:600px) { body.w3-info-page .qa-body-wrapper { width: calc(100% - 24px); } .w3-policy-heading { align-items: flex-start; flex-direction: column; gap: 15px; } .w3-policy-heading h1 { font-size: 28px; } .w3-policy-date { padding: 8px 12px; } .w3-policy-date time { display: inline; margin-left: 8px; } .w3-policy-article { padding: 21px 18px; } .w3-policy-section h2 { font-size: 16px; gap: 9px; } .w3-policy-sidebar { grid-template-columns: minmax(0,1fr); } .w3-policy-tabs a { padding: 9px 10px; font-size: 11px; } .w3-policy-table-wrap th, .w3-policy-table-wrap td { padding: 8px; font-size: 11px; overflow-wrap: anywhere; } }

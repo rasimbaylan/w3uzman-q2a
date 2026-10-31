@@ -1,0 +1,18 @@
+/* Shared public site statistics. No page-specific colour or legacy tile rules. */
+.w3-site-stats-card { box-sizing:border-box; min-width:0; margin:0; padding:18px 16px; border:1px solid #e5edf5; border-radius:13px; color:#172841; background:#fff; font-family:Arial,sans-serif; }
+.w3-site-stats-card > header { display:flex; align-items:center; margin:0 0 17px; padding:0; border:0; background:transparent; }
+.w3-site-stats-card > header > h2 { display:flex; align-items:center; gap:8px; min-width:0; margin:0; padding:0; border:0; color:#172841; background:transparent; font:600 13px/1.4 Arial,sans-serif; }
+.w3-site-stats-card > header svg { flex-shrink:0; width:20px; height:20px; color:#f5b900; }
+.w3-site-stats-card .w3-site-stats-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:0; padding:0; }
+.w3-site-stats-grid > div { position:relative; box-sizing:border-box; min-width:0; min-height:69px; padding:13px 8px 11px 51px; border-radius:10px; color:#285cba; background:#edf4ff; }
+.w3-site-stats-card .w3-site-stats-grid dt { display:contents; margin:0; padding:0; }
+.w3-site-stats-grid dt svg { position:absolute; top:23px; left:14px; width:23px; height:23px; }
+.w3-site-stats-grid dt span { position:absolute; top:39px; left:51px; display:block; color:#465a72; font:400 10px/1.4 Arial,sans-serif; }
+.w3-site-stats-card .w3-site-stats-grid dd { margin:0; padding:0; color:inherit; font:700 18px/1.3 Arial,sans-serif; }
+.w3-site-stats-grid .w3-site-stat-green { color:#209878; background:#edf9f4; }
+.w3-site-stats-grid .w3-site-stat-green dd { color:#176b3a; }
+.w3-site-stats-grid .w3-site-stat-amber { color:#d0a009; background:#fff8e4; }
+.w3-site-stats-grid .w3-site-stat-amber dd { color:#765700; }
+.w3-site-stats-grid .w3-site-stat-pink { color:#e55770; background:#fff0f3; }
+.w3-site-stats-grid .w3-site-stat-pink dd { color:#9b243c; }
+.qa-sidepanel .qa-widget-side.w3-site-stats-widget { padding:0; border:0; background:transparent; }

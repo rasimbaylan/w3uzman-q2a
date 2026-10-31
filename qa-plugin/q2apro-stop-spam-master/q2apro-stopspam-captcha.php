@@ -145,7 +145,7 @@
 			$fields[] = array(
 				'type' => 'static',
 				'note' => '<span><b>'.qa_lang('q2apro_stopspam_lang/note').'</b> '.strtr( qa_lang('q2apro_stopspam_lang/disable_captcha'), array( 
-							'^1' => '<a target="_blank" href="./spam">',
+							'^1' => '<a target="_blank" rel="noopener noreferrer" href="'.qa_path_html('admin/spam').'">',
 							'^2' => '</a>'
 						  )).'</span>',
 			);
@@ -267,29 +267,30 @@
 		{
 		  	$html = '<div class="q2apro_captcha">';
 			$html .= '<span class="captcha_q">'.qa_opt('q2apro_stopspam_captcha_question').'</span>';
-		  	$html .= '<input type="text" name="captcha_challenge_field" />';
-			$html .= '<input type="checkbox" name="response_field" id="response_field" />';
+		  	$html .= '<input type="text" name="captcha_challenge_field" aria-label="Güvenlik sorusunun yanıtı" autocomplete="off" />';
+			$html .= '<input type="checkbox" name="response_field" id="response_field" tabindex="-1" aria-hidden="true" autocomplete="off" />';
 			$html .= '</div>';
-			// insert css to hide the honeypot
-			$html .= '<style type="text/css"> .captcha_q{margin-right:10px;color:#00C;} #response_field{display:none;} .q2apro_captcha { margin-bottom:20px; }</style>';
-
 			return $html;
 		}
 
 		// check if user has given the correct answer
 		function validate_post(&$error)
 		{
+			$answer = isset($_POST['captcha_challenge_field']) && is_string($_POST['captcha_challenge_field']) ? trim($_POST['captcha_challenge_field']) : '';
+			$error = (string)qa_opt('q2apro_stopspam_captcha_errormsg');
+			if ($error === '') { $error = 'Güvenlik sorusuna doğru yanıt verin.'; }
 			// honeypot: bot filled input field (which is hidden by CSS)
 			if(!empty($_POST['response_field']))
 			{
 				$error = 's-p-a-m-b-o-t';
 			}
-			else if(!empty($_POST['captcha_challenge_field']))
+			else if($answer !== '')
 			{
 				// correct answer given
-				if( $_POST['captcha_challenge_field']==qa_opt('q2apro_stopspam_captcha_answer')
-					|| $_POST['captcha_challenge_field']==qa_opt('q2apro_stopspam_captcha_answer2') ) 
+				$accepted = array(trim((string)qa_opt('q2apro_stopspam_captcha_answer')), trim((string)qa_opt('q2apro_stopspam_captcha_answer2')));
+				if (($accepted[0] !== '' && hash_equals($accepted[0], $answer)) || ($accepted[1] !== '' && hash_equals($accepted[1], $answer)))
 				{
+					$error = null;
 					return true;
 				}
 				else 

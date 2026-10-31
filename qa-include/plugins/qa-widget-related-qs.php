@@ -21,6 +21,26 @@
 
 class qa_related_qs
 {
+	private function related_cover_url($postid)
+	{
+		require_once QA_INCLUDE_DIR . 'db/metas.php';
+		$cover = qa_db_postmeta_get($postid, 'w3_cover_image');
+		if (!empty($cover))
+			return html_entity_decode(trim($cover), ENT_QUOTES, 'UTF-8');
+
+		$content = qa_db_read_one_value(qa_db_query_sub('SELECT content FROM ^posts WHERE postid=#', $postid), true);
+		if (empty($content))
+			return '';
+
+		if (preg_match('/<img[^>]+src\\s*=\\s*["\\\']([^"\\\']+)/i', $content, $match))
+			return html_entity_decode($match[1], ENT_QUOTES, 'UTF-8');
+		if (preg_match('/!\\[[^\\]]*\\]\\(([^\\s\\)]+)/', $content, $match))
+			return html_entity_decode($match[1], ENT_QUOTES, 'UTF-8');
+		if (preg_match('/^\\s*\\[[0-9]+\\]:\\s*(\\S+)/m', $content, $match))
+			return html_entity_decode($match[1], ENT_QUOTES, 'UTF-8');
+
+		return '';
+	}
 	public function allow_template($template)
 	{
 		return $template == 'question';
@@ -34,6 +54,7 @@ class qa_related_qs
 	public function output_widget($region, $place, $themeobject, $template, $request, $qa_content)
 	{
 		require_once QA_INCLUDE_DIR . 'db/selects.php';
+		require_once QA_INCLUDE_DIR . 'util/w3-category-covers.php';
 
 		if (!isset($qa_content['q_view']['raw']['type']) || $qa_content['q_view']['raw']['type'] != 'Q') // question might not be visible, etc...
 			return;
@@ -65,10 +86,15 @@ class qa_related_qs
 			$themeobject->output('<ul class="qa-related-q-list">');
 
 			foreach ($questions as $question) {
+				$title = qa_html($question['title']);
+				$cover = $this->related_cover_url($question['postid']);
+				$fallback = w3_category_cover_url(isset($question['categoryid']) ? $question['categoryid'] : null, $question['title']);
+				$coverhtml = qa_html(empty($cover) ? $fallback : $cover);
 				$themeobject->output(
 					'<li class="qa-related-q-item">' .
-					'<a href="' . qa_q_path_html($question['postid'], $question['title']) . '">' .
-					qa_html($question['title']) .
+					'<a class="qa-related-q-link" href="' . qa_q_path_html($question['postid'], $question['title']) . '">' .
+					'<span class="qa-related-q-thumb"><img src="' . $coverhtml . '" alt="' . $title . '" loading="lazy" onerror="' . qa_html('this.onerror=null;this.src=' . qa_js($fallback) . ';') . '"></span>' .
+					'<span class="qa-related-q-title">' . $title . '</span>' .
 					'</a>' .
 					'</li>'
 				);

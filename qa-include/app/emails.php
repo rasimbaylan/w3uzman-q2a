@@ -133,10 +133,13 @@ function qa_send_email($params)
 
 	// @error_log(print_r($params, true));
 
-	require_once QA_INCLUDE_DIR . 'vendor/PHPMailer/PHPMailerAutoload.php';
+	require_once QA_INCLUDE_DIR . 'vendor/PHPMailer6/PHPMailer.php';
+	require_once QA_INCLUDE_DIR . 'vendor/PHPMailer6/Exception.php';
 
-	$mailer = new PHPMailer();
+	\PHPMailer\PHPMailer\PHPMailer::$validator = 'php';
+	$mailer = new \PHPMailer\PHPMailer\PHPMailer();
 	$mailer->CharSet = 'utf-8';
+
 	$mailer->From = $params['fromemail'];
 	$mailer->Sender = $params['fromemail'];
 	$mailer->FromName = $params['fromname'];
@@ -151,7 +154,9 @@ function qa_send_email($params)
 		$mailer->isHTML(true);
 
 	if (qa_opt('smtp_active')) {
-		$mailer->IsSMTP();
+		require_once QA_INCLUDE_DIR . 'vendor/PHPMailer6/SMTP.php';
+
+		$mailer->isSMTP();
 		$mailer->Host = qa_opt('smtp_address');
 		$mailer->Port = qa_opt('smtp_port');
 
@@ -169,10 +174,11 @@ function qa_send_email($params)
 
 		if (qa_opt('smtp_authenticate')) {
 			$mailer->SMTPAuth = true;
-	        $mailer->Username = qa_opt('smtp_username');
-	        $mailer->Password = qa_opt('smtp_password');
+			$mailer->Username = qa_opt('smtp_username');
+			$mailer->Password = qa_opt('smtp_password');
 		}
 	}
+
 	$send_status = $mailer->send();
 	if (!$send_status) {
 		@error_log('PHP Question2Answer email send error: ' . $mailer->ErrorInfo);

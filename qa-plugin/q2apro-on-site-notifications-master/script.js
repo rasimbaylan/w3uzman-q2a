@@ -25,29 +25,46 @@
 $(document).ready(function(){
 
 	$(document).on('click', '#nfyReadClose', function() {
-		$('#nfyWrap').fadeOut(500, function(){$(this).remove() });
+		$('#nfyWrap').remove();
+		$('.osn-new-events-link').attr('aria-expanded','false').trigger('focus');
+	});
+	$(document).on('keydown', function(event) {
+		if (event.key === 'Escape' && $('#nfyWrap').length) {
+			$('#nfyWrap').remove();
+			$('.osn-new-events-link').attr('aria-expanded','false').trigger('focus');
+		}
 	});
 	$('.osn-new-events-link').click(function() {
+		if ($(this).attr('aria-busy') === 'true') return;
 		// user clicked on N bubble again to hide event-box
 		if( $('#nfyWrap').length>0 && $('#nfyWrap').is(':visible') ) {
-			$('#nfyWrap').fadeOut(500, function(){$(this).remove() });
+			$('#nfyWrap').remove();
+			$(this).attr('aria-expanded','false');
 		}
 		else {
 			var evrequest = 'receiveNotify';
+			$(this).attr('aria-busy','true');
 			$.ajax({
 				 type: 'POST',
 				 url: eventnotifyAjaxURL, // root
-				 data: {ajax:evrequest},
+				 data: {ajax:evrequest, code:eventnotifySecurityCode},
 				 cache: false,
 				 success: function(data) {
 					// remove Event-Box if formerly loaded
-					$('#nfyWrap').fadeOut(500, function(){$(this).remove() });
+					$('#nfyWrap').remove();
 					// insert ajax-loaded html 
 					// $('.qa-nav-user').append(data);
 					$('.osn-new-events-link').after(data);
 					// make yellow notification bubble gray
 					$('.ntfy-event-new').addClass('ntfy-read');
-				 }
+					$('.osn-new-events-link').attr('aria-expanded','true');
+				 },
+				 error: function() {
+					$('#nfyWrap').remove();
+					$('<div>', {id:'nfyWrap',class:'nfyWrap',role:'alert',text:'Bildirimler yüklenemedi. Sayfayı yenileyip tekrar deneyin.'}).insertAfter('.osn-new-events-link');
+					$('.osn-new-events-link').attr('aria-expanded','true');
+				 },
+				 complete: function() { $('.osn-new-events-link').removeAttr('aria-busy'); }
 			});
 		}
 	});
@@ -56,7 +73,8 @@ $(document).ready(function(){
 	$(document).click(function(event) { 
 		if($(event.target).parents().index($('#nfyWrap')) == -1) {
 			if($('#nfyWrap').is(':visible')) {
-				$('#nfyWrap').fadeOut(500, function(){$(this).remove() });
+				$('#nfyWrap').remove();
+				$('.osn-new-events-link').attr('aria-expanded','false');
 			}
 		}        
 	})

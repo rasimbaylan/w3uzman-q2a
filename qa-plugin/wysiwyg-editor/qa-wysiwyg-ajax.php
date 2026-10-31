@@ -31,6 +31,23 @@ class qa_wysiwyg_ajax
 	// Fix path to WYSIWYG editor smileys
 	public function process_request($request)
 	{
+		// This endpoint rewrites stored posts, independently of its settings page.
+		header('Cache-Control: no-store');
+		if (qa_get_logged_in_level() < QA_USER_LEVEL_ADMIN) {
+			http_response_code(403);
+			echo qa_lang('users/no_permission');
+			return null;
+		}
+		if (!qa_is_http_post()) {
+			header('Allow: POST');
+			http_response_code(405);
+			return null;
+		}
+		if (!qa_check_form_security_code('wysiwyg-smiley-repair', qa_post_text('code'))) {
+			http_response_code(403);
+			echo qa_lang('misc/form_security_reload');
+			return null;
+		}
 		require_once QA_INCLUDE_DIR.'qa-app-posts.php';
 
 		// smiley replacement regexes

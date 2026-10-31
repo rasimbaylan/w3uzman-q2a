@@ -1,0 +1,32 @@
+<section class="w3-pdf" aria-labelledby="pdf-title">
+  <nav class="pdf-crumb" aria-label="Sayfa konumu"><a href="{{HOME_URL}}">Ana sayfa</a><span aria-hidden="true">›</span><a href="{{TOOLS_URL}}">Araçlar</a><span aria-hidden="true">›</span><span aria-current="page">Resimden PDF</span></nav>
+  <header class="pdf-heading"><div><span class="pdf-eyebrow">ÜCRETSİZ · ÜYELİKSİZ · FİLİGRANSIZ</span><h1 id="pdf-title">Fotoğraflarınız, tek bir PDF.</h1><p>Ders notlarınızı, ödevlerinizi veya belgelerinizi seçin. Sıralayın, düzenleyin ve PDF olarak indirin.</p></div><span class="pdf-private"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"></path></svg>Dosyalarınız cihazınızda kalır</span></header>
+  <noscript><p class="pdf-error">Bu araç tarayıcınızda çalışır. PDF oluşturabilmek için JavaScript'i etkinleştirin.</p></noscript>
+  <div id="pdf-error" class="pdf-error" role="alert" hidden></div>
+  <div class="pdf-workspace" id="pdf-workspace">
+    <div class="pdf-editor">
+      <div class="pdf-drop" id="pdf-drop">
+        <svg class="pdf-upload-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="6" y="10" width="28" height="30" rx="4"></rect><path d="m8 32 9-10 7 7 4-4 6 7M38 5v14m-7-7h14"></path><circle cx="25" cy="19" r="3"></circle></svg>
+        <h2>Görsellerinizi buraya bırakın</h2><p>veya cihazınızdan JPG, JPEG ve PNG seçin</p>
+        <button class="pdf-button pdf-button-primary" id="pdf-pick" type="button" disabled>Görselleri seç <span aria-hidden="true">＋</span></button>
+        <input id="pdf-files" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" multiple hidden aria-label="PDF için görselleri seçin">
+        <small>En fazla 20 görsel · Dosya başına 15 MB · Toplam 50 MB</small>
+      </div>
+      <div class="pdf-list-heading" id="pdf-list-heading" hidden><div><h2>PDF sayfaları <span id="pdf-count">0</span></h2><p>Oklarla veya sürükleyerek sıralayın. Her görsel ayrı bir sayfa olur.</p></div><button class="pdf-text-button" id="pdf-clear" type="button">Tümünü kaldır</button></div>
+      <ol class="pdf-pages" id="pdf-pages" aria-label="PDF sayfa sırası"></ol>
+      <p id="pdf-status" class="pdf-status" role="status" aria-live="polite">Dosyalarınız yüklenmez; dönüşüm bu tarayıcıda yapılır.</p>
+    </div>
+    <aside class="pdf-settings" aria-labelledby="pdf-settings-title">
+      <div class="pdf-settings-title"><span class="pdf-step">2</span><h2 id="pdf-settings-title">PDF ayarları</h2></div>
+      <label for="pdf-direction">A4 sayfa yönü</label><select id="pdf-direction"><option value="auto">Otomatik (görsele göre)</option><option value="portrait">Dikey</option><option value="landscape">Yatay</option></select>
+      <label for="pdf-margin">Kenar boşluğu</label><select id="pdf-margin"><option value="8">Normal · 8 mm</option><option value="0">Boşluksuz</option><option value="15">Geniş · 15 mm</option></select>
+      <label for="pdf-quality">Görsel kalitesi</label><select id="pdf-quality"><option value="high">Yüksek kalite</option><option value="small">Küçük dosya</option></select><p class="pdf-help">Yüksek kalitede uzun kenar en fazla 3.200, küçük dosyada 1.600 piksel olur. Görsel kırpılmaz.</p>
+      <label for="pdf-name">Dosya adı</label><div class="pdf-filename"><input id="pdf-name" type="text" value="belgelerim" maxlength="80" autocomplete="off"><span>.pdf</span></div>
+      <button class="pdf-button pdf-button-primary pdf-create" id="pdf-create" type="button" disabled>PDF oluştur <span aria-hidden="true">→</span></button>
+      <div id="pdf-progress-wrap" class="pdf-progress-wrap" hidden><label for="pdf-progress" id="pdf-progress-label">PDF hazırlanıyor…</label><progress id="pdf-progress" value="0" max="100"></progress><button class="pdf-text-button" id="pdf-cancel" type="button">İptal et</button></div>
+      <div id="pdf-result" class="pdf-result" hidden><strong>PDF'niz hazır</strong><span id="pdf-result-info"></span><a id="pdf-download" class="pdf-button pdf-button-primary" download="belgelerim.pdf">PDF'yi indir <span aria-hidden="true">↓</span></a></div>
+      <p class="pdf-local-note">Görselleriniz ve oluşturulan PDF sunucumuza gönderilmez. Sayfayı kapattığınızda seçimleriniz temizlenir.</p>
+    </aside>
+  </div>
+  <section class="pdf-guide" aria-labelledby="pdf-guide-title"><div><span class="pdf-step">?</span><h2 id="pdf-guide-title">Nasıl kullanılır?</h2><p>Görsellerinizi seçin, sayfa sırasını düzenleyin ve <strong>PDF oluştur</strong> düğmesine basın. Hazır olan dosyayı indirin.</p></div><div><h3>Okunaklı notlar için</h3><p>Fotoğrafı iyi ışıkta, belgeye paralel çekin. Küçük yazılar içeren belgelerde yüksek kaliteyi tercih edin. Şeffaf PNG alanları beyaz olur.</p></div><div><h3>Bilmeniz gerekenler</h3><p>Bu araç görselleri PDF sayfalarına yerleştirir; yazıları seçilebilir metne dönüştürmez (OCR yapmaz). Görseller en fazla 30 megapiksel ve kenar başına 12.000 piksel olabilir.</p></div></section>
+</section>

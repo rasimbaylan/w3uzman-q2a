@@ -25,6 +25,7 @@
 */
 
 	return array(
+		'w3_google_ads_enabled' => 'Tüm sitede Google reklamlarını etkinleştir',
 		'allow_change_usernames' => 'Mesajı olan kullanıcıların kullanıcı adlarını değiştirmesine izin ver:',
 		'allow_close_questions' => 'Soruların kapatılmasına izin ver:',
 		'allow_login_email_only' => 'Sadece e-posta adresi ile oturum açın (kullanıcı adı kabul edilmez):',

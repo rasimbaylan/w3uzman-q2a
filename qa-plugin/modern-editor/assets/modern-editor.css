@@ -1,0 +1,45 @@
+.qa-modern-editor-wrap {
+    overflow: hidden;
+    border: 1px solid #e3c51a;
+    border-radius: 7px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(39, 34, 0, .08);
+}
+.qa-modern-editor-value,
+.qa-modern-editor-file { display: none !important; }
+.qa-modern-editor-wrap .ql-toolbar.ql-snow {
+    border: 0;
+    border-bottom: 1px solid #e8dfac;
+    background: #fffdf1;
+}
+.qa-modern-editor-wrap .ql-container.ql-snow { border: 0; }
+.qa-modern-editor-wrap .ql-editor {
+    min-height: 280px;
+    color: #262626;
+    font: 16px/1.65 Arial, sans-serif;
+}
+.qa-modern-editor-wrap .ql-editor.ql-blank::before { color: #526279; }
+.qa-modern-editor-wrap .ql-toolbar button:focus-visible,
+.qa-modern-editor-wrap .ql-picker-label:focus-visible { outline: 2px solid #805800; outline-offset: 1px; }
+.qa-modern-editor-wrap .ql-toolbar button:hover .ql-stroke,
+.qa-modern-editor-wrap .ql-toolbar button:focus .ql-stroke,
+.qa-modern-editor-wrap .ql-toolbar button.ql-active .ql-stroke { stroke: #805800; }
+.qa-modern-editor-wrap .ql-toolbar button.ql-active .ql-fill { fill: #805800; }
+.qa-modern-editor-wrap .ql-video {
+    display: block;
+    width: min(100%, 760px);
+    aspect-ratio: 16 / 9;
+    height: auto;
+    margin: 18px auto;
+}
+.qa-modern-editor-status {
+    min-height: 24px;
+    padding: 2px 12px;
+    color: #685900;
+    font-size: 13px;
+}
+@media (max-width: 600px) {
+    .qa-modern-editor-wrap .ql-editor { min-height: 220px; }
+    .qa-modern-editor-wrap .ql-toolbar.ql-snow { padding: 6px 3px; }
+}
+

@@ -39,6 +39,39 @@ define('QA_PERMIT_MODERATORS', 40);
 define('QA_PERMIT_ADMINS', 20);
 define('QA_PERMIT_SUPERS', 0);
 
+/**
+ * Site-wide Google ad switch. The legacy homepage setting is used as the
+ * initial value when upgrading, so an existing disabled choice stays disabled.
+ */
+function qa_google_ads_enabled()
+{
+	return (bool)qa_opt('w3_google_ads_enabled');
+}
+
+/**
+ * Remove Google advertising from custom HTML without removing Analytics,
+ * verification tags, ordinary content, or the saved original ad code.
+ */
+function qa_google_ads_filter_html($html)
+{
+	if (qa_google_ads_enabled() || !is_string($html) || $html === '')
+		return $html;
+
+	$adurl = '~\b(?:src|href)\s*=\s*["\'](?:https?:)?//(?:[a-z0-9-]+\.)*(?:googlesyndication\.com|doubleclick\.net|googleadservices\.com)(?:[/:?#]|["\'])~i';
+	$html = preg_replace_callback('~<script\b[^>]*>.*?</script\s*>~is', function ($match) use ($adurl) {
+		return preg_match($adurl, $match[0]) || preg_match('/\badsbygoogle\b|\bgoogle_ad_(?:client|slot|width|height|format)\b|\bgoogletag\s*\./i', $match[0]) ? '' : $match[0];
+	}, $html);
+	$html = preg_replace_callback('~<ins\b[^>]*>.*?</ins\s*>~is', function ($match) {
+		return preg_match('~\bclass\s*=\s*["\'][^"\']*\badsbygoogle\b[^"\']*["\']~i', $match[0]) ? '' : $match[0];
+	}, $html);
+	$html = preg_replace_callback('~<iframe\b[^>]*>.*?</iframe\s*>|<link\b[^>]*>~is', function ($match) use ($adurl) {
+		return preg_match($adurl, $match[0]) ? '' : $match[0];
+	}, $html);
+
+	// An ad-only snippet must not leave an empty sidebar/header container.
+	return trim(preg_replace('~<!--.*?-->~s', '', $html)) === '' ? '' : $html;
+}
+
 
 /**
  * Return an array [name] => [value] of settings for each option in $names.
@@ -204,6 +237,7 @@ function qa_default_option($name)
 	if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
 	$fixed_defaults = array(
+		'w3_home_ads_enabled' => 1,
 		'allow_anonymous_naming' => 1,
 		'allow_change_usernames' => 1,
 		'allow_close_questions' => 1,
@@ -223,6 +257,16 @@ function qa_default_option($name)
 		'avatar_q_page_q_size' => 50,
 		'avatar_store_size' => 400,
 		'avatar_users_size' => 30,
+		'cache_acount' => 0,
+		'cache_ccount' => 0,
+		'cache_flaggedcount' => 0,
+		'cache_qcount' => 0,
+		'cache_queuedcount' => 0,
+		'cache_uapprovecount' => 0,
+		'cache_unaqcount' => 0,
+		'cache_unselqcount' => 0,
+		'cache_unupaqcount' => 0,
+		'cache_userpointscount' => 0,
 		'caching_catwidget_time' => 30,
 		'caching_driver' => 'filesystem',
 		'caching_enabled' => 0,
@@ -388,6 +432,10 @@ function qa_default_option($name)
 	}
 
 	switch ($name) {
+		case 'w3_google_ads_enabled':
+			$value = (int)qa_opt('w3_home_ads_enabled');
+			break;
+
 		case 'site_url':
 			$protocol =
 				(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
@@ -529,7 +577,7 @@ function qa_default_option($name)
 
 			foreach ($modules as $module) {
 				$value = $module->option_default($name);
-				if (strlen($value))
+				if (strlen((string)$value))
 					return $value;
 			}
 

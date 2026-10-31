@@ -311,28 +311,28 @@ function qa_page_q_edit_q_form(&$qa_content, $question, $in, $errors, $completet
 				'label' => qa_lang_html('question/q_title_label'),
 				'tags' => 'name="q_title"',
 				'value' => qa_html(($question['editable'] && isset($in['title'])) ? $in['title'] : $question['title']),
-				'error' => qa_html(@$errors['title']),
+				'error' => qa_html(isset($errors['title']) ? $errors['title'] : null),
 			),
 
 			'category' => array(
 				'label' => qa_lang_html('question/q_category_label'),
-				'error' => qa_html(@$errors['categoryid']),
+				'error' => qa_html(isset($errors['categoryid']) ? $errors['categoryid'] : null),
 			),
 
 			'content' => array(
 				'label' => qa_lang_html('question/q_content_label'),
-				'error' => qa_html(@$errors['content']),
+				'error' => qa_html(isset($errors['content']) ? $errors['content'] : null),
 			),
 
 			'extra' => array(
 				'label' => qa_html(qa_opt('extra_field_prompt')),
 				'tags' => 'name="q_extra"',
 				'value' => qa_html(isset($in['extra']) ? $in['extra'] : $question['extra']),
-				'error' => qa_html(@$errors['extra']),
+				'error' => qa_html(isset($errors['extra']) ? $errors['extra'] : null),
 			),
 
 			'tags' => array(
-				'error' => qa_html(@$errors['tags']),
+				'error' => qa_html(isset($errors['tags']) ? $errors['tags'] : null),
 			),
 
 		),
@@ -381,6 +381,15 @@ function qa_page_q_edit_q_form(&$qa_content, $question, $in, $errors, $completet
 		unset($form['fields']['category']);
 	}
 
+	if ($question['editable']) {
+		require_once QA_INCLUDE_DIR . 'db/metas.php';
+		$sliderplacement = array(
+			'type' => 'custom',
+			'html' => '<div class="w3-slider-placement"><label><input type="checkbox" name="q_featured_slider" id="q_featured_slider" value="1"' . (qa_db_postmeta_get($question['postid'], 'w3_slider_featured') === '1' ? ' checked' : '') . '> Ana Slide</label><label><input type="checkbox" name="q_slider_side" id="q_slider_side" value="1"' . (qa_db_postmeta_get($question['postid'], 'w3_slider_side') === '1' ? ' checked' : '') . '> Slide Yanı</label></div>',
+		);
+		qa_array_insert($form['fields'], 'content', array('slider_placement' => $sliderplacement));
+	}
+
 	if (!($question['editable'] && qa_opt('extra_field_active')))
 		unset($form['fields']['extra']);
 
@@ -397,7 +406,7 @@ function qa_page_q_edit_q_form(&$qa_content, $question, $in, $errors, $completet
 
 		qa_set_up_notify_fields($qa_content, $form['fields'], 'Q', qa_get_logged_in_email(),
 			isset($in['notify']) ? $in['notify'] : !empty($question['notify']),
-			isset($in['email']) ? $in['email'] : @$question['notify'], @$errors['email'], 'q_');
+			isset($in['email']) ? $in['email'] : @$question['notify'], isset($errors['email']) ? $errors['email'] : null, 'q_');
 	}
 
 	if (!qa_user_post_permit_error('permit_edit_silent', $question)) {
@@ -424,6 +433,8 @@ function qa_page_q_edit_q_submit($question, $answers, $commentsfollows, $closepo
 		$in['title'] = qa_get_post_title('q_title');
 		qa_get_post_content('q_editor', 'q_content', $in['editor'], $in['content'], $in['format'], $in['text']);
 		$in['extra'] = qa_opt('extra_field_active') ? qa_post_text('q_extra') : null;
+		$in['featured_slider'] = qa_post_text('q_featured_slider') === '1';
+		$in['slider_side'] = qa_post_text('q_slider_side') === '1';
 	}
 
 	if ($question['retagcatable']) {
@@ -470,7 +481,7 @@ function qa_page_q_edit_q_submit($question, $answers, $commentsfollows, $closepo
 				qa_update_post_text($in, $oldin);
 		}
 
-		if (array_key_exists('categoryid', $in) && strcmp($in['categoryid'], $question['categoryid'])) {
+		if (array_key_exists('categoryid', $in) && strcmp($in['categoryid'] ?? '', $question['categoryid'] ?? '')) {
 			if (qa_user_permit_error('permit_post_q', null, $userlevel))
 				$errors['categoryid'] = qa_lang_html('question/category_ask_not_allowed');
 		}
@@ -505,7 +516,19 @@ function qa_page_q_edit_q_submit($question, $answers, $commentsfollows, $closepo
 			qa_question_set_content($question, $in['title'], $in['content'], $in['format'], $in['text'], qa_tags_to_tagstring($in['tags']),
 				$setnotify, $userid, $handle, $cookieid, $in['extra'], @$in['name'], $in['queued'], $in['silent']);
 
-			if (qa_using_categories() && strcmp($in['categoryid'], $question['categoryid'])) {
+			if ($question['editable']) {
+				require_once QA_INCLUDE_DIR . 'db/metas.php';
+				if ($in['featured_slider'])
+					qa_db_postmeta_set($question['postid'], 'w3_slider_featured', '1');
+				else
+					qa_db_postmeta_clear($question['postid'], 'w3_slider_featured');
+				if ($in['slider_side'])
+					qa_db_postmeta_set($question['postid'], 'w3_slider_side', '1');
+				else
+					qa_db_postmeta_clear($question['postid'], 'w3_slider_side');
+			}
+
+			if (qa_using_categories() && strcmp($in['categoryid'] ?? '', $question['categoryid'] ?? '')) {
 				qa_question_set_category($question, $in['categoryid'], $userid, $handle, $cookieid,
 					$answers, $commentsfollows, $closepost, $in['silent']);
 			}
@@ -538,7 +561,7 @@ function qa_page_q_close_q_form(&$qa_content, $question, $id, $in, $errors)
 				'label' =>
 					'<span id="close_label_other">' . qa_lang_html('question/close_reason_title') . '</span>',
 				'value' => @$in['details'],
-				'error' => qa_html(@$errors['details']),
+				'error' => qa_html(isset($errors['details']) ? $errors['details'] : null),
 			),
 		),
 
@@ -572,7 +595,7 @@ function qa_page_q_close_q_form(&$qa_content, $question, $id, $in, $errors)
 function qa_page_q_close_q_submit($question, $closepost, &$in, &$errors)
 {
 	$in = array(
-		'details' => trim(qa_post_text('q_close_details')),
+		'details' => trim((string)qa_post_text('q_close_details')),
 	);
 
 	$userid = qa_get_logged_in_userid();
@@ -655,7 +678,7 @@ function qa_page_q_edit_a_form(&$qa_content, $id, $answer, $question, $answers, 
 			'content' => array_merge(
 				qa_editor_load_field($editor, $qa_content, $content, $format, $prefix . 'content', 12),
 				array(
-					'error' => qa_html(@$errors['content']),
+					'error' => qa_html(isset($errors['content']) ? $errors['content'] : null),
 				)
 			),
 		),
@@ -737,7 +760,7 @@ function qa_page_q_edit_a_form(&$qa_content, $id, $answer, $question, $answers, 
 
 		qa_set_up_notify_fields($qa_content, $form['fields'], 'A', qa_get_logged_in_email(),
 			isset($in['notify']) ? $in['notify'] : !empty($answer['notify']),
-			isset($in['email']) ? $in['email'] : @$answer['notify'], @$errors['email'], $prefix);
+			isset($in['email']) ? $in['email'] : @$answer['notify'], isset($errors['email']) ? $errors['email'] : null, $prefix);
 	}
 
 	if (!qa_user_post_permit_error('permit_edit_silent', $answer)) {
@@ -913,7 +936,7 @@ function qa_page_q_edit_c_form(&$qa_content, $id, $comment, $in, $errors)
 			'content' => array_merge(
 				qa_editor_load_field($editor, $qa_content, $content, $format, $prefix . 'content', 4, true),
 				array(
-					'error' => qa_html(@$errors['content']),
+					'error' => qa_html(isset($errors['content']) ? $errors['content'] : null),
 				)
 			),
 		),
@@ -944,7 +967,7 @@ function qa_page_q_edit_c_form(&$qa_content, $id, $comment, $in, $errors)
 
 		qa_set_up_notify_fields($qa_content, $form['fields'], 'C', qa_get_logged_in_email(),
 			isset($in['notify']) ? $in['notify'] : !empty($comment['notify']),
-			isset($in['email']) ? $in['email'] : @$comment['notify'], @$errors['email'], $prefix);
+			isset($in['email']) ? $in['email'] : @$comment['notify'], isset($errors['email']) ? $errors['email'] : null, $prefix);
 	}
 
 	if (!qa_user_post_permit_error('permit_edit_silent', $comment)) {

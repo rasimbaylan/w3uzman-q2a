@@ -22,6 +22,7 @@
 
 class qa_xml_sitemap
 {
+	private $emitted = array();
 	public function option_default($option)
 	{
 		switch ($option) {
@@ -136,12 +137,30 @@ class qa_xml_sitemap
 
 	public function process_request($request)
 	{
+		$this->emitted = array();
 		@ini_set('display_errors', 0); // we don't want to show PHP errors inside XML
 
 		header('Content-type: text/xml; charset=utf-8');
 
 		echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 		echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+		// Include the site's public entry points and enabled W3 tools/information pages.
+		// Auth forms, admin routes, searches and query-string tool results are not index entries.
+		foreach (array('' => 1.0, 'questions' => 0.8, 'hot' => 0.6, 'feedback' => 0.3) as $route => $priority) {
+			$this->sitemap_output($route, $priority);
+		}
+		if (qa_using_tags()) { $this->sitemap_output('tags', 0.5); }
+		if (!QA_FINAL_EXTERNAL_USERS && qa_opt('xml_sitemap_show_users')) { $this->sitemap_output('users', 0.4); }
+		$publicModules = array('w3_info_pages', 'w3_about_page', 'w3_whois_page', 'w3_image_pdf_page', 'w3_seo_check_page', 'w3_domain_generator_page', 'w3_domain_search_page', 'w3_dns_records_page', 'w3_ssl_check_page', 'w3_whatismyip_page', 'w3_responsive_page', 'w3_qr_code_page', 'w3_text_json_page', 'w3_tools_directory_page', 'w3_ai_pages');
+		foreach (qa_load_modules_with('page', 'suggest_requests') as $module) {
+			if (!in_array(get_class($module), $publicModules, true)) { continue; }
+			foreach ($module->suggest_requests() as $page) { $this->sitemap_output($page['request'], 0.3); }
+		}
+		require_once QA_INCLUDE_DIR . 'db/selects.php';
+		foreach (qa_db_select_with_pending(qa_db_pages_selectspec()) as $page) {
+			if (isset($page['tags']) && in_array($page['tags'], array('hakkimizda', 'dersler'), true)) { $this->sitemap_output($page['tags'], 0.5); }
+		}
 
 
 		// Question pages
@@ -155,7 +174,7 @@ class qa_xml_sitemap
 
 			while (1) {
 				$questions = qa_db_read_all_assoc(qa_db_query_sub(
-					"SELECT postid, title, hotness FROM ^posts WHERE postid>=# AND type='Q' ORDER BY postid LIMIT 100",
+					"SELECT postid, title, hotness, updated FROM ^posts WHERE postid>=# AND type='Q' ORDER BY postid LIMIT 100",
 					$nextpostid
 				));
 
@@ -164,7 +183,8 @@ class qa_xml_sitemap
 
 				foreach ($questions as $question) {
 					$this->sitemap_output(qa_q_request($question['postid'], $question['title']),
-						0.1 + 0.9 * ($question['hotness'] - $hotstats['base']) / (1 + $hotstats['spread']));
+						0.1 + 0.9 * ($question['hotness'] - $hotstats['base']) / (1 + $hotstats['spread']),
+						$question['updated']);
 					$nextpostid = max($nextpostid, $question['postid'] + 1);
 				}
 			}
@@ -267,10 +287,16 @@ class qa_xml_sitemap
 	}
 
 
-	private function sitemap_output($request, $priority)
+	private function sitemap_output($request, $priority, $updated = null)
 	{
+		$url = qa_path($request, null, qa_opt('site_url'));
+		if (isset($this->emitted[$url])) { return; }
+		$this->emitted[$url] = true;
+		$updatedtime = is_numeric($updated) ? (int)$updated : strtotime((string)$updated);
+		$lastmod = ($updatedtime > 0) ? "\t\t<lastmod>" . gmdate('c', $updatedtime) . "</lastmod>\n" : '';
 		echo "\t<url>\n" .
-			"\t\t<loc>" . qa_xml(qa_path($request, null, qa_opt('site_url'))) . "</loc>\n" .
+			"\t\t<loc>" . qa_xml($url) . "</loc>\n" .
+			$lastmod .
 			"\t\t<priority>" . max(0, min(1.0, $priority)) . "</priority>\n" .
 			"\t</url>\n";
 	}

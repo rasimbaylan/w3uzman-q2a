@@ -151,10 +151,14 @@ function qa_is_ip_blocked()
 	if (isset($qa_curr_ip_blocked))
 		return $qa_curr_ip_blocked;
 
-	$qa_curr_ip_blocked = false;
-	$blockipclauses = qa_block_ips_explode(qa_opt('block_ips_write'));
 	$ip = qa_remote_ip_address();
 
+	$qa_curr_ip_blocked = false;
+	if ($ip === null) {
+		return false;
+	}
+
+	$blockipclauses = qa_block_ips_explode(qa_opt('block_ips_write'));
 	foreach ($blockipclauses as $blockipclause) {
 		if (qa_block_ip_match($ip, $blockipclause)) {
 			$qa_curr_ip_blocked = true;
@@ -172,7 +176,7 @@ function qa_is_ip_blocked()
  */
 function qa_block_ips_explode($blockipstring)
 {
-	$blockipstring = preg_replace('/\s*\-\s*/', '-', $blockipstring); // special case for 'x.x.x.x - x.x.x.x'
+	$blockipstring = preg_replace('/\s*\-\s*/', '-', (string)$blockipstring); // special case for 'x.x.x.x - x.x.x.x'
 
 	return preg_split('/[^0-9A-Fa-f\.:\-\*]/', $blockipstring, -1, PREG_SPLIT_NO_EMPTY);
 }
@@ -248,32 +252,31 @@ function qa_ip_between($ip, $startip, $endip)
 function qa_ipv6_expand($ip)
 {
 	$ipv6_wildcard = false;
-	$wildcards = '';
 	$wildcards_matched = array();
 	if (strpos($ip, "*") !== false) {
 		$ipv6_wildcard = true;
 	}
 	if ($ipv6_wildcard) {
-		$wildcards = explode(":", $ip);
+		$wildcards = explode(':', $ip);
 		foreach ($wildcards as $index => $value) {
 			if ($value == "*") {
 				$wildcards_matched[] = count($wildcards) - 1 - $index;
 				$wildcards[$index] = "0";
 			}
 		}
-		$ip = implode($wildcards, ":");
+		$ip = implode(':', $wildcards);
 	}
 
 	$hex = unpack("H*hex", @inet_pton($ip));
 	$ip = substr(preg_replace("/([0-9A-Fa-f]{4})/", "$1:", $hex['hex']), 0, -1);
 
 	if ($ipv6_wildcard) {
-		$wildcards = explode(":", $ip);
+		$wildcards = explode(':', $ip);
 		foreach ($wildcards_matched as $value) {
 			$i = count($wildcards) - 1 - $value;
 			$wildcards[$i] = "*";
 		}
-		$ip = implode($wildcards, ":");
+		$ip = implode(':', $wildcards);
 	}
 
 	return $ip;

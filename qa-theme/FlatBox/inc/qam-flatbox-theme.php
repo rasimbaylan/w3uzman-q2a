@@ -208,10 +208,11 @@ class qam_flatbox_theme
      */
     private function heads()
     {
-        $fonts                       = 'https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic';
         $flatbox_core                = 'flatbox-core' . ( (qa_opt('site_text_direction') === 'rtl' ) ? '-rtl' : NULL ) . '.min';
         $this->data['meta_viewport'] = '<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">';
-        $this->data['theme_css']     = array($fonts, $this->css_dir . $flatbox_core);
+        // Use the local/system font fallback to avoid a render-blocking
+        // Google Fonts request on every page load.
+        $this->data['theme_css']     = array($this->css_dir . $flatbox_core);
         $this->data['theme_js']      = array($this->js_dir . 'flatbox-core.min');
         $this->data['inline_css']    = $this->head_inline_css();
 
@@ -414,7 +415,7 @@ class qam_flatbox_theme
      */
     private function footer_advert()
     {
-        return $this->qam_opt('footer_advert_code');
+        return qa_google_ads_filter_html($this->qam_opt('footer_advert_code'));
     }
 
     /**

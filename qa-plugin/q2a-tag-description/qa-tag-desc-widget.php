@@ -19,8 +19,8 @@ class qa_tag_descriptions_widget {
 		$parts=explode('/', $request);
 		$tag=$parts[1];
 		
-		$description=qa_db_tagmeta_get($tag, 'description');
-		if (!(qa_opt('plugin_tag_desc_sidebar_html'))) $description=qa_html($description);
+		$description=(string) qa_db_tagmeta_get($tag, 'description');
+		$description=qa_opt('plugin_tag_desc_sidebar_html') ? qa_sanitize_html($description) : qa_html($description);
 		$editurlhtml=qa_path_html('tag-edit/'.$tag);
 		
 		$allowediting=!qa_user_permit_error('plugin_tag_desc_permit_edit');
@@ -30,7 +30,7 @@ class qa_tag_descriptions_widget {
 			echo $description;
 			echo '</SPAN>';
 			if ($allowediting)
-				echo ' - <A HREF="'.$editurlhtml.'">edit</A>';
+				echo ' - <A HREF="'.$editurlhtml.'">Düzenle</A>';
 
 		} elseif ($allowediting)
 			echo '<A HREF="'.$editurlhtml.'">'.qa_lang_html('plugin_tag_desc/create_desc_link').'</A>';
@@ -75,6 +75,7 @@ class qa_tag_descriptions_widget {
 			qa_opt('plugin_tag_desc_enable_icon', (int)qa_post_text('plugin_tag_desc_enable_icon_field'));
 			qa_opt('plugin_tag_desc_icon_height', (int)qa_post_text('plugin_tag_desc_icon_height_field'));
 			qa_opt('plugin_tag_desc_icon_width', (int)qa_post_text('plugin_tag_desc_icon_width_field'));
+			qa_opt('plugin_tag_desc_sidebar_html', (int)(bool)qa_post_text('plugin_tag_desc_sidebar_html_field'));
 			$saved=true;
 		}
 			qa_set_display_rules($qa_content, array(

@@ -15,6 +15,16 @@
 .qa-sss-final a {color: #fff;margin-right: 5px;}
 .qa-sss-final a.btn-re {color: #000 ;}
 
+/* Keep the small sprite icons, but give each link a comfortable touch target. */
+.qa-sss-buttons .qa-sss-final a[class*="qa-sss-img-"] {
+    display: inline-block;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 13px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+
 .qa-sss-buttons .qa-sss-final a.qa-sss-text-gp ,
 .qa-sss-buttons .qa-sss-final a.qa-sss-text-fb ,
 .qa-sss-buttons .qa-sss-final a.qa-sss-text-tw ,

@@ -29,16 +29,17 @@
 			qa_html_theme_base::head_script();
 			// only load if enabled and user logged-in
 			if(qa_opt('q2apro_onsitenotifications_enabled') && qa_is_logged_in()) {
-				$this->output('<script type="text/javascript">
+				$this->output('<script>
 						var eventnotifyAjaxURL = "'.qa_path('eventnotify').'";
+						var eventnotifySecurityCode = '.qa_js(qa_get_form_security_code('eventnotify')).';
 					</script>');
-				$this->output('<script type="text/javascript" src="'.QA_HTML_THEME_LAYER_URLTOROOT.'script.js"></script>');
+				$this->output('<script type="text/javascript" src="'.QA_HTML_THEME_LAYER_URLTOROOT.'script.js?v=2"></script>');
 				$this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'styles.css">');
 
 				// hack for snow flat theme (q2a v1.7) to show the notification icon outside the user's drop down
 				if(qa_opt('site_theme')=='FlatBox') {
 					$this->output('
-					<script type="text/javascript">
+					<script>
 						$(document).ready(function(){
 							// $("#osnbox").detach().appendTo(".qa-nav-main");
 							var elem = $("#osnbox").detach();
@@ -117,7 +118,7 @@
 
 				// first time visitor, we set the last visit manually in the past
 				if(is_null($last_visit)) {
-					$last_visit = '1981-03-31 06:25:00';
+					$last_visit = 0;
 				}
 
 				// select and count all in_eventcount that are newer as last visit
@@ -154,7 +155,7 @@
 				}
 
 				$html = '<div id="osnbox">
-							<a class="osn-new-events-link" title="'.$tooltip.'"><span class="notifybub ntfy-event-'. $classSuffix.'">'.$eventcount.'</span></a>
+							<button type="button" class="osn-new-events-link" style="border:0;background:transparent;padding:0;cursor:pointer" aria-expanded="false" aria-label="'.qa_html($tooltip).'" title="'.qa_html($tooltip).'"><span class="notifybub ntfy-event-'. $classSuffix.'">'.qa_html($eventcount).'</span></button>
 						</div>';
 
 				// add to user panel

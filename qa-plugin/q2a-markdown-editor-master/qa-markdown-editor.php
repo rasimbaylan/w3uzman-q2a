@@ -38,12 +38,12 @@ class qa_markdown_editor
 
 	public function get_field(&$qa_content, $content, $format, $fieldname, $rows, $autofocus)
 	{
-		$html = '<div id="wmd-button-bar-'.$fieldname.'" class="wmd-button-bar"></div>' . "\n";
-		$html .= '<textarea name="'.$fieldname.'" id="wmd-input-'.$fieldname.'" class="wmd-input">'.$content.'</textarea>' . "\n";
+		$html = '<div id="wmd-button-bar-'.qa_html($fieldname).'" class="wmd-button-bar"></div>' . "\n";
+		$html .= '<textarea name="'.qa_html($fieldname).'" id="wmd-input-'.qa_html($fieldname).'" class="wmd-input">'.qa_html($content).'</textarea>' . "\n";
 		$html .= '<h3>'.qa_lang_html('markdown/preview').'</h3>' . "\n";
-		$html .= '<div id="wmd-preview-'.$fieldname.'" class="wmd-preview"></div>' . "\n";
+		$html .= '<div id="wmd-preview-'.qa_html($fieldname).'" class="wmd-preview"></div>' . "\n";
 
-		$imageUploadUrl = qa_js(qa_path('qa-markdown-upload'));
+		$imageUploadUrl = qa_js(qa_path('qa-markdown-upload', array('code' => qa_get_form_security_code('qa-markdown-upload'))));
 		$uploadimg = (int) qa_opt($this->impuplopt);
 		$html .= "<script>var image_upload_path=$imageUploadUrl; var image_upload_enabled=$uploadimg;</script>";
 
@@ -52,7 +52,7 @@ class qa_markdown_editor
         // $html .= '<script src="'.$this->pluginurl.'pagedown/Markdown.Editor.js"></script>' . "\n";
 
 		// comment this script and uncomment the 3 above to use the non-minified code
-    	$html .= '<script src="'.$this->pluginurl.'pagedown/markdown.min.js?v=2.6.2"></script>' . "\n";
+    	$html .= '<script defer src="'.$this->pluginurl.'pagedown/markdown.min.js?v=2.6.2"></script>' . "\n";
 
 		return array('type'=>'custom', 'html'=>$html);
 	}

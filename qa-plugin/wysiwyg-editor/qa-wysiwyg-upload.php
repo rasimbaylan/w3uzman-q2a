@@ -32,6 +32,15 @@ class qa_wysiwyg_upload
 	{
 		$message = '';
 		$url = '';
+		header('Cache-Control: no-store');
+		$code = qa_post_text('code');
+		if ($code === null) { $code = qa_get('code'); }
+		if (!qa_is_http_post() || !qa_check_form_security_code('wysiwyg-editor-upload', $code)) {
+			http_response_code(qa_is_http_post() ? 403 : 405);
+			if (!qa_is_http_post()) { header('Allow: POST'); }
+			echo sprintf('<script>window.parent.CKEDITOR.tools.callFunction(%s, "", %s);</script>', qa_js(qa_get('CKEditorFuncNum')), qa_js(qa_lang('misc/form_security_reload')));
+			return null;
+		}
 
 		if (is_array($_FILES) && count($_FILES)) {
 			if (qa_opt('wysiwyg_editor_upload_images')) {

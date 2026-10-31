@@ -499,6 +499,9 @@ function qa_recalc_perform_step(&$state)
 
 				if (qa_write_blob_file($blob['blobid'], $blob['content'], $blob['format'])) {
 					qa_db_blob_set_content($blob['blobid'], null);
+				} else {
+					$state = 'doblobstodisk_failed';
+					break;
 				}
 
 				$next = 1 + $blob['blobid'];
@@ -510,26 +513,9 @@ function qa_recalc_perform_step(&$state)
 			break;
 
 		case 'doblobstodb':
-			qa_recalc_transition($state, 'doblobstodb_move');
-			break;
-
 		case 'doblobstodb_move':
-			$blob = qa_db_get_next_blob_on_disk($next);
-
-			if (isset($blob)) {
-				require_once QA_INCLUDE_DIR . 'app/blobs.php';
-				require_once QA_INCLUDE_DIR . 'db/blobs.php';
-
-				$content = qa_read_blob_file($blob['blobid'], $blob['format']);
-				qa_db_blob_set_content($blob['blobid'], $content);
-				qa_delete_blob_file($blob['blobid'], $blob['format']);
-
-				$next = 1 + $blob['blobid'];
-				$done++;
-				$continue = true;
-			} else {
-				qa_recalc_transition($state, 'doblobstodb_complete');
-			}
+			// Block old bookmarks/Ajax states too, not just the panel button.
+			$state = 'doblobstodb_disabled';
 			break;
 
 		case 'docachetrim':
@@ -543,7 +529,7 @@ function qa_recalc_perform_step(&$state)
 		case 'docacheclear_process':
 			$cacheDriver = Q2A_Storage_CacheFactory::getCacheDriver();
 			$cacheStats = $cacheDriver->getStats();
-			$limit = min($cacheStats['files'], 20);
+			$limit = min($cacheStats['files'], 500);
 
 			if ($cacheStats['files'] > 0 && $next <= $length) {
 				$deleted = $cacheDriver->clear($limit, $next, ($operation === 'docachetrim_process'));
@@ -787,6 +773,14 @@ function qa_recalc_get_message($state)
 		case 'doblobstodisk_complete':
 		case 'doblobstodb_complete':
 			$message = qa_lang('admin/blobs_move_complete');
+			break;
+
+		case 'doblobstodisk_failed':
+			$message = 'Dosya kaydedilemedi. SQL içindeki asıl görsel korundu. Klasör izinlerini ve disk alanını kontrol edip yeniden deneyin.';
+			break;
+
+		case 'doblobstodb_disabled':
+			$message = 'Görselleri SQL içine taşıma kapalıdır. Yüklemeler dosya sisteminde saklanır.';
 			break;
 
 		case 'docachetrim_process':

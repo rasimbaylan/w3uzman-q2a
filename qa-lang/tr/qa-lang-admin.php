@@ -162,7 +162,7 @@
 		'no_multibyte' => 'Yüklenmiş olan PHP sürümü baytlı dize desteği olmadan derlenmiştir. Arama Roma karakterleri olmayanlar için daha az etkili olacaktır.',
 		'no_privileges' => 'Yalnızca yöneticiler bu sayfaya erişebilir.',
 		'no_unapproved_found' => 'Onay bekleyen kullanıcı yok',
-		'not_logged_in' => 'Bu sayfaya ulaşmak için ütfen yönetici olarak ^1giriş yapınız^2.',
+		'not_logged_in' => 'Bu sayfaya ulaşmak için lütfen yönetici olarak ^1giriş yapınız^2.',
 		'opposite_main_menu' => 'Üst kısımdaki sekmelerin uzağında',
 		'options' => 'Seçenekler',
 		'options_reset' => 'Seçenekleri Sıfırla',

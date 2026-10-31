@@ -1,0 +1,110 @@
+body.w3-tools-page { color:#192637; background:#f5f7f9; }
+html body.w3-tools-page .qa-body-wrapper { box-sizing:border-box; width:calc(100% - 40px); max-width:1120px; margin:0 auto; padding:0; }
+body.w3-tools-page .qa-body-wrapper .qa-main-wrapper { display:block; width:100%; margin:0; padding:12px 0 30px; }
+body.w3-tools-page .qa-main-wrapper .qa-main { float:none; width:100%!important; min-width:0; margin:0; padding:0; border:0; background:transparent; box-shadow:none; }
+body.w3-tools-page .qa-main .qa-part-custom { margin:0; padding:0; border:0; background:transparent; }
+.w3-dns { color:#192637; font:13px/1.6 Arial,sans-serif; }
+.w3-dns *, .w3-dns *::before, .w3-dns *::after { box-sizing:border-box; }
+.w3-dns [hidden] { display:none!important; }
+.w3-dns h1,.w3-dns h2,.w3-dns p { margin:0; padding:0; border:0; background:none; }
+.w3-dns a { color:#4c6380; }
+.w3-dns :is(a,button,input,select,summary):focus-visible { outline:3px solid #a57a00; outline-offset:3px; }
+.w3-dns button,.w3-dns input,.w3-dns select { font:inherit; }
+.w3-dns p { color:#68798e; font-size:12px; line-height:1.7; }
+.w3-dns-heading { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:5px 20px; margin-bottom:14px; }
+body.w3-tools-page .w3-dns-heading h1 { margin:0; padding:0; border:0; background:none; box-shadow:none; color:#192637; font-size:25px; font-weight:700; line-height:1.3; letter-spacing:-.5px; }
+.w3-dns-search { padding:14px 18px 12px; border:1px solid #dfe5ec; border-radius:9px; background:#fff; }
+.w3-dns-search form { display:flex; align-items:flex-end; gap:10px; margin:0; }
+.w3-dns-domain-field { flex:1; min-width:0; }
+.w3-dns-type-field { flex:0 0 160px; }
+.w3-dns-search label { display:block; margin:0 0 6px; color:#30435b; font-size:12px; font-weight:700; line-height:1.4; }
+.w3-dns .w3-dns-search input,.w3-dns .w3-dns-search select { display:block; width:100%; min-width:0; height:44px; margin:0; padding:0 11px; border:1px solid #dce3eb; border-radius:6px; color:#26384f; background:#f8fafb; font-size:14px; }
+.w3-dns .w3-dns-primary { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; gap:18px; height:44px; min-height:44px; margin:0; padding:0 18px; border:1px solid #ffc400; border-radius:6px; color:#192637; background:#ffc400; font-size:13px; font-weight:700; cursor:pointer; }
+.w3-dns-primary span { font-size:21px; line-height:1; }
+.w3-dns-search #w3-dns-help { margin-top:8px; font-size:11px; }
+.w3-dns .w3-dns-error { margin-top:8px; color:#b1323c; }
+.w3-dns-results { margin-top:16px; }
+.w3-dns-results-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
+.w3-dns h2 { color:#293d55; font-size:15px; font-weight:700; line-height:1.5; }
+.w3-dns-results-heading h2 { overflow-wrap:anywhere; }
+.w3-dns-results-heading p { font-size:11px; }
+.w3-dns button#w3-dns-copy-all,.w3-dns button.w3-dns-copy-value,.w3-dns button.w3-dns-retry { display:inline-flex; align-items:center; justify-content:center; min-height:44px; margin:0; padding:0 10px; border:1px solid #dce3eb; border-radius:6px; background:#fff; color:#536983; font-size:11px; white-space:nowrap; cursor:pointer; }
+.w3-dns-filters { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; }
+.w3-dns-filters button { display:inline-flex; align-items:center; gap:7px; min-height:44px; margin:0; padding:0 12px; border:1px solid #e1e6ed; border-radius:6px; background:#fff; color:#68798e; font-size:11px; cursor:pointer; }
+.w3-dns-filters button[aria-pressed="true"] { border-color:#e9cf71; background:#fff8de; color:#775d00; }
+.w3-dns-filters button span { color:#8c98a9; font-size:10px; }
+.w3-dns-group { margin-top:8px; border:1px solid #dfe5ec; border-radius:8px; background:#fff; overflow:hidden; }
+.w3-dns-group > summary { display:flex; align-items:center; gap:12px; min-height:56px; padding:8px 15px; list-style:none; cursor:pointer; }
+.w3-dns-group > summary::-webkit-details-marker { display:none; }
+.w3-dns-type { display:inline-flex; align-items:center; justify-content:center; flex:0 0 55px; min-height:29px; border:1px solid #ece5c6; border-radius:5px; background:#fffbeb; color:#7c660f; font-size:11px; font-weight:700; }
+.w3-dns-group-description { flex:1; min-width:0; color:#64758b; font-size:11px; line-height:1.5; }
+.w3-dns-group-count { color:#8491a3; font-size:10px; white-space:nowrap; }
+.w3-dns-group[data-state="ready"] .w3-dns-group-count { color:#29714f; }
+.w3-dns-group[data-state="error"] .w3-dns-group-count { color:#af3941; }
+.w3-dns-chevron { flex:0 0 6px; width:6px; height:6px; margin-right:2px; border:solid #8190a3; border-width:0 1.4px 1.4px 0; transform:rotate(45deg); }
+.w3-dns-group[open] .w3-dns-chevron { transform:rotate(225deg); }
+.w3-dns-group-body { padding:0 15px 12px; border-top:1px solid #f0f2f5; }
+.w3-dns-group-message { margin:10px 0!important; font-size:11px!important; }
+.w3-dns-group[data-state="error"] .w3-dns-group-message { color:#af3941; }
+.w3-dns table { width:100%; table-layout:fixed; border-collapse:collapse; margin:0; }
+.w3-dns th { padding:6px 8px; color:#8491a3; background:#f7f9fb; font-size:10px; font-weight:400; text-align:left; }
+.w3-dns th:first-child { width:24%; }
+.w3-dns th:nth-child(3) { width:70px; }
+.w3-dns th:nth-child(4) { width:94px; }
+.w3-dns td { padding:8px; border-bottom:1px solid #edf0f4; vertical-align:top; overflow-wrap:anywhere; }
+.w3-dns-record-name { color:#64758b; font-size:11px; }
+.w3-dns-record-name small,.w3-dns-record-ttl small { display:block; color:#97a2b1; font-size:10px; }
+.w3-dns code { color:#344b67; background:none; font:12px/1.8 Consolas,monospace; overflow-wrap:anywhere; white-space:pre-wrap; }
+.w3-dns-record-ttl { color:#6c7f96; font-size:11px; }
+.w3-dns-record-action { text-align:right; }
+.w3-dns .w3-dns-group-meta { margin-top:9px; color:#8b97a7; font-size:10px; }
+.w3-dns-retry { margin-top:8px!important; }
+.w3-dns-source { margin-top:13px!important; font-size:10px!important; }
+.w3-dns-related { display:flex; flex-wrap:wrap; gap:0 20px; margin-top:5px; }
+.w3-dns-related a { display:inline-flex; align-items:center; min-height:44px; font-size:11px; }
+.w3-dns-empty { margin-top:16px; padding:25px 18px; border:1px solid #e0e6ed; border-radius:9px; background:#fff; text-align:center; }
+.w3-dns-empty-icon { display:inline-flex; align-items:center; justify-content:center; width:48px; height:40px; margin-bottom:11px; border:1px solid #ead88f; border-radius:8px; color:#8b7119; background:#fff9df; font:700 11px Consolas,monospace; }
+.w3-dns-empty h2 { margin-bottom:7px; font-size:17px; }
+.w3-dns-type-tags { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin-top:18px; }
+.w3-dns-type-tags span { padding:5px 11px; border:1px solid #e4e9ef; border-radius:5px; color:#64758b; background:#fbfcfd; font-size:11px; }
+.w3-dns-guide { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:22px; }
+.w3-dns-guide h2 { margin-bottom:7px; font-size:13px; }
+.w3-dns-guide p { font-size:11px; }
+.w3-dns-guide p + p { margin-top:7px; }
+.w3-dns .w3-dns-privacy { margin-top:16px; color:#8b97a7; font-size:10px; }
+.w3-dns-reader-only { position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+@media (max-width:800px) {
+ html body.w3-tools-page .qa-body-wrapper { width:calc(100% - 24px); }
+ body.w3-tools-page .qa-body-wrapper .qa-main-wrapper { padding-top:8px; }
+ .w3-dns-type-field { flex-basis:135px; }
+ .w3-dns-heading { margin-bottom:12px; }
+ .w3-dns-guide { gap:16px; }
+}
+@media (max-width:560px) {
+ body.w3-tools-page .w3-dns-heading h1 { font-size:23px; }
+ .w3-dns-heading p { font-size:11px; }
+ .w3-dns-search { padding:12px; }
+ .w3-dns-search form { flex-wrap:wrap; gap:9px; }
+ .w3-dns-domain-field { flex-basis:100%; }
+ .w3-dns-type-field { flex:1; }
+ .w3-dns .w3-dns-search input { font-size:16px; }
+ .w3-dns .w3-dns-primary { padding:0 13px; gap:10px; font-size:12px; }
+ .w3-dns-filters { gap:5px; }
+ .w3-dns-filters button { padding:0 10px; }
+ .w3-dns-group > summary { gap:8px; padding:8px 10px; }
+ .w3-dns-type { flex-basis:46px; }
+ .w3-dns-group-description { font-size:10px; }
+ .w3-dns-group-count { font-size:9px; }
+ .w3-dns-group-body { padding:0 10px 10px; }
+ .w3-dns table,.w3-dns tbody { display:block; }
+ .w3-dns thead { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+ .w3-dns tr { display:grid; grid-template-columns:minmax(0,1fr) 73px; gap:0 5px; padding:7px 0; border-top:1px solid #edf0f4; }
+ .w3-dns td { min-width:0; padding:4px 0; border:0; }
+ .w3-dns-record-name { grid-column:1 / -1; }
+ .w3-dns-record-name small { display:inline; margin-left:8px; }
+ .w3-dns-record-value { grid-column:1 / -1; }
+ .w3-dns-record-ttl { display:flex; align-items:center; gap:5px; }
+ .w3-dns-record-ttl::before { content:"TTL:"; }
+ .w3-dns code { font-size:11px; }
+ .w3-dns-guide { grid-template-columns:1fr; }
+}

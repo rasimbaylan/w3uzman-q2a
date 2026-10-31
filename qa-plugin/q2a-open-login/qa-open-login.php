@@ -41,6 +41,8 @@ class qa_open_login {
 
 	function check_login() {
 		require_once $this->directory . 'HybridAuth/autoload.php';
+		$topath = (string)qa_get('to');
+		$adapter = null;
 
 		try {
 
@@ -78,7 +80,7 @@ class qa_open_login {
 				if (in_array($_GET['logout'], $hybridauth->getProviders())) {
 					// Disconnect the adapter
 					$adapter = $hybridauth->getAdapter($_GET['logout']);
-					$adapter->disconnect();
+						$adapter->disconnect();
 				} else {
 					$error = $_GET['logout'];
 				}
@@ -130,8 +132,8 @@ class qa_open_login {
 
 			// not really interested in the error message - for now
 			// however, in case we have errors 6 or 7, then we have to call logout to clean everything up
-			if($e->getCode() == 6 || $e->getCode() == 7) {
-				$adapter->logout();
+			if(($e->getCode() == 6 || $e->getCode() == 7) && $adapter) {
+				$adapter->disconnect();
 			}
 
 			$qry = 'provider=' . $this->provider . '&code=' . $e->getCode();
@@ -150,6 +152,7 @@ class qa_open_login {
 
 
 	function do_logout() {
+		$adapter = null;
 		// after login come back to the same page
 		$loginCallback = qa_path('', array(), qa_opt('site_url'));
 
@@ -162,16 +165,16 @@ class qa_open_login {
 			// try to logout
 			$hybridauth = new Hybridauth\Hybridauth( $config );
 
-			if($hybridauth->isConnectedWith( $this->provider )) {
-				$adapter = $hybridauth->getAdapter( $this->provider );
+			$adapter = $hybridauth->getAdapter( $this->provider );
+			if($adapter->isConnected()) {
 				$adapter->disconnect();
 			}
 
 		} catch(Exception $e) {
 			// not really interested in the error message - for now
 			// however, in case we have errors 6 or 7, then we have to call logout to clean everything up
-			if($e->getCode() == 6 || $e->getCode() == 7) {
-				$adapter->logout();
+			if(($e->getCode() == 6 || $e->getCode() == 7) && $adapter) {
+				$adapter->disconnect();
 			}
 		}
 	}
@@ -236,13 +239,13 @@ class qa_open_login {
 				'login' => $key,
 			);
 
-			$url = qa_path('login', $params, qa_path_to_root());
 			if(strlen($tourl) > 0) {
-				$url .= '&amp;to=' . htmlspecialchars($tourl); // play nice with validators
+				$params['to'] = $tourl;
 			}
+			$url = qa_path('login', $params, qa_path_to_root());
 			$classes = "$context action-login $zocial  $css";
 			$title = qa_lang_html_sub('plugin_open/login_using', $provider);
-			$text = ($key == 'google')?"Connexion avec Google":$provider . ' ' . qa_lang_html('main/nav_login');
+			$text = ($key == 'google') ? 'Google ile giriş yap' : $provider . ' ' . qa_lang_html('main/nav_login');
 
 			if($context != 'menu') {
 				$text = $title;
@@ -259,11 +262,14 @@ class qa_open_login {
 			}
 
 		} else if($action == 'view') {
-			$url = 'javascript://';
+			$url = qa_path('logins', null, qa_path_to_root());
 			$classes = "$context action-link $zocial $css";
 			$title = $provider;
-			$text = $tourl;
+			$text = qa_html($tourl);
 		}
+		$url = qa_html(html_entity_decode((string)$url, ENT_QUOTES, 'UTF-8'));
+		$title = qa_html(html_entity_decode((string)$title, ENT_QUOTES, 'UTF-8'));
+		$classes = qa_html($classes);
 
 		if ($key == 'google' && in_array($action, array('login', 'view', 'link'))) {
 			$html = <<<HTML

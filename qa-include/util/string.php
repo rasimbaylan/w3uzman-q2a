@@ -699,7 +699,7 @@ function qa_block_words_replace($string, $wordspreg, $character = '*')
 {
 	if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
-	if (strlen($wordspreg)) {
+	if (strlen((string)$wordspreg)) {
 		$matches = qa_block_words_match_all($string, $wordspreg);
 		krsort($matches, SORT_NUMERIC);
 
@@ -736,7 +736,7 @@ function qa_email_validate($email)
 {
 	if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
-	return preg_match("/^[\-\!\#\$\%\&\'\*\+\/\=\?\_\`\{\|\}\~a-zA-Z0-9\.\^]+\@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\.\-]+$/", $email) === 1;
+	return (bool)filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 

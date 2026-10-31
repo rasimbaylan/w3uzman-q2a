@@ -7,7 +7,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 		global
 			$plugin_tag_desc_list, // Already filled in qa-tag-desc-overrides.php  -  All tags used in this page are listed in this array
 			$plugin_tag_map;       // here it will be filled with tag's meta descriptions
-		if (count(@$plugin_tag_desc_list)) {
+		if (is_array($plugin_tag_desc_list) && !empty($plugin_tag_desc_list)) {
 			$result=qa_db_query_sub(
 				'SELECT tag, title, content FROM ^tagmetas WHERE tag IN ($)',
 				array_keys($plugin_tag_desc_list)
@@ -26,7 +26,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 		}
 
 		$html = new DOMDocument();
-		$html->loadHTML(mb_convert_encoding($taghtml, 'HTML-ENTITIES', 'UTF-8'));
+		$html->loadHTML(mb_encode_numericentity($taghtml, [0x80, 0x10ffff, 0, 0xffff], 'UTF-8'));
 
 		foreach($html->getElementsByTagName('a') as $a)
         {
@@ -42,7 +42,10 @@ class qa_html_theme_layer extends qa_html_theme_base
 			}
 		}
 		
-		$taghtml= $html->saveHTML(); 
+		$taghtml = '';
+		foreach ($html->getElementsByTagName('body')->item(0)->childNodes as $node) {
+			$taghtml .= $html->saveHTML($node);
+		}
 		qa_html_theme_base::post_tag_item($taghtml, $class);
 	}
 	function ranking($ranking)
@@ -51,7 +54,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 		{
 			global $plugin_tag_desc_list; // Already filled in qa-tag-desc-overrides.php  -  All tags used in this page are listed in this array
 			
-			if (count(@$plugin_tag_desc_list)) {
+			if (is_array($plugin_tag_desc_list) && !empty($plugin_tag_desc_list)) {
 				// Get all tag meta in this query
 				$result=qa_db_query_sub(
 					'SELECT tag, title, content FROM ^tagmetas WHERE tag IN ($)',
@@ -68,7 +71,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 				// add title and icon to each tag
 				$html = new DOMDocument();
 				foreach ($ranking['items'] as &$item) {
-					$html->loadHTML(mb_convert_encoding($item['label'], 'HTML-ENTITIES', 'UTF-8'));
+					$html->loadHTML(mb_encode_numericentity($item['label'], [0x80, 0x10ffff, 0, 0xffff], 'UTF-8'));
 					foreach($html->getElementsByTagName('a') as $a)
 					{
 						if (!empty($plugin_tag_map[$a->nodeValue]['title']))
@@ -82,7 +85,10 @@ class qa_html_theme_layer extends qa_html_theme_base
 							$a->insertBefore($element, $a->firstChild);
 						}
 					}
-					$item['label']= $html->saveHTML(); 				
+					$item['label'] = '';
+					foreach ($html->getElementsByTagName('body')->item(0)->childNodes as $node) {
+						$item['label'] .= $html->saveHTML($node);
+					}
 				}
 			}
 		}

@@ -15,13 +15,13 @@ class qa_sss_opt {
 	const VK_BUTTON       = 'ami_sss_btn_vk'  ;
 	const BUTTON_STATUS   = 'ami_sss_btn_status'  ;
 
-	const GP_URL_TEMPLATE = 'https://plus.google.com/share?url={{page_url}}" ' ;
-	const FB_URL_TEMPLATE = 'https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;ref=fbshare&amp;t={{page_title}}" ' ;
-	const TW_URL_TEMPLATE = 'https://twitter.com/intent/tweet?original_referer={{page_url}}&amp;text={{page_title}}&amp;url={{page_url}}" ' ;
-	const LI_URL_TEMPLATE = 'http://www.linkedin.com/shareArticle?mini=true&amp;url={{page_url}}&amp;title={{page_title}}&amp;summary={{page_title}}" ' ;
-	const RE_URL_TEMPLATE = 'http://www.reddit.com/submit?url={{page_url}}&amp;title={{page_title}}" ' ;
-	const VK_URL_TEMPLATE = 'http://vkontakte.ru/share.php?url={{page_url}}&amp;title={{page_title}}" ' ;
-	const EM_URL_TEMPLATE = 'mailto: ?subject={{page_title}}&amp;body=Check this out: {{page_title}} - {{page_url}}" ' ;
+	const GP_URL_TEMPLATE = 'https://plus.google.com/share?url={{page_url}}' ;
+	const FB_URL_TEMPLATE = 'https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;ref=fbshare&amp;t={{page_title}}' ;
+	const TW_URL_TEMPLATE = 'https://twitter.com/intent/tweet?original_referer={{page_url}}&amp;text={{page_title}}&amp;url={{page_url}}' ;
+	const LI_URL_TEMPLATE = 'https://www.linkedin.com/shareArticle?mini=true&amp;url={{page_url}}&amp;title={{page_title}}&amp;summary={{page_title}}' ;
+	const RE_URL_TEMPLATE = 'https://www.reddit.com/submit?url={{page_url}}&amp;title={{page_title}}' ;
+	const VK_URL_TEMPLATE = 'https://vkontakte.ru/share.php?url={{page_url}}&amp;title={{page_title}}' ;
+	const EM_URL_TEMPLATE = 'mailto:?subject={{page_title}}&amp;body=Check%20this%20out%3A%20{{page_title}}%20-%20{{page_url}}' ;
 
 	/*constants for the types of the social buttons */
 
