@@ -275,15 +275,15 @@ class qa_html_theme extends qa_html_theme_base
         $this->output('<div id="qam-topbar" class="clearfix ' . $flatbox->fixed_topbar . '">');
         $this->nav_main_sub();
         $this->output('</div><!-- END qam-topbar -->');
-        $w3_site_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        if ($w3_site_link == "http://w3uzman.com/" || $w3_site_link == "http://www.w3uzman.com/") {
+        $w3_site_link = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        if ($w3_site_link == "https://w3uzman.com/" || $w3_site_link == "https://www.w3uzman.com/") {
           $this->output('
             <div class="vitrin">
               <div class="vitrin-middle">
-                <a href="http://w3uzman.com/596/themeforestte-satış-yapmak"><img src="../../resimler/thumbs/themeforestte-satis-yapmak.jpg"></a>
-                <a href="http://w3uzman.com/7/blender-3d-nedir-nasıl-kullanılır-iyimidir-blender-3d-tarihçesi"><img src="../../resimler/thumbs/blender-3d-nedir-nasil-kullanilir.jpg"></a>
-                <a href="http://w3uzman.com/597/themeforest-ne-kadar-komisyon-alıyor"><img src="../../resimler/thumbs/themeforestte-satis-komisyon-oranlari.jpg"></a>
-                <a href="http://w3uzman.com/779/en-iyi-ücretsiz-blogger-temaları"><img src="../../resimler/thumbs/en-iyi-ucretsiz-blogger-temalari.jpg"></a>
+                <a href="https://w3uzman.com/596/themeforestte-satis-yapmak"><img src="../../resimler/thumbs/themeforestte-satis-yapmak.webp" alt="Themefores\'te Satış Yapmak"></a>
+                <a href="https://w3uzman.com/7/blender-3d-nedir-nasil-kullanilir-iyimidir-blender-3d-tarihçesi"><img src="../../resimler/thumbs/blender-3d-nedir-nasil-kullanilir.webp" alt="Blender 3D nedir nasıl kullanılır?"></a>
+                <a href="https://w3uzman.com/597/themeforest-ne-kadar-komisyon-aliyor"><img src="../../resimler/thumbs/themeforestte-satis-komisyon-oranlari.webp" alt="Themeforest\'te Satış Komisyon Oranları"></a>
+                <a href="https://w3uzman.com/779/en-iyi-ucretsiz-blogger-temalari"><img src="../../resimler/thumbs/en-iyi-ucretsiz-blogger-temalari.webp" alt="En İyi Ücretsiz Blogger Temaları"></a>
               </div>
             </div>
             ');
@@ -382,7 +382,7 @@ class qa_html_theme extends qa_html_theme_base
 
         $this->qam_body_prefix();
 
-        $this->output('<div class="qa-body-wrapper">', '');
+        $this->output('<div class="qa-body-wrapper" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">', '');
 
         $this->widgets('full', 'top');
         $this->header();

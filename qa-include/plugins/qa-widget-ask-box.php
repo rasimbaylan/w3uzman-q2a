@@ -55,7 +55,7 @@ class qa_ask_box
 			<tr>
 		<?php endif; ?>
 				<td class="qa-form-tall-data" style="padding:8px;">
-					<input name="title" type="text" class="qa-form-tall-text" style="width:95%;">
+					<input name="title" type="text" aria-label="Bir Soru Sor" class="qa-form-tall-text" style="width:95%;">
 				</td>
 			</tr>
 		</table>
@@ -63,7 +63,7 @@ class qa_ask_box
 	</form>
 	<div class="qa-search">
         <form method="GET" action="../search">
-        <input type="text" name="q" value="" class="qa-search-field">
+        <input type="text" name="q" aria-label="Sitede Ara" value="" class="qa-search-field">
         <input type="submit" value="Sitede Ara" class="qa-search-button">
         </form>
         <div id="searchresults" style="display:none"></div>

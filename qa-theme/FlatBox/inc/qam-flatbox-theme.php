@@ -210,7 +210,7 @@ class qam_flatbox_theme
     {
         $fonts                       = 'https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic';
         $flatbox_core                = 'flatbox-core' . ( (qa_opt('site_text_direction') === 'rtl' ) ? '-rtl' : NULL ) . '.min';
-        $this->data['meta_viewport'] = '<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">';
+        $this->data['meta_viewport'] = '<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">';
         $this->data['theme_css']     = array($fonts, $this->css_dir . $flatbox_core);
         $this->data['theme_js']      = array($this->js_dir . 'flatbox-core.min');
         $this->data['inline_css']    = $this->head_inline_css();
@@ -431,16 +431,9 @@ class qam_flatbox_theme
      */
     private function fb_like_box_init()
     {
-        $fb_like_box_init = '<div id="fb-root"></div>
-        <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1470369946514235&version=v2.0";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, \'script\', \'facebook-jssdk\'));</script>';
+        
 
-        return $fb_like_box_init;
+        //return $fb_like_box_init;
     }
 
     /**
@@ -500,7 +493,7 @@ class qam_flatbox_theme
 
 </script>';
 
-        return $twitter_widget_init;
+        //return $twitter_widget_init;
     }
 
     /**
@@ -525,7 +518,7 @@ class qam_flatbox_theme
             data-link-color="#3498db"
             height="' . $this->qam_opt('twitter_height') . '"
             data-chrome="noheader nofooter noborders noscrollbar transparent"
-            >Tweet Adresi @' . $this->qam_opt('twitter_id') . '</a>';
+            >Tweet Adresi @' . W3Uzman/* normalde bu vardı yönetim panelinden çekiyor sanırsam ben elle w3uzman yazdım $this->qam_opt('twitter_id')*/ . '</a>';
 
         return $twitter_widget;
     }
@@ -600,16 +593,16 @@ class qam_flatbox_theme
     {
         $column_items = array(
             $this->footer_advert(),
-            $this->fb_like_box(),
-            $this->twitter_widget(),
-            $this->social_icons(),
+            //$this->fb_like_box(),
+            //$this->twitter_widget(),
+            //$this->social_icons(),
         );
 
         $columns = '<div class="qam-footer-row">';
 
         foreach ($column_items as $column_item)
         {
-            $columns .= '<div class="qam-footer-col">' . $column_item . '</div>';
+            $columns .= '<div class="qam-footer-col" style="width:100%">' . $column_item . '</div>';
         }
 
         $columns .= '</div> <!-- END qam-footer-row -->';
